@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marytts-install xmlns="http://mary.dfki.de/installer">
+    <voice gender="female" locale="el" name="emily-mary-5-hsmm"
+        type="unit selection" version="5.1-SNAPSHOT">
+        <description></description>
+        <license href="http://mary.dfki.de/download/by-nd-3.0.html"/>
+        <package filename="voice-emily-mary-5-hsmm-5.1-SNAPSHOT.zip"
+            md5sum="ee4d0ee8032b2563516f595c6609d9f3" size="427848">
+            <location href="http://mary.dfki.de/download/5.1-SNAPSHOT/"/>
+        </package>
+        <depends language="el" version="5.1-SNAPSHOT"/>
+    </voice>
+</marytts-install>

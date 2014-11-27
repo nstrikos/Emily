@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marytts-install xmlns="http://mary.dfki.de/installer">
+    <voice gender="female" locale="el" name="emily-16-hmm-norm"
+        type="hsmm" version="5.1-SNAPSHOT">
+        <description>A female el Hidden semi-Markov model voice</description>
+        <license href="http://mary.dfki.de/download/by-nd-3.0.html"/>
+        <package filename="voice-emily-16-hmm-norm-5.1-SNAPSHOT.zip"
+            md5sum="f6f028353990ab0effcd3b71c637d47d" size="343008">
+            <location folder="false" href="http://mary.dfki.de/download/5.1-SNAPSHOT/"/>
+        </package>
+        <depends language="el" version="5.1-SNAPSHOT"/>
+    </voice>
+</marytts-install>
