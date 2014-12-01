@@ -6,10 +6,12 @@
 DownloadManager::DownloadManager(QStringList textList, QStringList indexList){
     reply = NULL;
     downloading = false;
+    clipBoardEnabled  = false;
     count = 0;
     this->indexList = indexList;
     this->textList = textList;
-    //connect(this, SIGNAL(finished(QString)), this, SLOT(processLists()));
+    connect(this, SIGNAL(finished(QString,QString,QString)), this, SLOT(processLists()));
+    buffer = "";
 }
 
 DownloadManager::~DownloadManager()
@@ -20,20 +22,14 @@ DownloadManager::~DownloadManager()
 
 void DownloadManager::processLists()
 {
-    if (!downloading)
+    if (!downloading && clipBoardEnabled)
     {
-        //qDebug() << "Text list not empty";
         if (!textList.isEmpty())
         {
             QString text = textList.takeFirst();
             QString index = indexList.takeFirst();
             performMaryTTSSpeak(text, index);
         }
-        else
-        {
-            //qDebug() << "Text list is empty";
-        }
-
     }
 }
 
@@ -41,7 +37,6 @@ void DownloadManager::performMaryTTSSpeak(QString text, QString index)
 {
     if (!downloading)
     {
-        //qDebug() << "Try to process:" << text;
         downloading = true;
         this->index = index;
         this->textToSpeak = text;
@@ -59,7 +54,6 @@ void DownloadManager::performMaryTTSSpeak(QString text, QString index)
         {
             delete this->file;
             this->file = 0;
-            qDebug() << "Return without starting request";
             return;
         }
         // schedule the request
@@ -132,13 +126,58 @@ void DownloadManager::setVoice(QString voice)
 
 void DownloadManager::addToList(QString text, QString index)
 {
-    textList << text;
-    indexList << index;
+    //QStringList tempList = text.split(".");
+    //foreach (QString tmp, tempList) {
+        //        //QStringList tempList2 = tmp.split(",");
+        //        //foreach (QString tmp2, tempList2) {
+        //            //qDebug() << tmp2;
+    //    textList << tmp;
+    //    indexList << "";
+        //        //}
+    //}
+
+        textList << text;
+        indexList << index;
+    //if (!indexList.isEmpty())
+    //{
+
+    //    indexList.removeLast();
+    //    indexList << index;
+    //}
     //processLists();
+}
+
+void DownloadManager::addToClipboardList(QString text)
+{
+    QStringList tempList = text.split(".");
+    foreach (QString tmp, tempList) {
+        //        //QStringList tempList2 = tmp.split(",");
+        //        //foreach (QString tmp2, tempList2) {
+        //            //qDebug() << tmp2;
+        //qDebug() << tmp;
+        textList << tmp;
+        indexList << "";
+        //        //}
+    }
+
+    //    textList << text;
+    //    indexList << index;
+    //if (!indexList.isEmpty())
+    //{
+
+    //    indexList.removeLast();
+    //    indexList << index;
+    //}
+
 }
 
 void DownloadManager::clearLists()
 {
     textList.clear();
     indexList.clear();
+}
+
+void DownloadManager::setClipBoardEnabled(bool value)
+{
+    this->clipBoardEnabled = value;
 }

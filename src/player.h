@@ -26,6 +26,8 @@ public:
     void setVoice(QString voice);
     void increaseRate();
     void decreaseRate();
+    void speakClipBoardText(QString text);
+    void setClipboardEnabled(bool value);
 
 public slots:
     void acceptConnection();
@@ -53,6 +55,7 @@ private:
     QStringList textList;
     QStringList indexList;
     QStringList fileList;
+    QStringList spokenIndex;
     QString voice;
     QString index;
     QString lastReadIndex;
@@ -73,6 +76,7 @@ private:
     QTcpServer tcpServer4;
     QTcpSocket *tcpServerConnection4;
     QTimer *timer4;
+    bool clipBoardEnabled;
 };
 
 #endif // PLAYER_H

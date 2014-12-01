@@ -18,8 +18,12 @@ public:
     ~DownloadManager();
     void setVoice(QString voice);
     void addToList(QString text, QString index);
+    void addToClipboardList(QString text);
+    void setClipBoardEnabled(bool value);
     void clearLists();
     void cancelDownload();
+
+public slots:
     void processLists();
 
 private:
@@ -38,6 +42,8 @@ private:
     QString index;
     QString textToSpeak;
     QString voice;
+    bool clipBoardEnabled;
+    QString buffer;
 
 private slots:
     void httpFinished();

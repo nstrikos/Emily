@@ -8,6 +8,7 @@
 #include "constants.h"
 #include <QtWidgets>
 #include <QTimer>
+#include <QClipboard>
 #include <qxtglobalshortcut.h>
 
 namespace Ui {
@@ -43,6 +44,9 @@ private slots:
     void installationComplete();
     void increaseRate();
     void decreaseRate();
+    void clipBoardChanged();
+    void enableClipBoard();
+    void stopPlayer();
 
 private:
     Ui::MainWindow *ui;
@@ -71,6 +75,8 @@ private:
     QTimer *timer;
     ChooseDiskDialog *chooseDiskDialog;
     ProgressDialog *progressDialog;
+    QClipboard *clipBoard;
+    bool IsclipBoardEnabled;
 };
 
 #endif // MAINWINDOW_H

@@ -66,6 +66,11 @@ MainWindow::MainWindow(QWidget *parent) :
     globalDecreaseRate->setShortcut(QKeySequence("Ctrl+Alt+-"));
     connect(globalDecreaseRate, SIGNAL(activated()), this, SLOT(decreaseRate())) ;
 
+
+    QxtGlobalShortcut *globalPlayerStop = new QxtGlobalShortcut(this);
+    globalPlayerStop->setShortcut(QKeySequence("Ctrl+Alt+s"));
+    connect(globalPlayerStop, SIGNAL(activated()), this, SLOT(stopPlayer())) ;
+
     QShortcut *okShortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
@@ -78,9 +83,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
     QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F5"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F6"), this);
+    QShortcut *clipBoardShortcut = new QShortcut(QKeySequence("F6"), this);
+    connect(clipBoardShortcut, SIGNAL(activated()), this, SLOT(enableClipBoard()));
+    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F7"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
-    QShortcut *quitShortcut = new QShortcut(QKeySequence("F7"), this);
+    QShortcut *quitShortcut = new QShortcut(QKeySequence("F8"), this);
     connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
 
     ui->okButton->setFocus();
@@ -91,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installDrivers()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
+    connect(ui->enableClipboardButton, SIGNAL(clicked()), this, SLOT(enableClipBoard()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
     connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 
@@ -102,6 +110,10 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
     timer->start(1000);
+
+    clipBoard=QApplication::clipboard();
+    connect(clipBoard, SIGNAL(dataChanged()), this, SLOT(clipBoardChanged()));
+    IsclipBoardEnabled = false;
 }
 
 //Ok
@@ -298,7 +310,9 @@ void MainWindow::startMaryServer()
         startMaryServerProcess(MIN_MEMORY_FOR_MARY);
     }
 
-    startNVDA();
+    //Not necessary anymore
+    //Openmary.py now waits enough to connect with server
+    //startNVDA();
 
     //finally if process fails to start we display information
     if (maryServerProcess.pid() == 0)
@@ -336,8 +350,8 @@ void MainWindow::startMaryServerProcess(int memory)
 
         maryServerProcess.start(string3);
         memoryForMaryServer = memory;
-        qWarning() << "Available memory found: " + QString::number(availableMemory) + " Mb";
-        qWarning() << "Mary server tries to start with " + QString::number(memory)+ "MB in Java Virtual Machine";
+        //qWarning() << "Available memory found: " + QString::number(availableMemory) + " Mb";
+        //qWarning() << "Mary server tries to start with " + QString::number(memory)+ "MB in Java Virtual Machine";
 
         //If mary server has started this delay does not affect anything
         //If mary server has not started this delay is necessary to catch the flaw in the next check
@@ -484,4 +498,33 @@ void MainWindow::increaseRate()
 void MainWindow::decreaseRate()
 {
     player->decreaseRate();
+}
+
+void MainWindow::clipBoardChanged()
+{
+    if (IsclipBoardEnabled)
+    {
+        QString text = clipBoard->text();
+        player->speakClipBoardText(text);
+    }
+}
+
+void MainWindow::enableClipBoard()
+{
+    if (IsclipBoardEnabled)
+    {
+        IsclipBoardEnabled = false;
+        ui->enableClipboardButton->setText(tr("F6 - Ενεργοποίηση προχείρου"));
+    }
+    else
+    {
+        ui->enableClipboardButton->setText(tr("F6 - Απενεργοποίηση προχείρου"));
+        IsclipBoardEnabled = true;
+    }
+    player->setClipboardEnabled(IsclipBoardEnabled);
+}
+
+void MainWindow::stopPlayer()
+{
+    player->speakClipBoardText("");
 }

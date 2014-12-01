@@ -10,6 +10,7 @@ import threading
 import string
 import socket
 import sys
+import time
 
 class SynthDriver(SynthDriver):
 
@@ -27,7 +28,22 @@ class SynthDriver(SynthDriver):
             self.port = 57121;
             #self.server_address = ('localhost', 57000)
             #self.socket.bind(self.server_address)
-            self.socket.connect((self.host , self.port))
+            try:
+                self.socket.connect((self.host , self.port))
+            except socket.error, ex:
+                totalDelay = 0.0
+                delay = 0.25
+                while totalDelay < 25.0:
+                    try:
+                        self.socket.connect((self.host, self.port))
+                        #self.initServer()
+                        #self.log(DEBUG_MESSAGE, "Connect succeeded")
+                        return
+                    except socket.error, ex:
+                        time.sleep(delay)
+                        totalDelay = totalDelay + delay
+                #self.log(DEBUG_MESSAGE, "Connect failed\n")
+                raise IOError
             #self.socket.settimeout(2)
 
             #self.socket.listen(1)
@@ -52,8 +68,9 @@ class SynthDriver(SynthDriver):
                 #try:
                 reply = self.socket.recv(4)
                 if len(reply) > 0:
-                    self.myList[0] = int(float(reply))
-                    #log.info("Read Index: %d"%self.myList[0])
+                    if reply != "":
+                        self.myList[0] = int(float(reply))
+                        #log.info("Read Index: %d"%self.myList[0])
 
 
         def quit(self):
@@ -66,7 +83,7 @@ class SynthDriver(SynthDriver):
     class sendText:
         def __init__(self):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            #self.socket.settimeout(None)
+            self.socket.settimeout(None)
             self.socket = socket.create_connection(('localhost', 57116))
 
         def write(self, data):
@@ -78,7 +95,7 @@ class SynthDriver(SynthDriver):
     class sendIndex():
         def __init__(self):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            #self.socket.settimeout(None)
+            self.socket.settimeout(None)
             self.socket = socket.create_connection(('localhost', 57117))
 
         def write(self, data):
@@ -135,9 +152,11 @@ class SynthDriver(SynthDriver):
                 text = text + item
             elif isinstance(item, speech.IndexCommand):
                 self.index=item.index
+                #text = text + "(NVDA Index)" + str(self.index) + "#"
 
         if text:
             self.sendIndex.write("Index:" + str(self.index))
+            text = "(NVDA Index)" + str(self.index) + "#" + text
             self.sendText.write(text)
             #self.index = 0
 

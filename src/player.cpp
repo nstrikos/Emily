@@ -29,21 +29,17 @@ Player::Player()
     connect(&tcpServer4, SIGNAL(newConnection()),
             this, SLOT(acceptConnection4()));
 
-    if (tcpServer.listen(QHostAddress::LocalHost, 57116))
-        qDebug() << tcpServer.serverPort();
+    tcpServer.listen(QHostAddress::LocalHost, 57116);
+    tcpServer2.listen(QHostAddress::LocalHost, 57117);
+    tcpServer3.listen(QHostAddress::LocalHost, 57118);
+    tcpServer4.listen(QHostAddress::LocalHost, 57121);
 
-    if (tcpServer2.listen(QHostAddress::LocalHost, 57117))
-        qDebug() << tcpServer2.serverPort();
-
-    if (tcpServer3.listen(QHostAddress::LocalHost, 57118))
-        qDebug() << tcpServer3.serverPort();
-
-    if (tcpServer4.listen(QHostAddress::LocalHost, 57121))
-        qDebug() << tcpServer4.serverPort();
 
     this->index = "0";
     timer4 = new QTimer();
     connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
+    tcpServerConnection4 = NULL;
+    clipBoardEnabled = false;
 }
 
 Player::~Player()
@@ -77,7 +73,7 @@ void Player::playFile(QString filename, QString text, QString index)
     this->index = index;
     this->spokenText = text;
     fileList << filename;
-    //qDebug() << "Add to playlist" << text;
+    spokenIndex << index;
     addToPlaylist(filename);
     player.play();
 }
@@ -95,10 +91,11 @@ void Player::addToPlaylist(const QString& filename)
 void Player::setVoice(QString voice)
 {
     this->voice = voice;
-    if (voice == emilyVoice)
-        rate = 0.8;
-    else
-        rate = 1.0;
+    //    if (voice == emilyVoice)
+    //        rate = 0.8;
+    //    else
+    rate = 1.0;
+    downloadManager->setVoice(voice);
     player.setPlaybackRate(rate);
 }
 
@@ -122,43 +119,39 @@ void Player::informNVDA()
     if (playlist.currentIndex() == -1)
     {
         playlist.clear();
-
-//        if (!fileList.isEmpty())
-//        {
-//            for (int i = 0; i < fileList.size(); i++)
-//            {
-//                QString file = fileList.at(i);
-//                QFile::remove(file);
-//            }
-//        }
         while (!fileList.isEmpty())
         {
             QString file = fileList.takeFirst();
             QFile::remove(file);
         }
 
+        if (tcpServerConnection4 != NULL)
+        {
+            //if (index != "")
+            //{
+            if (!spokenIndex.isEmpty())
+            {
+                QString index = spokenIndex.takeFirst();
+                if (index != "")
+                {
+                    QByteArray textTemp = index.toUtf8() ;
+                    tcpServerConnection4->write(textTemp);
+                    //qDebug() << "Send index:" << index;
+                }
+            }
+        }
+
         downloadManager->processLists();
-//        QString filename = QDir::tempPath() + "/emily2.txt";
-//        QFile file(filename);
-//        file.open(QIODevice::WriteOnly | QIODevice::Text);
-//        QTextStream out(&file);
-//        out.setCodec(QTextCodec::codecForName("UTF-8"));
-//        out << index.toUtf8();
-//        file.close();
-        //QByteArray textTemp = index.toUtf8() ;
-        //tcpClient.write(textTemp);
-        //qDebug() << textTemp;
-        //bytesToWrite = TotalBytes - (int)tcpClient.write(QByteArray(PayloadSize, '@'));
-        QByteArray textTemp = index.toUtf8() ;
-        tcpServerConnection4->write(textTemp);
+
     }
 }
 
 void Player::acceptConnection()
 {
     tcpServerConnection = tcpServer.nextPendingConnection();
-    connect(textTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress()));
-    textTimer->start(10);
+    //connect(textTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress()));
+    //textTimer->start(10);
+    connect(tcpServerConnection, SIGNAL(readyRead()), this, SLOT(updateServerProgress()));
 }
 
 void Player::acceptConnection2()
@@ -190,15 +183,65 @@ void Player::acceptConnection4()
 void Player::updateServerProgress()
 {
 
+    //This code can handle both formats of openmary.py
+    //Sending self.index at the end of the text
+    //Or in the middle
+
+    const QString nvdaIndex = "(NVDA Index)";
     QString result(tcpServerConnection->readAll());
     if (result != "")
     {
-        qDebug() << result;
-        if (lastReadIndex == "")
+        //qDebug() << "Incoming text:" << result;
+        if (result.contains(nvdaIndex))
         {
-            qDebug() << "Found empty index";
+            bool done = false;
+            while (!done)
+            {
+                int c = result.indexOf(nvdaIndex);
+                QString preLine = result.left(c);
+                if (preLine != "")
+                {
+                    //qDebug() << "Preline:" << preLine;
+                    downloadManager->addToList(preLine, "");
+                }
+                result = result.right(result.size() - c);
+                //qDebug() << "Result:" << result;
+                int n = result.indexOf("#");
+                QString index = result.left(n);
+                index = index.replace(nvdaIndex, "");
+                //qDebug() << "Index:" << index;
+                QString leftover = result.right(result.size() - n - 1);
+                //qDebug() << "Leftover:" << leftover;
+                if (!leftover.contains(nvdaIndex))
+                {
+                    QString line = leftover;
+                    downloadManager->addToList(line, index);
+                    done = true;
+                }
+                else
+                {
+                    //qDebug() << "Leftover:" << leftover;
+                    int d = leftover.indexOf(nvdaIndex);
+                    QString line = leftover.left(d);
+                    downloadManager->addToList(line, index);
+                    //qDebug() << "Line:" << line;
+                    result = leftover.right(leftover.size() - d);
+                    //qDebug() << "New result:" << result;
+                }
+                //qDebug() << "Line:" << line;
+                //downloadManager->addToList(line, index);
+            }
+
         }
-        downloadManager->addToList(result,  lastReadIndex);
+        else
+        {
+            QString line = result;
+            QString index = "";
+            //qDebug() << "Index:" << index;
+            //qDebug() << "Line:" << line;
+            downloadManager->addToList(result,  "");
+        }
+        //downloadManager->addToList(result,  lastReadIndex);
         informNVDA();
     }
 }
@@ -213,6 +256,7 @@ void Player::updateServerProgress2()
         QString index = result.right(result.size() - n);
         index.replace("Index:", "");
         lastReadIndex = index;
+        //qDebug() << "Read index:" << lastReadIndex;
     }
 
 }
@@ -237,22 +281,38 @@ void Player::updateServerProgress3()
 void Player::updateServerProgress4()
 {
 
-//    QString result(tcpServerConnection4->readAll());
-//    if (result != "")
-//    {
-//        if (result.contains("Cancel"))
-//        {
-//            player.stop();
-//            if (!player.playlist()->isEmpty())
-//                player.playlist()->clear();
-//            downloadManager->clearLists();
-//            downloadManager->cancelDownload();
-//        }
-//    }
+    //    QString result(tcpServerConnection4->readAll());
+    //    if (result != "")
+    //    {
+    //        if (result.contains("Cancel"))
+    //        {
+    //            player.stop();
+    //            if (!player.playlist()->isEmpty())
+    //                player.playlist()->clear();
+    //            downloadManager->clearLists();
+    //            downloadManager->cancelDownload();
+    //        }
+    //    }
 }
 
 void Player::updateIndex()
 {
     QByteArray textTemp = index.toUtf8() ;
     tcpServerConnection4->write(textTemp);
+}
+
+void Player::speakClipBoardText(QString text)
+{
+    player.stop();
+    if (!player.playlist()->isEmpty())
+        player.playlist()->clear();
+    downloadManager->clearLists();
+    downloadManager->addToClipboardList(text);
+    informNVDA();
+}
+
+void Player::setClipboardEnabled(bool value)
+{
+    this->clipBoardEnabled = value;
+    downloadManager->setClipBoardEnabled(value);
 }
