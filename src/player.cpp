@@ -39,7 +39,7 @@ Player::Player()
     timer4 = new QTimer();
     connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
     tcpServerConnection4 = NULL;
-    clipBoardEnabled = false;
+    clipBoardEnabled = false;    
 }
 
 Player::~Player()
@@ -52,6 +52,16 @@ Player::~Player()
     {
         delete downloadManager;
         downloadManager = NULL;
+    }
+    while (!playedFiles.isEmpty())
+    {
+        QString file = playedFiles.takeFirst();
+        QFile::remove(file);
+    }
+    while (!createdFiles.isEmpty())
+    {
+        QString file = createdFiles.takeFirst();
+        QFile::remove(file);
     }
 }
 
@@ -73,9 +83,11 @@ void Player::playFile(QString filename, QString text, QString index)
     this->index = index;
     this->spokenText = text;
     fileList << filename;
+    createdFiles << filename;
     spokenIndex << index;
-    addToPlaylist(filename);
-    player.play();
+    //addToPlaylist(filename);
+    //player.play();
+    informNVDA();
 }
 
 void Player::addToPlaylist(const QString& filename)
@@ -114,15 +126,23 @@ void Player::decreaseRate()
 }
 void Player::informNVDA()
 {
-    QString filename;
-
+    //qDebug() << "Inform NVDA";
     if (playlist.currentIndex() == -1)
     {
+        //qDebug() << "Player is stopped";
         playlist.clear();
-        while (!fileList.isEmpty())
+        while (!playedFiles.isEmpty())
         {
-            QString file = fileList.takeFirst();
+            QString file = playedFiles.takeFirst();
+            qDebug() << file;
             QFile::remove(file);
+        }
+        if (!fileList.isEmpty())
+        {
+            QString filename = fileList.takeFirst();
+            playedFiles << filename;
+            addToPlaylist(filename);
+            player.play();
         }
 
         if (tcpServerConnection4 != NULL)
@@ -273,6 +293,9 @@ void Player::updateServerProgress3()
             if (!player.playlist()->isEmpty())
                 player.playlist()->clear();
             downloadManager->clearLists();
+            fileList.clear();
+            indexList.clear();
+            clearFiles();
             //downloadManager->cancelDownload();
         }
     }
@@ -303,10 +326,13 @@ void Player::updateIndex()
 
 void Player::speakClipBoardText(QString text)
 {
+    clearFiles();
     player.stop();
     if (!player.playlist()->isEmpty())
         player.playlist()->clear();
     downloadManager->clearLists();
+    fileList.clear();
+    indexList.clear();
     downloadManager->addToClipboardList(text);
     informNVDA();
 }
@@ -315,4 +341,29 @@ void Player::setClipboardEnabled(bool value)
 {
     this->clipBoardEnabled = value;
     downloadManager->setClipBoardEnabled(value);
+}
+
+void Player::stopPlayer()
+{
+    clearFiles();
+    downloadManager->clearLists();
+    downloadManager->cancelDownload();
+    fileList.clear();
+    indexList.clear();
+    if (!player.playlist()->isEmpty())
+        player.playlist()->clear();
+
+    //We stop player after cleaning all
+    //Because stopping player will insert new media in playlist
+    //How does this affect NVDA?
+    player.stop();
+}
+
+void Player::clearFiles()
+{
+    while (!createdFiles.isEmpty())
+    {
+        QString file = createdFiles.takeFirst();
+        QFile::remove(file);
+    }
 }

@@ -8,6 +8,7 @@
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
 #include <QtMultimedia/QMediaPlayer>
+#include <QTimer>
 
 class DownloadManager : public QObject
 {
@@ -44,6 +45,7 @@ private:
     QString voice;
     bool clipBoardEnabled;
     QString buffer;
+    QTimer *timer;
 
 private slots:
     void httpFinished();

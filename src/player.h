@@ -26,8 +26,10 @@ public:
     void setVoice(QString voice);
     void increaseRate();
     void decreaseRate();
-    void speakClipBoardText(QString text);
+
     void setClipboardEnabled(bool value);
+    void stopPlayer();
+    void clearFiles();
 
 public slots:
     void acceptConnection();
@@ -39,6 +41,7 @@ public slots:
     void acceptConnection4();
     void updateServerProgress4();
     void updateIndex();
+    void speakClipBoardText(QString text);
 
 private slots:
     void playFile(QString filename, QString text, QString index);
@@ -55,6 +58,8 @@ private:
     QStringList textList;
     QStringList indexList;
     QStringList fileList;
+    QStringList playedFiles;
+    QStringList createdFiles;
     QStringList spokenIndex;
     QString voice;
     QString index;

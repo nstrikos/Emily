@@ -12,6 +12,9 @@ DownloadManager::DownloadManager(QStringList textList, QStringList indexList){
     this->textList = textList;
     connect(this, SIGNAL(finished(QString,QString,QString)), this, SLOT(processLists()));
     buffer = "";
+    timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(processLists()));
+    timer->start(50);
 }
 
 DownloadManager::~DownloadManager()
@@ -22,7 +25,8 @@ DownloadManager::~DownloadManager()
 
 void DownloadManager::processLists()
 {
-    if (!downloading && clipBoardEnabled)
+    //if (!downloading && clipBoardEnabled)
+    if (!downloading)
     {
         if (!textList.isEmpty())
         {

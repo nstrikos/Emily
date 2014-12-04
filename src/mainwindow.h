@@ -6,9 +6,11 @@
 #include "copythread.h"
 #include "progressdialog.h"
 #include "constants.h"
+#include <windows.h>
+#include <psapi.h>
 #include <QtWidgets>
 #include <QTimer>
-#include <QClipboard>
+#include "clipboardhandler.h"
 #include <qxtglobalshortcut.h>
 
 namespace Ui {
@@ -29,11 +31,10 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void terminate();
     void restore();
     void startMaryServer();
     void restartMaryServer();
-    void installDrivers();
+    void installAddon();
     void displayMemoryStatus();
     void help();
     void about();
@@ -44,7 +45,6 @@ private slots:
     void installationComplete();
     void increaseRate();
     void decreaseRate();
-    void clipBoardChanged();
     void enableClipBoard();
     void stopPlayer();
 
@@ -53,9 +53,15 @@ private:
     Player *player;
 
     void createActions();
-    void createTrayIcon();
-    void startNVDA();
+    void createTrayAndIcons();
+    void createAndInitializeObjects();
+    void createShortcuts();
+    void createConnections();
     void startMaryServerProcess(int memory);
+    double getAvailableMemory();
+    double getUsedMemory();
+    void delay(int n);
+    //void startNVDA();
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -66,16 +72,12 @@ private:
 
     QString command;
     QProcess maryServerProcess;
-
-    double getAvailableMemory();
-    double getUsedMemory();
-    void delay(int n);
     int memoryForMaryServer;
 
     QTimer *timer;
     ChooseDiskDialog *chooseDiskDialog;
     ProgressDialog *progressDialog;
-    QClipboard *clipBoard;
+    ClipboardHandler *clipboardHandler;
     bool IsclipBoardEnabled;
 };
 

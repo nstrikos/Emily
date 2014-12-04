@@ -1,84 +1,90 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <windows.h>
-#include <psapi.h>
-
-#define MEGABYTE 1048576
-#define MAX_MEMORY_FOR_MARY 2000 // 2000 megabytes
-#define NORMAL_MEMORY_FOR_MARY 1000 //1000 megabytes
-#define MIN_MEMORY_FOR_MARY 500 //500 megabytes
-
-//Ok
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Emily"));
+    ui->okButton->setFocus();
 
     createActions();
-    createTrayIcon();
+    createTrayAndIcons();
+    createAndInitializeObjects();
+    createShortcuts();
+    createConnections();
+    startMaryServer();
+}
 
-    QIcon icon = QIcon(":/new/prefix1/resources/flag.png");
-    trayIcon->setIcon(icon);
-    setWindowIcon(icon);
-    trayIcon->setToolTip(tr("Emily"));
-    trayIcon->show();
+MainWindow::~MainWindow()
+{
+    if (chooseDiskDialog != NULL)
+        delete chooseDiskDialog;
+    if (progressDialog != NULL)
+        delete progressDialog;
+    delete clipboardHandler;
+    delete timer;
+    delete player;
+    delete trayIcon;
+    delete trayIconMenu;
+    delete minimizeAction;
+    delete quitAction;
+    delete restoreAction;
+    maryServerProcess.close();
+    delete ui;
+}
 
-    setWindowTitle(tr("Emily"));
-    //resize(800, 500);
+void MainWindow::createAndInitializeObjects()
+{
     chooseDiskDialog = NULL;
     progressDialog = NULL;
 
-    QxtGlobalShortcut *globalRestoreShortcut = new QxtGlobalShortcut(this);
+    timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
+    timer->start(1000);
+    player = new Player();
 
+    //Create clipboard handler and connect to player slot
+    clipboardHandler = new ClipboardHandler();
+    connect(clipboardHandler, SIGNAL(newClipBoardText(QString)), player, SLOT(speakClipBoardText(QString)));
+    IsclipBoardEnabled = false;
+}
+
+void MainWindow::createShortcuts()
+{
+    QxtGlobalShortcut *globalRestoreShortcut = new QxtGlobalShortcut(this);
     globalRestoreShortcut->setShortcut(QKeySequence("Ctrl+Alt+e"));
     connect(globalRestoreShortcut, SIGNAL(activated()), this, SLOT(restore())) ;
-
     QxtGlobalShortcut *globalRestartShortcut = new QxtGlobalShortcut(this);
-
     globalRestartShortcut->setShortcut(QKeySequence("Ctrl+Alt+r"));
     connect(globalRestartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer())) ;
-
     QxtGlobalShortcut *globalGoogleGreekVoice = new QxtGlobalShortcut(this);
-
     globalGoogleGreekVoice->setShortcut(QKeySequence("Ctrl+Alt+1"));
     connect(globalGoogleGreekVoice, SIGNAL(activated()), this, SLOT(setGoogleGreekVoice())) ;
-
-
     QxtGlobalShortcut *globalEnglishVoice = new QxtGlobalShortcut(this);
-
     globalEnglishVoice->setShortcut(QKeySequence("Ctrl+Alt+2"));
     connect(globalEnglishVoice, SIGNAL(activated()), this, SLOT(setEnglishVoice())) ;
-
     QxtGlobalShortcut *globalEmilyVoice = new QxtGlobalShortcut(this);
-
     globalEmilyVoice->setShortcut(QKeySequence("Ctrl+Alt+3"));
     connect(globalEmilyVoice, SIGNAL(activated()), this, SLOT(setEmilyVoice())) ;
-
     QxtGlobalShortcut *globalIncreaseRate = new QxtGlobalShortcut(this);
-
     globalIncreaseRate->setShortcut(QKeySequence("Ctrl+Alt++"));
     connect(globalIncreaseRate, SIGNAL(activated()), this, SLOT(increaseRate())) ;
-
     QxtGlobalShortcut *globalDecreaseRate = new QxtGlobalShortcut(this);
-
     globalDecreaseRate->setShortcut(QKeySequence("Ctrl+Alt+-"));
     connect(globalDecreaseRate, SIGNAL(activated()), this, SLOT(decreaseRate())) ;
-
-
     QxtGlobalShortcut *globalPlayerStop = new QxtGlobalShortcut(this);
     globalPlayerStop->setShortcut(QKeySequence("Ctrl+Alt+s"));
     connect(globalPlayerStop, SIGNAL(activated()), this, SLOT(stopPlayer())) ;
-
     QShortcut *okShortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
     connect(helpShortcut, SIGNAL(activated()), this, SLOT(help()));
     QShortcut *restartShortcut = new QShortcut(QKeySequence("F2"), this);
     connect(restartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer()));
-    QShortcut *installDriversShortcut = new QShortcut(QKeySequence("F3"), this);
-    connect(installDriversShortcut, SIGNAL(activated()), this, SLOT(installDrivers()));
+    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F3"), this);
+    connect(installAddonShortcut, SIGNAL(activated()), this, SLOT(installAddon()));
     QShortcut *memoryShortcut = new QShortcut(QKeySequence("F4"), this);
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
     QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F5"), this);
@@ -89,58 +95,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
     QShortcut *quitShortcut = new QShortcut(QKeySequence("F8"), this);
     connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
+}
 
-    ui->okButton->setFocus();
-
+void MainWindow::createConnections()
+{
     connect(ui->okButton, SIGNAL(clicked()), this, SLOT(hide()));
     connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(help()));
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(startMaryServer()));
-    connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installDrivers()));
+    connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
     connect(ui->enableClipboardButton, SIGNAL(clicked()), this, SLOT(enableClipBoard()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
     connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
-
-    startMaryServer();
-    //player = new Player(this);
-    player = new Player();
-    //player->hide();
-
-    timer = new QTimer();
-    connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
-    timer->start(1000);
-
-    clipBoard=QApplication::clipboard();
-    connect(clipBoard, SIGNAL(dataChanged()), this, SLOT(clipBoardChanged()));
-    IsclipBoardEnabled = false;
 }
 
-//Ok
-MainWindow::~MainWindow()
-{
-    if (timer != NULL)
-    {
-        delete timer;
-    }
-
-    if (chooseDiskDialog != NULL)
-    {
-        delete chooseDiskDialog;
-    }
-    if (progressDialog != NULL)
-    {
-        delete progressDialog;
-    }
-    maryServerProcess.close();
-    if ( player != NULL)
-    {
-        delete player;
-    }
-    delete ui;
-}
-
-//Ok
 void MainWindow::setVisible(bool visible)
 {
     minimizeAction->setEnabled(visible);
@@ -148,7 +117,6 @@ void MainWindow::setVisible(bool visible)
     QMainWindow::setVisible(visible);
 }
 
-//Ok
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (trayIcon->isVisible())
@@ -158,7 +126,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
-//Ok
 void MainWindow::createActions()
 {
     minimizeAction = new QAction(tr("Ε&λαχιστοποίηση"), this);
@@ -171,27 +138,24 @@ void MainWindow::createActions()
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
-//Ok
-void MainWindow::createTrayIcon()
+void MainWindow::createTrayAndIcons()
 {
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(minimizeAction);
     trayIconMenu->addAction(restoreAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
-
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
+
+    QIcon icon = QIcon(":/new/prefix1/resources/flag.png");
+    trayIcon->setIcon(icon);
+    setWindowIcon(icon);
+    trayIcon->setToolTip(tr("Emily"));
+    trayIcon->show();
 }
 
-//Ok
-void MainWindow::terminate()
-{
-    maryServerProcess.kill();
-    qApp->quit();
-}
 
-//Ok
 void MainWindow::restore()
 {
     this->showNormal();
@@ -201,7 +165,6 @@ void MainWindow::restore()
     ui->okButton->setFocus();
 }
 
-//Ok
 double MainWindow::getAvailableMemory()
 {
     MEMORYSTATUSEX memory_status;
@@ -235,48 +198,7 @@ double MainWindow::getUsedMemory()
 
 }
 
-//Ok
-void MainWindow::startNVDA()
-{
-    INPUT ip;
-    ip.type = INPUT_KEYBOARD;
-    ip.ki.wScan = 0;
-    ip.ki.time = 0;
-    ip.ki.dwExtraInfo = 0;
 
-
-    // Press the "Ctrl" key
-    ip.ki.wVk = VK_CONTROL;
-    ip.ki.dwFlags = 0; // 0 for key press
-    SendInput(1, &ip, sizeof(INPUT));
-
-    // Press the "ALT" key
-    ip.ki.wVk = VK_MENU;
-    ip.ki.dwFlags = 0; // 0 for key press
-    SendInput(1, &ip, sizeof(INPUT));
-
-    // Press the "N" key
-    ip.ki.wVk = 'N';
-    ip.ki.dwFlags = 0; // 0 for key press
-    SendInput(1, &ip, sizeof(INPUT));
-
-    // Release the "N" key
-    ip.ki.wVk = 'N';
-    ip.ki.dwFlags = KEYEVENTF_KEYUP;
-    SendInput(1, &ip, sizeof(INPUT));
-
-    // Release the "ALT" key
-    ip.ki.wVk = VK_MENU;
-    ip.ki.dwFlags = KEYEVENTF_KEYUP;
-    SendInput(1, &ip, sizeof(INPUT));
-
-    // Release the "Ctrl" key
-    ip.ki.wVk = VK_CONTROL;
-    ip.ki.dwFlags = KEYEVENTF_KEYUP;
-    SendInput(1, &ip, sizeof(INPUT));
-}
-
-//Ok
 void MainWindow::startMaryServer()
 {
     double availableMemory;
@@ -286,29 +208,24 @@ void MainWindow::startMaryServer()
 
     availableMemory = getAvailableMemory();
 
-    //    //if there is enough memory available we allocate it to mary server
-    //    //otherwise we choose the default allocation
+    //if there is enough memory available we allocate it to mary server
+    //otherwise we choose the default allocation
     if (availableMemory > MAX_MEMORY_FOR_MARY)
-    {
         //try to allocate 2Gb for mary server
         startMaryServerProcess(MAX_MEMORY_FOR_MARY);
-    }
 
     //if process has not started try with 1gb
     if  (maryServerProcess.pid() == 0)
     {
         if (availableMemory > NORMAL_MEMORY_FOR_MARY)
-        {
             //try to allocate 1Gb for mary server
             startMaryServerProcess(NORMAL_MEMORY_FOR_MARY);
-        }
+
     }
 
     if  (maryServerProcess.pid() == 0)
-    {
         //try to allocate 500mb for mary server
         startMaryServerProcess(MIN_MEMORY_FOR_MARY);
-    }
 
     //Not necessary anymore
     //Openmary.py now waits enough to connect with server
@@ -328,16 +245,11 @@ void MainWindow::startMaryServer()
 void MainWindow::restartMaryServer()
 {
     if (maryServerProcess.pid() == NULL)
-    {
         startMaryServer();
-    }
 }
 
 void MainWindow::startMaryServerProcess(int memory)
 {
-    double availableMemory;
-
-    availableMemory = getAvailableMemory();
 
     if  (maryServerProcess.pid() == 0)
     {
@@ -359,7 +271,6 @@ void MainWindow::startMaryServerProcess(int memory)
     }
 }
 
-//Ok
 void MainWindow::delay(int n)
 {
     QTime dieTime= QTime::currentTime().addSecs(n);
@@ -367,15 +278,14 @@ void MainWindow::delay(int n)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
-//Ok
-void MainWindow::installDrivers()
+void MainWindow::installAddon()
 {
     QString file1, file2;
 
     QString dir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 
-    file1 = dir + "\\AppData\\Roaming\\nvda\\synthDrivers\\openmary.py";
-    file2 = dir + "\\AppData\\Roaming\\nvda\\synthDrivers\\openmary.pyo";
+    file1 = dir + "\\AppData\\Roaming\\nvda\\addons\\Emily\\synthDrivers\\openmary.py";
+    file2 = dir + "\\AppData\\Roaming\\nvda\\addons\\Emily\\synthDrivers\\openmary.pyo";
 
     QFile::remove(file2);
 
@@ -444,24 +354,24 @@ void MainWindow::installDiskDrive()
                     progressDialog = new ProgressDialog(this);
 
                 //Set up thread
-                QThread* thread = new QThread;
+                QThread* copyThread = new QThread;
                 Copy* copy = new Copy(drivePath);
                 int maxFiles = copy->countMaxFiles();
-                copy->moveToThread(thread);
-                connect(copy, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
-                connect(thread, SIGNAL(started()), copy, SLOT(process()));
-                connect(copy, SIGNAL(finished()), thread, SLOT(quit()));
+                copy->moveToThread(copyThread);
+                connect(copyThread, SIGNAL(started()), copy, SLOT(process()));
+                connect(copy, SIGNAL(finished()), copyThread, SLOT(quit()));
+
+                //We schedule the objects for deletion, no leak memory here
                 connect(copy, SIGNAL(finished()), copy, SLOT(deleteLater()));
-                connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+                connect(copyThread, SIGNAL(finished()), copyThread, SLOT(deleteLater()));
                 connect(copy, SIGNAL(increase()), progressDialog, SLOT(increase()));
                 connect(copy, SIGNAL(finished()), this, SLOT(installationComplete()));
 
                 //Activate progress dialog
-                //progressDialog->setWindowTitle("0% αντιγράφτηκε");
                 progressDialog->resetProgressBar(maxFiles);
                 progressDialog->show();
                 progressDialog->raise();
-                thread->start();
+                copyThread->start();
             }
         }
     }
@@ -500,15 +410,6 @@ void MainWindow::decreaseRate()
     player->decreaseRate();
 }
 
-void MainWindow::clipBoardChanged()
-{
-    if (IsclipBoardEnabled)
-    {
-        QString text = clipBoard->text();
-        player->speakClipBoardText(text);
-    }
-}
-
 void MainWindow::enableClipBoard()
 {
     if (IsclipBoardEnabled)
@@ -521,10 +422,51 @@ void MainWindow::enableClipBoard()
         ui->enableClipboardButton->setText(tr("F6 - Απενεργοποίηση προχείρου"));
         IsclipBoardEnabled = true;
     }
-    player->setClipboardEnabled(IsclipBoardEnabled);
+    clipboardHandler->setEnabled(IsclipBoardEnabled);
 }
 
 void MainWindow::stopPlayer()
 {
-    player->speakClipBoardText("");
+    player->stopPlayer();
 }
+
+//void MainWindow::startNVDA()
+//{
+//    This is not necessary because NVDA addon waits for the server to come up
+//    INPUT ip;
+//    ip.type = INPUT_KEYBOARD;
+//    ip.ki.wScan = 0;
+//    ip.ki.time = 0;
+//    ip.ki.dwExtraInfo = 0;
+
+
+//    // Press the "Ctrl" key
+//    ip.ki.wVk = VK_CONTROL;
+//    ip.ki.dwFlags = 0; // 0 for key press
+//    SendInput(1, &ip, sizeof(INPUT));
+
+//    // Press the "ALT" key
+//    ip.ki.wVk = VK_MENU;
+//    ip.ki.dwFlags = 0; // 0 for key press
+//    SendInput(1, &ip, sizeof(INPUT));
+
+//    // Press the "N" key
+//    ip.ki.wVk = 'N';
+//    ip.ki.dwFlags = 0; // 0 for key press
+//    SendInput(1, &ip, sizeof(INPUT));
+
+//    // Release the "N" key
+//    ip.ki.wVk = 'N';
+//    ip.ki.dwFlags = KEYEVENTF_KEYUP;
+//    SendInput(1, &ip, sizeof(INPUT));
+
+//    // Release the "ALT" key
+//    ip.ki.wVk = VK_MENU;
+//    ip.ki.dwFlags = KEYEVENTF_KEYUP;
+//    SendInput(1, &ip, sizeof(INPUT));
+
+//    // Release the "Ctrl" key
+//    ip.ki.wVk = VK_CONTROL;
+//    ip.ki.dwFlags = KEYEVENTF_KEYUP;
+//    SendInput(1, &ip, sizeof(INPUT));
+//}

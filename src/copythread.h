@@ -17,7 +17,6 @@ public slots:
 
 signals:
     void finished();
-    void error(QString err);
     void increase();
 
 private:
