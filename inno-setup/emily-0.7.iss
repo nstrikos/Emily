@@ -20,7 +20,7 @@ DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=C:\Emily-build-directory\licenses\gpl-3.0.txt
-OutputDir=C:\Users\Nick\Desktop\Emily\inno-setup
+OutputDir=C:\Users\Nikos\Desktop\Emily\inno-setup
 SetupIconFile=C:\Emily-build-directory\resources\emily.ico
 OutputBaseFilename=emily
 Compression=lzma
@@ -32,21 +32,17 @@ Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 
 [Files]
 Source: "C:\Emily-build-directory\emily.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\icudt52.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\icuin52.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\icuuc52.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Emily-build-directory\icudt53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Emily-build-directory\icuin53.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Emily-build-directory\icuuc53.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Multimedia.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\Qt5MultimediaWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\Qt5OpenGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\QxtCore.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Emily-build-directory\QxtWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\marytts\*"; DestDir: "{app}\marytts\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs createallsubdirs
