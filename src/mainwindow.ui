@@ -147,7 +147,7 @@
      <x>0</x>
      <y>0</y>
      <width>360</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
@@ -169,6 +169,7 @@
   <tabstop>installDriversButton</tabstop>
   <tabstop>memoryButton</tabstop>
   <tabstop>installDiskButton</tabstop>
+  <tabstop>enableClipboardButton</tabstop>
   <tabstop>aboutButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

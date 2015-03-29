@@ -48,35 +48,12 @@ void MainWindow::createAndInitializeObjects()
     //Create clipboard handler and connect to player slot
     clipboardHandler = new ClipboardHandler();
     connect(clipboardHandler, SIGNAL(newClipBoardText(QString)), player, SLOT(speakClipBoardText(QString)));
+    connect(clipboardHandler, SIGNAL(cancel(QString)), player, SLOT(speakClipBoardText(QString)));
     IsclipBoardEnabled = false;
 }
 
 void MainWindow::createShortcuts()
 {
-    QxtGlobalShortcut *globalRestoreShortcut = new QxtGlobalShortcut(this);
-    globalRestoreShortcut->setShortcut(QKeySequence("Ctrl+Alt+e"));
-    connect(globalRestoreShortcut, SIGNAL(activated()), this, SLOT(restore())) ;
-    QxtGlobalShortcut *globalRestartShortcut = new QxtGlobalShortcut(this);
-    globalRestartShortcut->setShortcut(QKeySequence("Ctrl+Alt+r"));
-    connect(globalRestartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer())) ;
-    QxtGlobalShortcut *globalGoogleGreekVoice = new QxtGlobalShortcut(this);
-    globalGoogleGreekVoice->setShortcut(QKeySequence("Ctrl+Alt+1"));
-    connect(globalGoogleGreekVoice, SIGNAL(activated()), this, SLOT(setGoogleGreekVoice())) ;
-    QxtGlobalShortcut *globalEnglishVoice = new QxtGlobalShortcut(this);
-    globalEnglishVoice->setShortcut(QKeySequence("Ctrl+Alt+2"));
-    connect(globalEnglishVoice, SIGNAL(activated()), this, SLOT(setEnglishVoice())) ;
-    QxtGlobalShortcut *globalEmilyVoice = new QxtGlobalShortcut(this);
-    globalEmilyVoice->setShortcut(QKeySequence("Ctrl+Alt+3"));
-    connect(globalEmilyVoice, SIGNAL(activated()), this, SLOT(setEmilyVoice())) ;
-    QxtGlobalShortcut *globalIncreaseRate = new QxtGlobalShortcut(this);
-    globalIncreaseRate->setShortcut(QKeySequence("Ctrl+Alt++"));
-    connect(globalIncreaseRate, SIGNAL(activated()), this, SLOT(increaseRate())) ;
-    QxtGlobalShortcut *globalDecreaseRate = new QxtGlobalShortcut(this);
-    globalDecreaseRate->setShortcut(QKeySequence("Ctrl+Alt+-"));
-    connect(globalDecreaseRate, SIGNAL(activated()), this, SLOT(decreaseRate())) ;
-    QxtGlobalShortcut *globalPlayerStop = new QxtGlobalShortcut(this);
-    globalPlayerStop->setShortcut(QKeySequence("Ctrl+Alt+s"));
-    connect(globalPlayerStop, SIGNAL(activated()), this, SLOT(stopPlayer())) ;
     QShortcut *okShortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
@@ -176,25 +153,25 @@ double MainWindow::getAvailableMemory()
 
 double MainWindow::getUsedMemory()
 {
-    HANDLE hProcess;
-    PROCESS_MEMORY_COUNTERS pmc;
+//    HANDLE hProcess;
+//    PROCESS_MEMORY_COUNTERS pmc;
 
 
-    if (maryServerProcess.pid() != 0)
-    {
-        hProcess = maryServerProcess.pid()->hProcess;
-        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
-        {
-            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
-            return (double) pmc.WorkingSetSize/MEGABYTE;
-            //CloseHandle( hProcess );
-        }
-    }
-    else
-        qWarning() << "Null process";
+//    if (maryServerProcess.pid() != 0)
+//    {
+//        hProcess = maryServerProcess.pid()->hProcess;
+//        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
+//        {
+//            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
+//            return (double) pmc.WorkingSetSize/MEGABYTE;
+//            //CloseHandle( hProcess );
+//        }
+//    }
+//    else
+//        qWarning() << "Null process";
 
-    //error if control reaches here
-    return -1;
+//    //error if control reaches here
+//    return -1;
 
 }
 

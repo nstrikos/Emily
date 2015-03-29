@@ -35,17 +35,3 @@ FORMS    += mainwindow.ui \
     progressdialog.ui
 
 RESOURCES = emily.qrc
-
-
-win32:CONFIG(release, debug|release): LIBS += -LC:/Qt/libqxt-qt5.2/lib/ -lqxtcore -lpsapi
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Qt/libqxt-qt5.2/lib/ -lqxtcore -lpsapi
-win32:CONFIG(release, debug|release): LIBS += -LC:/Qt/libqxt-qt5.2/lib/ -lqxtwidgets -lpsapi
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Qt/libqxt-qt5.2/lib/ -lqxtwidgets -lpsapi
-
-INCLUDEPATH += C:/Qt/libqxt-qt5.2/src/core
-DEPENDPATH += C:/Qt/libqxt-qt5.2/src/core
-INCLUDEPATH += C:/Qt/libqxt-qt5.2/src/widgets
-DEPENDPATH += C:/Qt/libqxt-qt5.2/src/widgets
-
-CONFIG  += qxt
-QXT     += core gui

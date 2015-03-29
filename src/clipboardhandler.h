@@ -19,9 +19,11 @@ private slots:
 private:
     QClipboard *clipBoard;
     bool IsEnabled;
+    QString currentText;
 
 signals:
     void newClipBoardText(QString text);
+    void cancel(QString text);
 };
 
 #endif // CLIPBOARD_H

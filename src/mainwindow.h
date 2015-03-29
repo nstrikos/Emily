@@ -11,7 +11,6 @@
 #include <QtWidgets>
 #include <QTimer>
 #include "clipboardhandler.h"
-#include <qxtglobalshortcut.h>
 
 namespace Ui {
 class MainWindow;

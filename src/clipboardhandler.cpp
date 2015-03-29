@@ -5,6 +5,7 @@ ClipboardHandler::ClipboardHandler()
     clipBoard = QApplication::clipboard();
     connect(clipBoard, SIGNAL(dataChanged()), this, SLOT(clipBoardChanged()));
     IsEnabled = false;
+    currentText = "";
 }
 
 ClipboardHandler::~ClipboardHandler()
@@ -20,16 +21,20 @@ void ClipboardHandler::clipBoardChanged()
     if (IsEnabled)
     {
         QString text = clipBoard->text();
-        emit newClipBoardText(text);
+        if (text != currentText)
+        {
+            currentText = text;
+            emit newClipBoardText(text);
+        }
+        else
+        {
+            currentText = "";
+            emit cancel("");
+        }
     }
 }
 
 void ClipboardHandler::setEnabled(bool enabled)
 {
     this->IsEnabled = enabled;
-}
-
-void ClipboardHandler::clear()
-{
-    clipBoard->clear();
 }
