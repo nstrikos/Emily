@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     choosediskdialog.cpp \
     copythread.cpp \
     progressdialog.cpp \
-    clipboardhandler.cpp
+    clipboardhandler.cpp \
+    hotkeythread.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     copythread.h \
     progressdialog.h \
     constants.h \
-    clipboardhandler.h
+    clipboardhandler.h \
+    hotkeythread.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \

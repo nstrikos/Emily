@@ -32,6 +32,7 @@ MainWindow::~MainWindow()
     delete quitAction;
     delete restoreAction;
     maryServerProcess.close();
+    hotkeyThread.terminate();
     delete ui;
 }
 
@@ -50,6 +51,11 @@ void MainWindow::createAndInitializeObjects()
     connect(clipboardHandler, SIGNAL(newClipBoardText(QString)), player, SLOT(speakClipBoardText(QString)));
     connect(clipboardHandler, SIGNAL(cancel(QString)), player, SLOT(speakClipBoardText(QString)));
     IsclipBoardEnabled = false;
+    hotkeyThread.start();
+    connect(&hotkeyThread, SIGNAL(restoreWindow()), this, SLOT(restore()));
+    connect(&hotkeyThread, SIGNAL(setGoogleGreekVoice()), this, SLOT(setGoogleGreekVoice()));
+    connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
+    connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
 }
 
 void MainWindow::createShortcuts()

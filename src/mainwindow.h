@@ -11,6 +11,7 @@
 #include <QtWidgets>
 #include <QTimer>
 #include "clipboardhandler.h"
+#include "hotkeythread.h"
 
 namespace Ui {
 class MainWindow;
@@ -78,6 +79,7 @@ private:
     ProgressDialog *progressDialog;
     ClipboardHandler *clipboardHandler;
     bool IsclipBoardEnabled;
+    HotkeyThread hotkeyThread;
 };
 
 #endif // MAINWINDOW_H
