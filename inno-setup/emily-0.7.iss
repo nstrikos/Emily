@@ -44,10 +44,10 @@ Source: "C:\Emily-build-directory\Qt5Multimedia.dll"; DestDir: "{app}"; Flags: i
 Source: "C:\Emily-build-directory\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Emily-build-directory\marytts\*"; DestDir: "{app}\marytts\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Emily-build-directory\platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "C:\Emily-build-directory\platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\licenses\*"; DestDir: "{app}\licenses\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Emily-build-directory\mediaservice\*"; DestDir: "{app}\mediaservice\"; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "C:\Emily-build-directory\mediaservice\*"; DestDir: "{app}\mediaservice\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\resources\openmary.py"; DestDir: "{userappdata}\nvda\addons\Emily\synthDrivers\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Emily-build-directory\resources\manifest.ini"; DestDir: "{userappdata}\nvda\addons\Emily\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
