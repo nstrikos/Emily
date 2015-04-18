@@ -50,6 +50,7 @@ void MainWindow::createAndInitializeObjects()
     connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
     connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
+    connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
 }
 
 void MainWindow::createShortcuts()

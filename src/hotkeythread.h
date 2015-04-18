@@ -25,6 +25,7 @@ signals:
      void setEnglishVoice();
      void restoreWindow();
      void speakHighlightedText(QString);
+     void stop();
  };
 
 #endif // HOTKEYTHREAD_H

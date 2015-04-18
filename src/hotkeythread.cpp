@@ -26,6 +26,7 @@ void HotkeyThread::run()
     RegisterHotKey(NULL,3,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x33); //Ctrl + Alt + 3
     RegisterHotKey(NULL,4,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x45); //Ctrl + Alt + E
     RegisterHotKey(NULL,5, MOD_CONTROL | MOD_NOREPEAT,0x70); //Ctrl + F1
+    RegisterHotKey(NULL,6, MOD_CONTROL | MOD_NOREPEAT,0x71); //Ctrl + F2
 
     QApplication::processEvents();
 
@@ -47,6 +48,8 @@ void HotkeyThread::run()
                 QString text = clipBoard->text();
                 emit speakHighlightedText(text);
             }
+            else if (msg.wParam == 6)
+                emit stop();
         }
     }
 }
