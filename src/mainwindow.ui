@@ -102,18 +102,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="enableClipboardButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F6 - Ενεργοποίηση προχείρου</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="aboutButton">
         <property name="font">
          <font>
@@ -121,7 +109,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F7 - Σχετικά</string>
+         <string>F6 - Σχετικά</string>
         </property>
        </widget>
       </item>
@@ -133,7 +121,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F8 - Έξοδος</string>
+         <string>F7 - Έξοδος</string>
         </property>
        </widget>
       </item>
@@ -169,7 +157,6 @@
   <tabstop>installDriversButton</tabstop>
   <tabstop>memoryButton</tabstop>
   <tabstop>installDiskButton</tabstop>
-  <tabstop>enableClipboardButton</tabstop>
   <tabstop>aboutButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

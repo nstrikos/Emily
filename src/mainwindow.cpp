@@ -23,7 +23,6 @@ MainWindow::~MainWindow()
         delete chooseDiskDialog;
     if (progressDialog != NULL)
         delete progressDialog;
-    delete clipboardHandler;
     delete timer;
     delete player;
     delete trayIcon;
@@ -45,17 +44,12 @@ void MainWindow::createAndInitializeObjects()
     connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
     timer->start(1000);
     player = new Player();
-
-    //Create clipboard handler and connect to player slot
-    clipboardHandler = new ClipboardHandler();
-    connect(clipboardHandler, SIGNAL(newClipBoardText(QString)), player, SLOT(speakClipBoardText(QString)));
-    connect(clipboardHandler, SIGNAL(cancel(QString)), player, SLOT(speakClipBoardText(QString)));
-    IsclipBoardEnabled = false;
     hotkeyThread.start();
     connect(&hotkeyThread, SIGNAL(restoreWindow()), this, SLOT(restore()));
     connect(&hotkeyThread, SIGNAL(setGoogleGreekVoice()), this, SLOT(setGoogleGreekVoice()));
     connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
+    connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
 }
 
 void MainWindow::createShortcuts()
@@ -72,11 +66,9 @@ void MainWindow::createShortcuts()
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
     QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F5"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *clipBoardShortcut = new QShortcut(QKeySequence("F6"), this);
-    connect(clipBoardShortcut, SIGNAL(activated()), this, SLOT(enableClipBoard()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F7"), this);
+    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F6"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
-    QShortcut *quitShortcut = new QShortcut(QKeySequence("F8"), this);
+    QShortcut *quitShortcut = new QShortcut(QKeySequence("F7"), this);
     connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
 }
 
@@ -88,7 +80,6 @@ void MainWindow::createConnections()
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
-    connect(ui->enableClipboardButton, SIGNAL(clicked()), this, SLOT(enableClipBoard()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
     connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
@@ -391,21 +382,6 @@ void MainWindow::increaseRate()
 void MainWindow::decreaseRate()
 {
     player->decreaseRate();
-}
-
-void MainWindow::enableClipBoard()
-{
-    if (IsclipBoardEnabled)
-    {
-        IsclipBoardEnabled = false;
-        ui->enableClipboardButton->setText(tr("F6 - Ενεργοποίηση προχείρου"));
-    }
-    else
-    {
-        ui->enableClipboardButton->setText(tr("F6 - Απενεργοποίηση προχείρου"));
-        IsclipBoardEnabled = true;
-    }
-    clipboardHandler->setEnabled(IsclipBoardEnabled);
 }
 
 void MainWindow::stopPlayer()

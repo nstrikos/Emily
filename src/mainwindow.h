@@ -10,7 +10,6 @@
 #include <psapi.h>
 #include <QtWidgets>
 #include <QTimer>
-#include "clipboardhandler.h"
 #include "hotkeythread.h"
 
 namespace Ui {
@@ -45,7 +44,6 @@ private slots:
     void installationComplete();
     void increaseRate();
     void decreaseRate();
-    void enableClipBoard();
     void stopPlayer();
 
 private:
@@ -77,8 +75,6 @@ private:
     QTimer *timer;
     ChooseDiskDialog *chooseDiskDialog;
     ProgressDialog *progressDialog;
-    ClipboardHandler *clipboardHandler;
-    bool IsclipBoardEnabled;
     HotkeyThread hotkeyThread;
 };
 

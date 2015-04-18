@@ -39,7 +39,7 @@ Player::Player()
     timer4 = new QTimer();
     connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
     tcpServerConnection4 = NULL;
-    clipBoardEnabled = false;    
+    clipBoardEnabled = false;
 }
 
 Player::~Player()

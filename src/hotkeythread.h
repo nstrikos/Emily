@@ -2,6 +2,8 @@
 #define HOTKEYTHREAD_H
 
 #include <QThread>
+#include <QtWidgets>
+#include <QClipboard>
 
 class HotkeyThread : public QThread
  {
@@ -11,14 +13,18 @@ public:
     ~HotkeyThread();
 
 
- protected:
-     void run();
+protected:
+    void run();
+
+private:
+    QClipboard *clipBoard;
 
 signals:
      void setEmilyVoice();
      void setGoogleGreekVoice();
      void setEnglishVoice();
      void restoreWindow();
+     void speakHighlightedText(QString);
  };
 
 #endif // HOTKEYTHREAD_H

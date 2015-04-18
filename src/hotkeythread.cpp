@@ -8,20 +8,24 @@
 
 HotkeyThread::HotkeyThread()
 {
-
+    clipBoard = QApplication::clipboard();
 }
 
 HotkeyThread::~HotkeyThread()
 {
-
+    if (clipBoard != NULL)
+    {
+        clipBoard = NULL;
+    }
 }
 
 void HotkeyThread::run()
 {
-    RegisterHotKey(NULL,1,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x31);
-    RegisterHotKey(NULL,2,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x32);
-    RegisterHotKey(NULL,3,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x33);
-    RegisterHotKey(NULL,4,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x45);
+    RegisterHotKey(NULL,1,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x31); //Ctrl + Alt + 1
+    RegisterHotKey(NULL,2,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x32); //Ctrl + Alt + 2
+    RegisterHotKey(NULL,3,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x33); //Ctrl + Alt + 3
+    RegisterHotKey(NULL,4,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x45); //Ctrl + Alt + E
+    RegisterHotKey(NULL,5, MOD_CONTROL | MOD_NOREPEAT,0x70); //Ctrl + F1
 
     QApplication::processEvents();
 
@@ -38,6 +42,11 @@ void HotkeyThread::run()
                 emit setEmilyVoice();
             else if (msg.wParam == 4)
                 emit restoreWindow();
+            else if (msg.wParam == 5)
+            {
+                QString text = clipBoard->text();
+                emit speakHighlightedText(text);
+            }
         }
     }
 }
