@@ -59,6 +59,9 @@ private:
     double getAvailableMemory();
     double getUsedMemory();
     void delay(int n);
+    void writeSettings();
+    void readSettings();
+    void setVoice(QString voice);
     //void startNVDA();
 
     QSystemTrayIcon *trayIcon;
@@ -76,6 +79,7 @@ private:
     ChooseDiskDialog *chooseDiskDialog;
     ProgressDialog *progressDialog;
     HotkeyThread hotkeyThread;
+    QString voice;
 };
 
 #endif // MAINWINDOW_H

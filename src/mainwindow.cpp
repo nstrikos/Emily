@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createShortcuts();
     createConnections();
     startMaryServer();
+    readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -32,6 +33,7 @@ MainWindow::~MainWindow()
     delete restoreAction;
     maryServerProcess.close();
     hotkeyThread.terminate();
+    writeSettings();
     delete ui;
 }
 
@@ -151,25 +153,25 @@ double MainWindow::getAvailableMemory()
 
 double MainWindow::getUsedMemory()
 {
-//    HANDLE hProcess;
-//    PROCESS_MEMORY_COUNTERS pmc;
+    //    HANDLE hProcess;
+    //    PROCESS_MEMORY_COUNTERS pmc;
 
 
-//    if (maryServerProcess.pid() != 0)
-//    {
-//        hProcess = maryServerProcess.pid()->hProcess;
-//        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
-//        {
-//            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
-//            return (double) pmc.WorkingSetSize/MEGABYTE;
-//            //CloseHandle( hProcess );
-//        }
-//    }
-//    else
-//        qWarning() << "Null process";
+    //    if (maryServerProcess.pid() != 0)
+    //    {
+    //        hProcess = maryServerProcess.pid()->hProcess;
+    //        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
+    //        {
+    //            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
+    //            return (double) pmc.WorkingSetSize/MEGABYTE;
+    //            //CloseHandle( hProcess );
+    //        }
+    //    }
+    //    else
+    //        qWarning() << "Null process";
 
-//    //error if control reaches here
-//    return -1;
+    //    //error if control reaches here
+    //    return -1;
 
 }
 
@@ -295,16 +297,19 @@ void MainWindow::about()
 
 void MainWindow::setEnglishVoice()
 {
+    this->voice = englishVoice;
     player->setVoice(englishVoice);
 }
 
 void MainWindow::setGoogleGreekVoice()
 {
+    this->voice = googleVoice;
     player->setVoice(googleVoice);
 }
 
 void MainWindow::setEmilyVoice()
 {
+    this->voice = emilyVoice;
     player->setVoice(emilyVoice);
 }
 
@@ -430,3 +435,29 @@ void MainWindow::stopPlayer()
 //    ip.ki.dwFlags = KEYEVENTF_KEYUP;
 //    SendInput(1, &ip, sizeof(INPUT));
 //}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings("Emily", "Emily");
+    settings.setValue("Voice", this->voice);
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings("Emily", "Emily");
+    QString readVoice = settings.value("Voice").toString();
+    setVoice(readVoice);
+}
+
+void MainWindow::setVoice(QString voice)
+{
+    if (voice == emilyVoice)
+        this->voice = emilyVoice;
+    else if (voice == googleVoice)
+        this->voice = googleVoice;
+    else if (voice == englishVoice)
+        this->voice = englishVoice;
+    else
+        this->voice = googleVoice;
+    player->setVoice(this->voice);
+}
