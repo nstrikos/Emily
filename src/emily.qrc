@@ -3,5 +3,6 @@
         <file>resources/openmary.py</file>
         <file>resources/emily.ico</file>
         <file>resources/flag.png</file>
+        <file>resources/manifest.ini</file>
     </qresource>
 </RCC>

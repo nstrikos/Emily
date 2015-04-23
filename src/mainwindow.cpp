@@ -257,16 +257,33 @@ void MainWindow::delay(int n)
 
 void MainWindow::installAddon()
 {
-    QString file1, file2;
+    QString manifestFile, openmaryFile, openmaryObjectFile;
 
-    QString dir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    QString nvdaRoamingPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
+                                "\\AppData\\Roaming\\nvda";
 
-    file1 = dir + "\\AppData\\Roaming\\nvda\\addons\\Emily\\synthDrivers\\openmary.py";
-    file2 = dir + "\\AppData\\Roaming\\nvda\\addons\\Emily\\synthDrivers\\openmary.pyo";
+    QDir nvdaDir(nvdaRoamingPath);
+    if (nvdaDir.exists())
+    {
 
-    QFile::remove(file2);
+        QString emilyAddonPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
+                "\\AppData\\Roaming\\nvda\\addons\\Emily";
 
-    QFile::copy(":/new/prefix1/resources/openmary.py", file1);
+        QString emilyAddonSynthDriverPath = emilyAddonPath + "\\synthDrivers";
+
+        QDir dir(emilyAddonSynthDriverPath);
+        if(!dir.exists())
+            dir.mkpath(emilyAddonSynthDriverPath);
+
+        manifestFile = emilyAddonPath + "\\manifest.ini";
+        openmaryFile = emilyAddonSynthDriverPath + "\\openmary.py";
+        openmaryObjectFile = emilyAddonSynthDriverPath + "\\openmary.pyo";
+
+        QFile::remove(openmaryObjectFile);
+
+        QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
+        QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+    }
 }
 
 void MainWindow::displayMemoryStatus()
