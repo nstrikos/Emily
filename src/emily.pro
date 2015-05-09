@@ -34,4 +34,6 @@ FORMS    += mainwindow.ui \
     choosediskdialog.ui \
     progressdialog.ui
 
+win32:LIBS += -lpsapi
+
 RESOURCES = emily.qrc

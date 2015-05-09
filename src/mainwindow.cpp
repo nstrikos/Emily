@@ -153,26 +153,24 @@ double MainWindow::getAvailableMemory()
 
 double MainWindow::getUsedMemory()
 {
-    //    HANDLE hProcess;
-    //    PROCESS_MEMORY_COUNTERS pmc;
+    HANDLE hProcess;
+    PROCESS_MEMORY_COUNTERS pmc;
 
+    if (maryServerProcess.pid() != 0)
+    {
+        hProcess = maryServerProcess.pid()->hProcess;
+        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
+        {
+            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
+            return (double) pmc.WorkingSetSize/MEGABYTE;
+            //CloseHandle( hProcess );
+        }
+    }
+    else
+        qWarning() << "Null process";
 
-    //    if (maryServerProcess.pid() != 0)
-    //    {
-    //        hProcess = maryServerProcess.pid()->hProcess;
-    //        if ( GetProcessMemoryInfo( hProcess, &pmc, sizeof(pmc)) )
-    //        {
-    //            qWarning() << (double) pmc.WorkingSetSize/MEGABYTE;
-    //            return (double) pmc.WorkingSetSize/MEGABYTE;
-    //            //CloseHandle( hProcess );
-    //        }
-    //    }
-    //    else
-    //        qWarning() << "Null process";
-
-    //    //error if control reaches here
-    //    return -1;
-
+    //error if control reaches here
+    return -1;
 }
 
 
@@ -239,8 +237,6 @@ void MainWindow::startMaryServerProcess(int memory)
 
         maryServerProcess.start(string3);
         memoryForMaryServer = memory;
-        //qWarning() << "Available memory found: " + QString::number(availableMemory) + " Mb";
-        //qWarning() << "Mary server tries to start with " + QString::number(memory)+ "MB in Java Virtual Machine";
 
         //If mary server has started this delay does not affect anything
         //If mary server has not started this delay is necessary to catch the flaw in the next check
@@ -260,7 +256,7 @@ void MainWindow::installAddon()
     QString manifestFile, openmaryFile, openmaryObjectFile;
 
     QString nvdaRoamingPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
-                                "\\AppData\\Roaming\\nvda";
+            "\\AppData\\Roaming\\nvda";
 
     QDir nvdaDir(nvdaRoamingPath);
     if (nvdaDir.exists())
