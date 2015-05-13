@@ -298,6 +298,10 @@ void Player::updateServerProgress3()
             clearFiles();
             //downloadManager->cancelDownload();
         }
+        else if (result.contains("Pause"))
+            player.pause();
+        else if (result.contains("Start"))
+            player.play();
     }
 }
 

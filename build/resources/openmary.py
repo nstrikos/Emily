@@ -182,6 +182,13 @@ class SynthDriver(SynthDriver):
         #file1.close
         self.sendCommand.write("Cancel")
 
+    def pause(self, switch):
+        if switch:
+            self.sendCommand.write("Pause")
+        else:
+            self.sendCommand.write("Start")
+
+
     def terminate(self):
         self.thread.quit()
         self.thread.join()
