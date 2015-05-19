@@ -26,9 +26,10 @@ public:
     void setVoice(QString voice);
     void increaseRate();
     void decreaseRate();
-
     void setClipboardEnabled(bool value);
-    void stopPlayer();
+    void stop();
+    void pause();
+    void resume();
     void clearFiles();
 
 public slots:
@@ -50,7 +51,7 @@ private slots:
 private:
     void createPlayListModel();
     void addToPlaylist(const QString& filename);
-    QMediaPlayer player;
+    QMediaPlayer qMediaPlayer;
     QMediaPlaylist playlist;
     //QFileSystemWatcher fileSystemWatcher;
     //QFileSystemWatcher fileSystemWatcher4;

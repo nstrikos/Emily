@@ -405,7 +405,7 @@ void MainWindow::decreaseRate()
 
 void MainWindow::stopPlayer()
 {
-    player->stopPlayer();
+    player->stop();
 }
 
 //void MainWindow::startNVDA()
