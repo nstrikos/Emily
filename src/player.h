@@ -26,7 +26,6 @@ public:
     void setVoice(QString voice);
     void increaseRate();
     void decreaseRate();
-    void setClipboardEnabled(bool value);
     void stop();
     void pause();
     void resume();
@@ -53,8 +52,6 @@ private:
     void addToPlaylist(const QString& filename);
     QMediaPlayer qMediaPlayer;
     QMediaPlaylist playlist;
-    //QFileSystemWatcher fileSystemWatcher;
-    //QFileSystemWatcher fileSystemWatcher4;
     DownloadManager *downloadManager;
     QStringList textList;
     QStringList indexList;
@@ -82,7 +79,6 @@ private:
     QTcpServer tcpServer4;
     QTcpSocket *tcpServerConnection4;
     QTimer *timer4;
-    bool clipBoardEnabled;
 };
 
 #endif // PLAYER_H

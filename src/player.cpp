@@ -39,7 +39,6 @@ Player::Player()
     timer4 = new QTimer();
     connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
     tcpServerConnection4 = NULL;
-    clipBoardEnabled = false;
 }
 
 Player::~Player()
@@ -330,12 +329,6 @@ void Player::speakClipBoardText(QString text)
     indexList.clear();
     downloadManager->addToClipboardList(text);
     informNVDA();
-}
-
-void Player::setClipboardEnabled(bool value)
-{
-    this->clipBoardEnabled = value;
-    downloadManager->setClipBoardEnabled(value);
 }
 
 void Player::stop()
