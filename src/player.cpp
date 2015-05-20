@@ -5,15 +5,22 @@ static const int PayloadSize = 64 * 1024; // 64 KB
 
 Player::Player()
 {
+    //Create download manager object
     downloadManager = new DownloadManager(textList, indexList);
-    createPlayListModel();
     connect(downloadManager, SIGNAL(finished(QString, QString, QString)), this, SLOT(playFile(QString, QString, QString)));
-    connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
     voice = googleVoice;
     downloadManager->setVoice(voice);
+
+    //Create playlist object
+    createPlayListModel();
+    connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
+
+    //Set rate
     rate = 1.0;
     qMediaPlayer.setPlaybackRate(rate);
 
+    //Create, connect server objects and set timers
+    //why are timers necessary?
     indexTimer = new QTimer();
 
     connect(&tcpServer, SIGNAL(newConnection()),
@@ -42,25 +49,27 @@ Player::Player()
 
 Player::~Player()
 {
+    //Close connections
     tcpServer.close();
     tcpServer2.close();
     tcpServer3.close();
     tcpServer4.close();
+
+    //Free memory
     if (downloadManager != NULL)
     {
         delete downloadManager;
         downloadManager = NULL;
     }
+
+    //Clear all files
     while (!playedFiles.isEmpty())
     {
         QString file = playedFiles.takeFirst();
         QFile::remove(file);
     }
-    while (!createdFiles.isEmpty())
-    {
-        QString file = createdFiles.takeFirst();
-        QFile::remove(file);
-    }
+
+    clearFiles();
 }
 
 void Player::createPlayListModel()
