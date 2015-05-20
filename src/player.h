@@ -67,7 +67,6 @@ private:
 
     QTcpServer tcpServer;
     QTcpSocket *tcpServerConnection;
-    QTimer *textTimer;
 
     QTcpServer tcpServer2;
     QTcpSocket *tcpServerConnection2;

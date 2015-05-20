@@ -14,7 +14,6 @@ Player::Player()
     rate = 1.0;
     qMediaPlayer.setPlaybackRate(rate);
 
-    textTimer = new QTimer();
     indexTimer = new QTimer();
 
     connect(&tcpServer, SIGNAL(newConnection()),
