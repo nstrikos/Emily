@@ -332,18 +332,15 @@ void Player::speakClipBoardText(QString text)
 
 void Player::stop()
 {
-    clearFiles();
-    downloadManager->clearLists();
-    downloadManager->cancelDownload();
-    fileList.clear();
-    indexList.clear();
+    //It is necessary to keep this order
+    //otherwise the player will freeze
+    qMediaPlayer.stop();
     if (!qMediaPlayer.playlist()->isEmpty())
         qMediaPlayer.playlist()->clear();
-
-    //We stop player after cleaning all
-    //Because stopping player will insert new media in playlist
-    //We do this because this affects NVDA
-    qMediaPlayer.stop();
+    downloadManager->clearLists();
+    fileList.clear();
+    indexList.clear();
+    clearFiles();
 }
 
 void Player::pause()
