@@ -10,5 +10,6 @@ const int MEGABYTE =  1048576;
 const int MAX_MEMORY_FOR_MARY =  2000; // 2000 megabytes
 const int NORMAL_MEMORY_FOR_MARY = 1000; //1000 megabytes
 const int MIN_MEMORY_FOR_MARY = 500; //500 megabytes
+const QString nvdaIndex = "(NVDA Index)";
 
 #endif // CONSTANTS_H

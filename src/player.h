@@ -32,8 +32,8 @@ public:
     void clearFiles();
 
 public slots:
-    void acceptConnection();
-    void updateServerProgress();
+    void nvdaTextServerAcceptConnection();
+    void updatenvdaTextServerProgress();
     void acceptConnection2();
     void updateServerProgress2();
     void acceptConnection3();
@@ -65,8 +65,8 @@ private:
     QString spokenText;
     float rate;
 
-    QTcpServer tcpServer;
-    QTcpSocket *tcpServerConnection;
+    QTcpServer nvdaTextServer;
+    QTcpSocket *nvdaTextServerConnection;
 
     QTcpServer tcpServer2;
     QTcpSocket *tcpServerConnection2;

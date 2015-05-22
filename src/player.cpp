@@ -23,8 +23,8 @@ Player::Player()
     //why are timers necessary?
     indexTimer = new QTimer();
 
-    connect(&tcpServer, SIGNAL(newConnection()),
-            this, SLOT(acceptConnection()));
+    connect(&nvdaTextServer, SIGNAL(newConnection()),
+            this, SLOT(nvdaTextServerAcceptConnection()));
 
     connect(&tcpServer2, SIGNAL(newConnection()),
             this, SLOT(acceptConnection2()));
@@ -35,7 +35,7 @@ Player::Player()
     connect(&tcpServer4, SIGNAL(newConnection()),
             this, SLOT(acceptConnection4()));
 
-    tcpServer.listen(QHostAddress::LocalHost, 57116);
+    nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
     tcpServer2.listen(QHostAddress::LocalHost, 57117);
     tcpServer3.listen(QHostAddress::LocalHost, 57118);
     tcpServer4.listen(QHostAddress::LocalHost, 57121);
@@ -50,7 +50,7 @@ Player::Player()
 Player::~Player()
 {
     //Close connections
-    tcpServer.close();
+    nvdaTextServer.close();
     tcpServer2.close();
     tcpServer3.close();
     tcpServer4.close();
@@ -141,7 +141,7 @@ void Player::informNVDA()
         while (!playedFiles.isEmpty())
         {
             QString file = playedFiles.takeFirst();
-            qDebug() << file;
+//            qDebug() << file;
             QFile::remove(file);
         }
         if (!fileList.isEmpty())
@@ -173,12 +173,10 @@ void Player::informNVDA()
     }
 }
 
-void Player::acceptConnection()
+void Player::nvdaTextServerAcceptConnection()
 {
-    tcpServerConnection = tcpServer.nextPendingConnection();
-    //connect(textTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress()));
-    //textTimer->start(10);
-    connect(tcpServerConnection, SIGNAL(readyRead()), this, SLOT(updateServerProgress()));
+    nvdaTextServerConnection = nvdaTextServer.nextPendingConnection();
+    connect(nvdaTextServerConnection, SIGNAL(readyRead()), this, SLOT(updatenvdaTextServerProgress()));
 }
 
 void Player::acceptConnection2()
@@ -207,68 +205,47 @@ void Player::acceptConnection4()
     //timer4->start();
 }
 
-void Player::updateServerProgress()
+void Player::updatenvdaTextServerProgress()
 {
 
-    //This code can handle both formats of openmary.py
-    //Sending self.index at the end of the text
-    //Or in the middle
+    //This code handles incoming text from nvda
 
-    const QString nvdaIndex = "(NVDA Index)";
-    QString result(tcpServerConnection->readAll());
+    QString result(nvdaTextServerConnection->readAll());
     if (result != "")
     {
-        //qDebug() << "Incoming text:" << result;
         if (result.contains(nvdaIndex))
         {
             bool done = false;
             while (!done)
             {
-                int c = result.indexOf(nvdaIndex);
-                QString preLine = result.left(c);
-                if (preLine != "")
-                {
-                    //qDebug() << "Preline:" << preLine;
-                    downloadManager->addToList(preLine, "");
-                }
-                result = result.right(result.size() - c);
-                //qDebug() << "Result:" << result;
-                int n = result.indexOf("#");
-                QString index = result.left(n);
-                index = index.replace(nvdaIndex, "");
-                //qDebug() << "Index:" << index;
-                QString leftover = result.right(result.size() - n - 1);
-                //qDebug() << "Leftover:" << leftover;
+                int indexPosition = result.indexOf(nvdaIndex);
+                QString firstPart = result.left(indexPosition);
+                if (firstPart != "")
+                    downloadManager->addToList(firstPart, "");
+                result = result.right(result.size() - indexPosition);
+                int nextIndexPosition = result.indexOf("#");
+                QString indexString = result.left(nextIndexPosition);
+                indexString = indexString.replace(nvdaIndex, "");
+                QString leftover = result.right(result.size() - nextIndexPosition - 1);
                 if (!leftover.contains(nvdaIndex))
                 {
-                    QString line = leftover;
-                    downloadManager->addToList(line, index);
+                    downloadManager->addToList(leftover, indexString);
                     done = true;
                 }
                 else
                 {
-                    //qDebug() << "Leftover:" << leftover;
+                    //Do the same again
                     int d = leftover.indexOf(nvdaIndex);
                     QString line = leftover.left(d);
-                    downloadManager->addToList(line, index);
-                    //qDebug() << "Line:" << line;
+                    downloadManager->addToList(line, indexString);
                     result = leftover.right(leftover.size() - d);
-                    //qDebug() << "New result:" << result;
                 }
-                //qDebug() << "Line:" << line;
-                //downloadManager->addToList(line, index);
             }
-
         }
         else
-        {
-            QString line = result;
-            QString index = "";
-            //qDebug() << "Index:" << index;
-            //qDebug() << "Line:" << line;
             downloadManager->addToList(result,  "");
-        }
-        //downloadManager->addToList(result,  lastReadIndex);
+
+        //Finally
         informNVDA();
     }
 }
