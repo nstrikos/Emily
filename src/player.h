@@ -34,8 +34,6 @@ public:
 public slots:
     void nvdaTextServerAcceptConnection();
     void updatenvdaTextServerProgress();
-    void acceptConnection2();
-    void updateServerProgress2();
     void acceptConnection3();
     void updateServerProgress3();
     void acceptConnection4();
@@ -67,10 +65,6 @@ private:
 
     QTcpServer nvdaTextServer;
     QTcpSocket *nvdaTextServerConnection;
-
-    QTcpServer tcpServer2;
-    QTcpSocket *tcpServerConnection2;
-    QTimer *indexTimer;
 
     QTcpServer tcpServer3;
     QTcpSocket *tcpServerConnection3;

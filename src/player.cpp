@@ -20,27 +20,19 @@ Player::Player()
     qMediaPlayer.setPlaybackRate(rate);
 
     //Create, connect server objects and set timers
-    //why are timers necessary?
-    indexTimer = new QTimer();
-
     connect(&nvdaTextServer, SIGNAL(newConnection()),
             this, SLOT(nvdaTextServerAcceptConnection()));
-
-    connect(&tcpServer2, SIGNAL(newConnection()),
-            this, SLOT(acceptConnection2()));
-
     connect(&tcpServer3, SIGNAL(newConnection()),
             this, SLOT(acceptConnection3()));
-
     connect(&tcpServer4, SIGNAL(newConnection()),
             this, SLOT(acceptConnection4()));
 
     nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
-    tcpServer2.listen(QHostAddress::LocalHost, 57117);
     tcpServer3.listen(QHostAddress::LocalHost, 57118);
     tcpServer4.listen(QHostAddress::LocalHost, 57121);
 
 
+    //why are timers necessary?
     this->index = "0";
     timer4 = new QTimer();
     connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
@@ -51,7 +43,6 @@ Player::~Player()
 {
     //Close connections
     nvdaTextServer.close();
-    tcpServer2.close();
     tcpServer3.close();
     tcpServer4.close();
 
@@ -179,13 +170,6 @@ void Player::nvdaTextServerAcceptConnection()
     connect(nvdaTextServerConnection, SIGNAL(readyRead()), this, SLOT(updatenvdaTextServerProgress()));
 }
 
-void Player::acceptConnection2()
-{
-    tcpServerConnection2 = tcpServer2.nextPendingConnection();
-    connect(indexTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress2()));
-    indexTimer->start(10);
-}
-
 void Player::acceptConnection3()
 {
     tcpServerConnection3 = tcpServer3.nextPendingConnection();
@@ -213,6 +197,7 @@ void Player::updatenvdaTextServerProgress()
     QString result(nvdaTextServerConnection->readAll());
     if (result != "")
     {
+        qDebug() << result;
         if (result.contains(nvdaIndex))
         {
             bool done = false;
@@ -243,26 +228,11 @@ void Player::updatenvdaTextServerProgress()
             }
         }
         else
-            downloadManager->addToList(result,  "");
+            downloadManager->addToList(result, "");
 
         //Finally
         informNVDA();
     }
-}
-
-void Player::updateServerProgress2()
-{
-
-    QString result(tcpServerConnection2->readAll());
-    if (result != "")
-    {
-        int n = result.lastIndexOf("Index:");
-        QString index = result.right(result.size() - n);
-        index.replace("Index:", "");
-        lastReadIndex = index;
-        //qDebug() << "Read index:" << lastReadIndex;
-    }
-
 }
 
 void Player::updateServerProgress3()
