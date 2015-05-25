@@ -25,7 +25,7 @@ class SynthDriver(SynthDriver):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(None)
             self.host = 'localhost';
-            self.port = 57121;
+            self.port = 57118;
             try:
                 self.socket.connect((self.host , self.port))
             except socket.error, ex:
@@ -68,7 +68,7 @@ class SynthDriver(SynthDriver):
     class sendCommand():
         def __init__(self):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket = socket.create_connection(('localhost', 57118))
+            self.socket = socket.create_connection(('localhost', 57117))
 
         def write(self, data):
             self.socket.sendall(data.encode('utf-8'))
@@ -143,6 +143,8 @@ class SynthDriver(SynthDriver):
     def stopServer(self):
         try:
             self.sendText.socket.shutdown(socket.SHUT_RDWR)
+            self.sendCommand.socket.shutdown(socket.SHUT_RDWR)
         except socket.error:
             pass
         self.sendText.socket.close()
+        self.sendCommand.socket.close()

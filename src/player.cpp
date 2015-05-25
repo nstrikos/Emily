@@ -22,29 +22,29 @@ Player::Player()
     //Create, connect server objects and set timers
     connect(&nvdaTextServer, SIGNAL(newConnection()),
             this, SLOT(nvdaTextServerAcceptConnection()));
-    connect(&tcpServer3, SIGNAL(newConnection()),
-            this, SLOT(acceptConnection3()));
-    connect(&tcpServer4, SIGNAL(newConnection()),
-            this, SLOT(acceptConnection4()));
+    connect(&nvdaCommandServer, SIGNAL(newConnection()),
+            this, SLOT(nvdaCommandServerAcceptConnection()));
+    connect(&nvdaIndexServer, SIGNAL(newConnection()),
+            this, SLOT(nvdaIndexServerAcceptConnection()));
 
     nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
-    tcpServer3.listen(QHostAddress::LocalHost, 57118);
-    tcpServer4.listen(QHostAddress::LocalHost, 57121);
+    nvdaCommandServer.listen(QHostAddress::LocalHost, 57117);
+    nvdaIndexServer.listen(QHostAddress::LocalHost, 57118);
 
 
     //why are timers necessary?
     this->index = "0";
-    timer4 = new QTimer();
-    connect(timer4, SIGNAL(timeout()), this, SLOT(updateIndex()));
-    tcpServerConnection4 = NULL;
+    updateIndexTimer = new QTimer();
+    connect(updateIndexTimer, SIGNAL(timeout()), this, SLOT(updateIndex()));
+    nvdaIndexServerConnection = NULL;
 }
 
 Player::~Player()
 {
     //Close connections
     nvdaTextServer.close();
-    tcpServer3.close();
-    tcpServer4.close();
+    nvdaCommandServer.close();
+    nvdaIndexServer.close();
 
     //Free memory
     if (downloadManager != NULL)
@@ -143,7 +143,7 @@ void Player::informNVDA()
             qMediaPlayer.play();
         }
 
-        if (tcpServerConnection4 != NULL)
+        if (nvdaIndexServerConnection != NULL)
         {
             //if (index != "")
             //{
@@ -153,7 +153,7 @@ void Player::informNVDA()
                 if (index != "")
                 {
                     QByteArray textTemp = index.toUtf8() ;
-                    tcpServerConnection4->write(textTemp);
+                    nvdaIndexServerConnection->write(textTemp);
                     //qDebug() << "Send index:" << index;
                 }
             }
@@ -170,22 +170,20 @@ void Player::nvdaTextServerAcceptConnection()
     connect(nvdaTextServerConnection, SIGNAL(readyRead()), this, SLOT(updatenvdaTextServerProgress()));
 }
 
-void Player::acceptConnection3()
+void Player::nvdaCommandServerAcceptConnection()
 {
-    tcpServerConnection3 = tcpServer3.nextPendingConnection();
-    //connect(commandTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress3()));
-    //commandTimer->start(100);
-    connect(tcpServerConnection3, SIGNAL(readyRead()),
-            this, SLOT(updateServerProgress3()));
+    nvdaCommandServerConnection = nvdaCommandServer.nextPendingConnection();
+    connect(nvdaCommandServerConnection, SIGNAL(readyRead()),
+            this, SLOT(updatenvdaCommandServerProgress()));
 }
 
-void Player::acceptConnection4()
+void Player::nvdaIndexServerAcceptConnection()
 {
-    tcpServerConnection4 = tcpServer4.nextPendingConnection();
+    nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
     //connect(commandTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress3()));
     //commandTimer->start(100);
-    connect(tcpServerConnection4, SIGNAL(readyRead()),
-            this, SLOT(updateServerProgress4()));
+    //connect(nvdaIndexServerConnection, SIGNAL(readyRead()),
+    //        this, SLOT(updatenvdaIndexServerProgress()));
     //timer4->start();
 }
 
@@ -235,10 +233,10 @@ void Player::updatenvdaTextServerProgress()
     }
 }
 
-void Player::updateServerProgress3()
+void Player::updatenvdaCommandServerProgress()
 {
 
-    QString result(tcpServerConnection3->readAll());
+    QString result(nvdaCommandServerConnection->readAll());
     if (result != "")
     {
         if (result.contains("Cancel"))
@@ -250,8 +248,8 @@ void Player::updateServerProgress3()
     }
 }
 
-void Player::updateServerProgress4()
-{
+//void Player::updatenvdaIndexServerProgress()
+//{
 
     //    QString result(tcpServerConnection4->readAll());
     //    if (result != "")
@@ -265,12 +263,12 @@ void Player::updateServerProgress4()
     //            downloadManager->cancelDownload();
     //        }
     //    }
-}
+//}
 
 void Player::updateIndex()
 {
     QByteArray textTemp = index.toUtf8() ;
-    tcpServerConnection4->write(textTemp);
+    nvdaIndexServerConnection->write(textTemp);
 }
 
 void Player::speakClipBoardText(QString text)

@@ -34,10 +34,9 @@ public:
 public slots:
     void nvdaTextServerAcceptConnection();
     void updatenvdaTextServerProgress();
-    void acceptConnection3();
-    void updateServerProgress3();
-    void acceptConnection4();
-    void updateServerProgress4();
+    void nvdaCommandServerAcceptConnection();
+    void updatenvdaCommandServerProgress();
+    void nvdaIndexServerAcceptConnection();
     void updateIndex();
     void speakClipBoardText(QString text);
 
@@ -66,12 +65,12 @@ private:
     QTcpServer nvdaTextServer;
     QTcpSocket *nvdaTextServerConnection;
 
-    QTcpServer tcpServer3;
-    QTcpSocket *tcpServerConnection3;
+    QTcpServer nvdaCommandServer;
+    QTcpSocket *nvdaCommandServerConnection;
 
-    QTcpServer tcpServer4;
-    QTcpSocket *tcpServerConnection4;
-    QTimer *timer4;
+    QTcpServer nvdaIndexServer;
+    QTcpSocket *nvdaIndexServerConnection;
+    QTimer *updateIndexTimer;
 };
 
 #endif // PLAYER_H
