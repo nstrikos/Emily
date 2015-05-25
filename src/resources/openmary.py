@@ -68,6 +68,7 @@ class SynthDriver(SynthDriver):
     class sendCommand():
         def __init__(self):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.settimeout(None)
             self.socket = socket.create_connection(('localhost', 57117))
 
         def write(self, data):

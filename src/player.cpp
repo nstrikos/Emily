@@ -31,11 +31,6 @@ Player::Player()
     nvdaCommandServer.listen(QHostAddress::LocalHost, 57117);
     nvdaIndexServer.listen(QHostAddress::LocalHost, 57118);
 
-
-    //why are timers necessary?
-    this->index = "0";
-    updateIndexTimer = new QTimer();
-    connect(updateIndexTimer, SIGNAL(timeout()), this, SLOT(updateIndex()));
     nvdaIndexServerConnection = NULL;
 }
 
@@ -83,8 +78,6 @@ void Player::playFile(QString filename, QString text, QString index)
     fileList << filename;
     createdFiles << filename;
     spokenIndex << index;
-    //addToPlaylist(filename);
-    //player.play();
     informNVDA();
 }
 
@@ -180,11 +173,6 @@ void Player::nvdaCommandServerAcceptConnection()
 void Player::nvdaIndexServerAcceptConnection()
 {
     nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
-    //connect(commandTimer, SIGNAL(timeout()), this , SLOT(updateServerProgress3()));
-    //commandTimer->start(100);
-    //connect(nvdaIndexServerConnection, SIGNAL(readyRead()),
-    //        this, SLOT(updatenvdaIndexServerProgress()));
-    //timer4->start();
 }
 
 void Player::updatenvdaTextServerProgress()
@@ -248,29 +236,6 @@ void Player::updatenvdaCommandServerProgress()
     }
 }
 
-//void Player::updatenvdaIndexServerProgress()
-//{
-
-    //    QString result(tcpServerConnection4->readAll());
-    //    if (result != "")
-    //    {
-    //        if (result.contains("Cancel"))
-    //        {
-    //            player.stop();
-    //            if (!player.playlist()->isEmpty())
-    //                player.playlist()->clear();
-    //            downloadManager->clearLists();
-    //            downloadManager->cancelDownload();
-    //        }
-    //    }
-//}
-
-void Player::updateIndex()
-{
-    QByteArray textTemp = index.toUtf8() ;
-    nvdaIndexServerConnection->write(textTemp);
-}
-
 void Player::speakClipBoardText(QString text)
 {
     clearFiles();
@@ -292,6 +257,7 @@ void Player::stop()
     if (!qMediaPlayer.playlist()->isEmpty())
         qMediaPlayer.playlist()->clear();
     downloadManager->clearLists();
+    downloadManager->cancelDownload();
     fileList.clear();
     indexList.clear();
     clearFiles();

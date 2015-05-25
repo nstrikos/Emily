@@ -37,7 +37,6 @@ public slots:
     void nvdaCommandServerAcceptConnection();
     void updatenvdaCommandServerProgress();
     void nvdaIndexServerAcceptConnection();
-    void updateIndex();
     void speakClipBoardText(QString text);
 
 private slots:
@@ -70,7 +69,6 @@ private:
 
     QTcpServer nvdaIndexServer;
     QTcpSocket *nvdaIndexServerConnection;
-    QTimer *updateIndexTimer;
 };
 
 #endif // PLAYER_H
