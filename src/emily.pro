@@ -19,7 +19,10 @@ SOURCES += main.cpp\
     choosediskdialog.cpp \
     copythread.cpp \
     progressdialog.cpp \
-    hotkeythread.cpp
+    hotkeythread.cpp \
+    nvdareceiver.cpp \
+    nvdatexthandler.cpp \
+    indextextlist.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -28,7 +31,10 @@ HEADERS  += mainwindow.h \
     copythread.h \
     progressdialog.h \
     constants.h \
-    hotkeythread.h
+    hotkeythread.h \
+    nvdareceiver.h \
+    nvdatexthandler.h \
+    indextextlist.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \

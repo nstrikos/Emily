@@ -152,8 +152,8 @@ void Player::informNVDA()
             }
         }
 
+        //Finally process next text
         downloadManager->processLists();
-
     }
 }
 
@@ -183,7 +183,6 @@ void Player::updatenvdaTextServerProgress()
     QString result(nvdaTextServerConnection->readAll());
     if (result != "")
     {
-        qDebug() << result;
         if (result.contains(nvdaIndex))
         {
             bool done = false;

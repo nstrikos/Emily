@@ -11,6 +11,8 @@
 #include <QtWidgets>
 #include <QTimer>
 #include "hotkeythread.h"
+#include "nvdareceiver.h"
+#include "indextextlist.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,6 +47,7 @@ private slots:
     void increaseRate();
     void decreaseRate();
     void stopPlayer();
+    void test();
 
 private:
     Ui::MainWindow *ui;
@@ -80,6 +83,9 @@ private:
     ProgressDialog *progressDialog;
     HotkeyThread hotkeyThread;
     QString voice;
+
+    NvdaReceiver *nvdaReceiver;
+    IndexTextList *indexTextList;
 };
 
 #endif // MAINWINDOW_H

@@ -26,6 +26,8 @@ MainWindow::~MainWindow()
         delete progressDialog;
     delete timer;
     delete player;
+    delete nvdaReceiver;
+    delete indexTextList;
     delete trayIcon;
     delete trayIconMenu;
     delete minimizeAction;
@@ -53,6 +55,10 @@ void MainWindow::createAndInitializeObjects()
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
     connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
     connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
+
+    indexTextList = new IndexTextList();
+    nvdaReceiver = new NvdaReceiver(indexTextList);
+    connect(indexTextList, SIGNAL(textInserted()), this, SLOT(test()));
 }
 
 void MainWindow::createShortcuts()
@@ -473,4 +479,14 @@ void MainWindow::setVoice(QString voice)
     else
         this->voice = googleVoice;
     player->setVoice(this->voice);
+}
+
+void MainWindow::test()
+{
+    for (int i = 0; i < indexTextList->textList.size(); i++)
+    {
+        QString text = indexTextList->textList.at(i);
+        QString index = indexTextList->indexList.at(i);
+        qDebug() << "index:" << index << ", text:" << text;
+    }
 }
