@@ -16,8 +16,8 @@ Player::Player()
     connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
 
     //Set rate
-    rate = 1.0;
-    qMediaPlayer.setPlaybackRate(rate);
+    //rate = 1.0;
+    //qMediaPlayer.setPlaybackRate(rate);
 
     //Create, connect server objects and set timers
     connect(&nvdaTextServer, SIGNAL(newConnection()),
@@ -97,35 +97,40 @@ void Player::setVoice(QString voice)
     //    if (voice == emilyVoice)
     //        rate = 0.8;
     //    else
-    rate = 1.0;
+    //rate = 1.0;
     downloadManager->setVoice(voice);
-    qMediaPlayer.setPlaybackRate(rate);
+    //qMediaPlayer.setPlaybackRate(rate);
 }
 
 void Player::increaseRate()
 {
-    rate += 0.05;
-    qMediaPlayer.setPlaybackRate(rate);
+    //rate += 0.05;
+    //qMediaPlayer.setPlaybackRate(rate);
 }
 
 void Player::decreaseRate()
 {
-    rate -= 0.05;
-    if ( rate <= 0)
-        rate = 0.05;
+    //rate -= 0.05;
+    //if ( rate <= 0)
+    //    rate = 0.05;
+    //qMediaPlayer.setPlaybackRate(rate);
+}
+
+void Player::setRate(QString rateString)
+{
+    float rate = rateString.toFloat();
+    rate = (0.01 * rate) + 0.5;
     qMediaPlayer.setPlaybackRate(rate);
 }
+
 void Player::informNVDA()
 {
-    //qDebug() << "Inform NVDA";
     if (playlist.currentIndex() == -1)
     {
-        //qDebug() << "Player is stopped";
         playlist.clear();
         while (!playedFiles.isEmpty())
         {
             QString file = playedFiles.takeFirst();
-//            qDebug() << file;
             QFile::remove(file);
         }
         if (!fileList.isEmpty())
@@ -138,8 +143,6 @@ void Player::informNVDA()
 
         if (nvdaIndexServerConnection != NULL)
         {
-            //if (index != "")
-            //{
             if (!spokenIndex.isEmpty())
             {
                 QString index = spokenIndex.takeFirst();
@@ -147,7 +150,6 @@ void Player::informNVDA()
                 {
                     QByteArray textTemp = index.toUtf8() ;
                     nvdaIndexServerConnection->write(textTemp);
-                    //qDebug() << "Send index:" << index;
                 }
             }
         }
@@ -183,7 +185,6 @@ void Player::updatenvdaTextServerProgress()
     QString result(nvdaTextServerConnection->readAll());
     if (result != "")
     {
-        qDebug() << result;
         if (result.contains(nvdaIndex))
         {
             bool done = false;
@@ -225,6 +226,7 @@ void Player::updatenvdaCommandServerProgress()
 {
 
     QString result(nvdaCommandServerConnection->readAll());
+    qDebug() << result;
     if (result != "")
     {
         if (result.contains("Cancel"))
@@ -233,6 +235,11 @@ void Player::updatenvdaCommandServerProgress()
             pause();
         else if (result.contains("Start"))
             resume();
+        else if (result.contains("Rate "))
+        {
+            result.replace("Rate ", "");
+            setRate(result);
+        }
     }
 }
 
