@@ -1,12 +1,10 @@
 #include "player.h"
+#include <QDebug>
 
-static const int TotalBytes = 50 * 1024 * 1024;
-static const int PayloadSize = 64 * 1024; // 64 KB
 
-Player::Player()
+Player::Player(DownloadManager* downloadManager)
 {
-    //Create download manager object
-    downloadManager = new DownloadManager(textList, indexList);
+    this->downloadManager = downloadManager;
     connect(downloadManager, SIGNAL(finished(QString, QString, QString)), this, SLOT(playFile(QString, QString, QString)));
     voice = googleVoice;
     downloadManager->setVoice(voice);
@@ -15,20 +13,11 @@ Player::Player()
     createPlayListModel();
     connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
 
-    //Set rate
-    //rate = 1.0;
-    //qMediaPlayer.setPlaybackRate(rate);
 
-    //Create, connect server objects and set timers
-    connect(&nvdaTextServer, SIGNAL(newConnection()),
-            this, SLOT(nvdaTextServerAcceptConnection()));
-    connect(&nvdaCommandServer, SIGNAL(newConnection()),
-            this, SLOT(nvdaCommandServerAcceptConnection()));
     connect(&nvdaIndexServer, SIGNAL(newConnection()),
             this, SLOT(nvdaIndexServerAcceptConnection()));
 
-    nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
-    nvdaCommandServer.listen(QHostAddress::LocalHost, 57117);
+
     nvdaIndexServer.listen(QHostAddress::LocalHost, 57118);
 
     nvdaIndexServerConnection = NULL;
@@ -37,16 +26,7 @@ Player::Player()
 Player::~Player()
 {
     //Close connections
-    nvdaTextServer.close();
-    nvdaCommandServer.close();
     nvdaIndexServer.close();
-
-    //Free memory
-    if (downloadManager != NULL)
-    {
-        delete downloadManager;
-        downloadManager = NULL;
-    }
 
     //Clear all files
     while (!playedFiles.isEmpty())
@@ -78,6 +58,7 @@ void Player::playFile(QString filename, QString text, QString index)
     fileList << filename;
     createdFiles << filename;
     spokenIndex << index;
+    qDebug() << index << ":" << text;
     informNVDA();
 }
 
@@ -159,88 +140,9 @@ void Player::informNVDA()
     }
 }
 
-void Player::nvdaTextServerAcceptConnection()
-{
-    nvdaTextServerConnection = nvdaTextServer.nextPendingConnection();
-    connect(nvdaTextServerConnection, SIGNAL(readyRead()), this, SLOT(updatenvdaTextServerProgress()));
-}
-
-void Player::nvdaCommandServerAcceptConnection()
-{
-    nvdaCommandServerConnection = nvdaCommandServer.nextPendingConnection();
-    connect(nvdaCommandServerConnection, SIGNAL(readyRead()),
-            this, SLOT(updatenvdaCommandServerProgress()));
-}
-
 void Player::nvdaIndexServerAcceptConnection()
 {
     nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
-}
-
-void Player::updatenvdaTextServerProgress()
-{
-
-    //This code handles incoming text from nvda
-
-    QString result(nvdaTextServerConnection->readAll());
-    if (result != "")
-    {
-        if (result.contains(nvdaIndex))
-        {
-            bool done = false;
-            while (!done)
-            {
-                int indexPosition = result.indexOf(nvdaIndex);
-                QString firstPart = result.left(indexPosition);
-                if (firstPart != "")
-                    downloadManager->addToList(firstPart, "");
-                result = result.right(result.size() - indexPosition);
-                int nextIndexPosition = result.indexOf("#");
-                QString indexString = result.left(nextIndexPosition);
-                indexString = indexString.replace(nvdaIndex, "");
-                QString leftover = result.right(result.size() - nextIndexPosition - 1);
-                if (!leftover.contains(nvdaIndex))
-                {
-                    downloadManager->addToList(leftover, indexString);
-                    done = true;
-                }
-                else
-                {
-                    //Do the same again
-                    int d = leftover.indexOf(nvdaIndex);
-                    QString line = leftover.left(d);
-                    downloadManager->addToList(line, indexString);
-                    result = leftover.right(leftover.size() - d);
-                }
-            }
-        }
-        else
-            downloadManager->addToList(result, "");
-
-        //Finally
-        informNVDA();
-    }
-}
-
-void Player::updatenvdaCommandServerProgress()
-{
-
-    QString result(nvdaCommandServerConnection->readAll());
-    qDebug() << result;
-    if (result != "")
-    {
-        if (result.contains("Cancel"))
-            stop();
-        else if (result.contains("Pause"))
-            pause();
-        else if (result.contains("Start"))
-            resume();
-        else if (result.contains("Rate "))
-        {
-            result.replace("Rate ", "");
-            setRate(result);
-        }
-    }
 }
 
 void Player::speakClipBoardText(QString text)

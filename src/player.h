@@ -21,7 +21,7 @@ class Player : public QObject
     Q_OBJECT
 
 public:
-    Player();
+    Player(DownloadManager* downloadManager);
     ~Player();
     void setVoice(QString voice);
     void increaseRate();
@@ -33,10 +33,7 @@ public:
     void clearFiles();
 
 public slots:
-    void nvdaTextServerAcceptConnection();
-    void updatenvdaTextServerProgress();
-    void nvdaCommandServerAcceptConnection();
-    void updatenvdaCommandServerProgress();
+
     void nvdaIndexServerAcceptConnection();
     void speakClipBoardText(QString text);
 
@@ -60,13 +57,6 @@ private:
     QString index;
     QString lastReadIndex;
     QString spokenText;
-    //float rate;
-
-    QTcpServer nvdaTextServer;
-    QTcpSocket *nvdaTextServerConnection;
-
-    QTcpServer nvdaCommandServer;
-    QTcpSocket *nvdaCommandServerConnection;
 
     QTcpServer nvdaIndexServer;
     QTcpSocket *nvdaIndexServerConnection;

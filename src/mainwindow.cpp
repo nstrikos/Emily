@@ -25,6 +25,7 @@ MainWindow::~MainWindow()
     if (progressDialog != NULL)
         delete progressDialog;
     delete timer;
+    delete downloadManager;
     delete player;
     delete nvdaReceiver;
     delete indexTextList;
@@ -47,18 +48,18 @@ void MainWindow::createAndInitializeObjects()
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
     timer->start(1000);
-    player = new Player();
     hotkeyThread.start();
     connect(&hotkeyThread, SIGNAL(restoreWindow()), this, SLOT(restore()));
     connect(&hotkeyThread, SIGNAL(setGoogleGreekVoice()), this, SLOT(setGoogleGreekVoice()));
     connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
-    connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
     connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
 
-    indexTextList = new IndexTextList();
-    nvdaReceiver = new NvdaReceiver(indexTextList);
-    connect(indexTextList, SIGNAL(textInserted()), this, SLOT(test()));
+    downloadManager = new DownloadManager(textList, indexList);
+    indexTextList = new IndexTextList(downloadManager);
+    player = new Player(downloadManager);
+    nvdaReceiver = new NvdaReceiver(indexTextList, player);
+    connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
 }
 
 void MainWindow::createShortcuts()
@@ -479,14 +480,4 @@ void MainWindow::setVoice(QString voice)
     else
         this->voice = googleVoice;
     player->setVoice(this->voice);
-}
-
-void MainWindow::test()
-{
-    for (int i = 0; i < indexTextList->textList.size(); i++)
-    {
-        QString text = indexTextList->textList.at(i);
-        QString index = indexTextList->indexList.at(i);
-        qDebug() << "index:" << index << ", text:" << text;
-    }
 }

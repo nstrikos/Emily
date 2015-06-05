@@ -1,6 +1,5 @@
 #include "hotkeythread.h"
 #include "windows.h"
-#include <QDebug>
 #include <QApplication>
 #define MOD_NOREPEAT    0x4000
 #define MOD_ALT         0x0001

@@ -2,21 +2,18 @@
 #define INDEXTEXTLIST_H
 
 #include <QStringList>
+#include "downloadmanager.h"
 
 class IndexTextList : public QObject
 {
     Q_OBJECT
 
 public:
-    IndexTextList();
+    IndexTextList(DownloadManager* downloadManager);
     void insert(QString text, QString index);
 
-public:
-    QStringList indexList;
-    QStringList textList;
-
-signals:
-    void textInserted();
+private:
+    DownloadManager *downloadManager;
 };
 
 #endif // INDEXTEXTLIST_H

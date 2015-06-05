@@ -1,20 +1,22 @@
 #include "nvdareceiver.h"
 
-NvdaReceiver::NvdaReceiver(IndexTextList* list)
+NvdaReceiver::NvdaReceiver(IndexTextList* list, Player* player)
 {
     connect(&nvdaTextServer, SIGNAL(newConnection()),
             this, SLOT(nvdaTextServerAcceptConnection()));
     connect(&nvdaCommandServer, SIGNAL(newConnection()),
             this, SLOT(nvdaCommandServerAcceptConnection()));
-    nvdaTextServer.listen(QHostAddress::LocalHost, 57151);
-    nvdaCommandServer.listen(QHostAddress::LocalHost, 57152);
+    nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
+    nvdaCommandServer.listen(QHostAddress::LocalHost, 57117);
 
     nvdaTextHandler = new NvdaTextHandler(list);
+    nvdaCommandHandler = new NvdaCommandHandler(player);
 }
 
 NvdaReceiver::~NvdaReceiver()
 {
     delete nvdaTextHandler;
+    delete nvdaCommandHandler;
 }
 
 void NvdaReceiver::nvdaTextServerAcceptConnection()
@@ -40,14 +42,6 @@ void NvdaReceiver::updatenvdaCommandServerProgress()
 {
 
     QString result(nvdaCommandServerConnection->readAll());
-    if (result != "")
-    {
-        //if (result.contains("Cancel"))
-        //    stop();
-        //else if (result.contains("Pause"))
-        //    pause();
-        //else if (result.contains("Start"))
-        //    resume();
-    }
+    nvdaCommandHandler->handleCommand(result);
 }
 

@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     hotkeythread.cpp \
     nvdareceiver.cpp \
     nvdatexthandler.cpp \
-    indextextlist.cpp
+    indextextlist.cpp \
+    nvdacommandhandler.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h \
     hotkeythread.h \
     nvdareceiver.h \
     nvdatexthandler.h \
-    indextextlist.h
+    indextextlist.h \
+    nvdacommandhandler.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \

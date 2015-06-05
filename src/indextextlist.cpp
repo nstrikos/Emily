@@ -1,13 +1,11 @@
 #include "indextextlist.h"
 
-IndexTextList::IndexTextList()
+IndexTextList::IndexTextList(DownloadManager* downloadManager)
 {
-
+    this->downloadManager = downloadManager;
 }
 
 void IndexTextList::insert(QString text, QString index)
 {
-    textList << text;
-    indexList << index;
-    emit textInserted();
+    downloadManager->addToList(text, index);
 }

@@ -5,8 +5,6 @@
 #include "constants.h"
 #include "indextextlist.h"
 
-#include <QDebug>
-
 class NvdaTextHandler
 {
 public:
@@ -14,8 +12,7 @@ public:
     void handleText(QString incomingText);
 
 private:
-    QStringList textList;
-    QStringList indexList;
+    IndexTextList* indexTextlist;
 };
 
 #endif // NVDATEXTHANDLER_H

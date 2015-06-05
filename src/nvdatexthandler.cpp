@@ -2,7 +2,7 @@
 
 NvdaTextHandler::NvdaTextHandler(IndexTextList* list)
 {
-
+    this->indexTextlist = list;
 }
 
 void NvdaTextHandler::handleText(QString incomingText)
@@ -20,8 +20,7 @@ void NvdaTextHandler::handleText(QString incomingText)
                 QString firstPart = incomingText.left(indexPosition);
                 if (firstPart != "")
                 {
-                    textList << firstPart;
-                    indexList << "";
+                    indexTextlist->insert(firstPart, "");
                 }
                 incomingText = incomingText.right(incomingText.size() - indexPosition);
                 int nextIndexPosition = incomingText.indexOf("#");
@@ -30,8 +29,7 @@ void NvdaTextHandler::handleText(QString incomingText)
                 QString leftover = incomingText.right(incomingText.size() - nextIndexPosition - 1);
                 if (!leftover.contains(nvdaIndex))
                 {
-                    textList << leftover;
-                    indexList << indexString;
+                    indexTextlist->insert(leftover, indexString);
                     done = true;
                 }
                 else
@@ -39,25 +37,14 @@ void NvdaTextHandler::handleText(QString incomingText)
                     //Do the same again
                     int d = leftover.indexOf(nvdaIndex);
                     QString line = leftover.left(d);
-                    textList << line;
-                    indexList << indexString;
+                    indexTextlist->insert(line, indexString);
                     incomingText = leftover.right(leftover.size() - d);
                 }
             }
         }
         else
         {
-            textList << incomingText;
-            indexList << "";
-        }
-
-        //Finally
-        //informNVDA();
-        for (int i = 0; i < textList.size(); i++)
-        {
-            QString text = textList.at(i);
-            QString index = indexList.at(i);
-            qDebug() << "index:" << index << ", text:" << text;
+           indexTextlist->insert(incomingText, "");
         }
     }
 }

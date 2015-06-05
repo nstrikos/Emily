@@ -13,6 +13,7 @@
 #include "hotkeythread.h"
 #include "nvdareceiver.h"
 #include "indextextlist.h"
+#include "downloadmanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,7 +48,6 @@ private slots:
     void increaseRate();
     void decreaseRate();
     void stopPlayer();
-    void test();
 
 private:
     Ui::MainWindow *ui;
@@ -86,6 +86,9 @@ private:
 
     NvdaReceiver *nvdaReceiver;
     IndexTextList *indexTextList;
+    DownloadManager *downloadManager;
+    QStringList textList;
+    QStringList indexList;
 };
 
 #endif // MAINWINDOW_H

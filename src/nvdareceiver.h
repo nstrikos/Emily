@@ -7,13 +7,15 @@
 
 #include "nvdatexthandler.h"
 #include "indextextlist.h"
+#include "nvdacommandhandler.h"
+#include "player.h"
 
 class NvdaReceiver : public QObject
 {
     Q_OBJECT
 
 public:
-    NvdaReceiver(IndexTextList* list);
+    NvdaReceiver(IndexTextList* list, Player* player);
     ~NvdaReceiver();
 
 public slots:
@@ -30,6 +32,7 @@ private:
     QTcpSocket *nvdaCommandServerConnection;
 
     NvdaTextHandler *nvdaTextHandler;
+    NvdaCommandHandler *nvdaCommandHandler;
 };
 
 #endif // NVDARECEIVER_H
