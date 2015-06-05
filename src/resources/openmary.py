@@ -87,6 +87,7 @@ class SynthDriver(SynthDriver):
         self.thread.start()
         self.sendText = SynthDriver.sendText()
         self.sendCommand = SynthDriver.sendCommand()
+        self.myRate = 50
 
 
     name = "openmary"
@@ -133,6 +134,13 @@ class SynthDriver(SynthDriver):
             self.sendCommand.write("Pause")
         else:
             self.sendCommand.write("Start")
+
+    def _set_rate(self, rate):
+        self.myRate = rate
+        self.sendCommand.write("Rate " + str(self.myRate))
+
+    def _get_rate(self):
+        return self.myRate
 
 
     def terminate(self):

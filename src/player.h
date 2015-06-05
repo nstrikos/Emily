@@ -26,6 +26,7 @@ public:
     void setVoice(QString voice);
     void increaseRate();
     void decreaseRate();
+    void setRate(QString rateString);
     void stop();
     void pause();
     void resume();
@@ -59,7 +60,7 @@ private:
     QString index;
     QString lastReadIndex;
     QString spokenText;
-    float rate;
+    //float rate;
 
     QTcpServer nvdaTextServer;
     QTcpSocket *nvdaTextServerConnection;
