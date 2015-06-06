@@ -1,29 +1,20 @@
 #include "player.h"
-#include <QDebug>
-
 
 Player::Player(DownloadManager* downloadManager)
 {
     this->downloadManager = downloadManager;
-    connect(downloadManager, SIGNAL(finished(QString, QString, QString)), this, SLOT(playFile(QString, QString, QString)));
-    voice = googleVoice;
-    downloadManager->setVoice(voice);
+    connect(downloadManager, SIGNAL(finished(QString, QString)), this, SLOT(addToFileList(QString, QString)));
 
     //Create playlist object
     createPlayListModel();
-    connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
+    connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(play()));
 }
 
 Player::~Player()
 {
     //Clear all files
-    while (!playedFiles.isEmpty())
-    {
-        QString file = playedFiles.takeFirst();
-        QFile::remove(file);
-    }
-
-    clearFiles();
+    clearPlayedFiles();
+    clearCreatedFiles();
 }
 
 void Player::createPlayListModel()
@@ -31,14 +22,11 @@ void Player::createPlayListModel()
     qMediaPlayer.setPlaylist(&playlist);
 }
 
-void Player::playFile(QString filename, QString text, QString index)
+void Player::addToFileList(QString filename, QString index)
 {
-    this->index = index;
-    this->spokenText << text;
-    fileList << filename;
     createdFiles << filename;
-    spokenIndex << index;
-    informNVDA();
+    createdFileIndexes << index;
+    play();
 }
 
 void Player::addToPlaylist(const QString& filename)
@@ -53,7 +41,6 @@ void Player::addToPlaylist(const QString& filename)
 
 void Player::setVoice(QString voice)
 {
-    this->voice = voice;
     downloadManager->setVoice(voice);
 }
 
@@ -78,40 +65,28 @@ void Player::setRate(QString rateString)
     qMediaPlayer.setPlaybackRate(rate);
 }
 
-void Player::informNVDA()
+void Player::play()
 {
+    //This function is called when player has finished playing
+    //If playlist is not empty we do nothing, the next file will be played automatically
+    //Otherwise we do the next
     if (playlist.currentIndex() == -1)
     {
+        //Clear playlist, clear all the files that have been played so far
         playlist.clear();
-        while (!playedFiles.isEmpty())
+        clearPlayedFiles();
+
+        //Take one file from the createdFiles list and put it in playedFiles list
+        //add it to play list, start the player and send the index to nvda
+        if (!createdFiles.isEmpty())
         {
-            QString file = playedFiles.takeFirst();
-            QFile::remove(file);
-        }
-        if (!fileList.isEmpty())
-        {
-            QString filename = fileList.takeFirst();
+            QString filename = createdFiles.takeFirst();
             playedFiles << filename;
             addToPlaylist(filename);
             qMediaPlayer.play();
         }
 
-        //if (nvdaIndexServerConnection != NULL)
-        if (nvdaSender.nvdaIndexServerConnection != NULL)
-        {
-            if (!spokenIndex.isEmpty())
-            {
-                QString index = spokenIndex.takeFirst();
-                QString text = spokenText.takeFirst();
-                if (index != "")
-                {
-                    QByteArray textTemp = index.toUtf8() ;
-                    //nvdaIndexServerConnection->write(textTemp);
-                    nvdaSender.nvdaIndexServerConnection->write(textTemp);
-                    qDebug() << "Sent index:" << index << ",Text:" << text;
-                }
-            }
-        }
+        sendIndexToNVDA();
 
         //Finally process next text
         downloadManager->processLists();
@@ -120,15 +95,15 @@ void Player::informNVDA()
 
 void Player::speakClipBoardText(QString text)
 {
-    clearFiles();
+    clearCreatedFiles();
+    clearPlayedFiles(); // ????? is it necessary?
     qMediaPlayer.stop();
     if (!qMediaPlayer.playlist()->isEmpty())
         qMediaPlayer.playlist()->clear();
     downloadManager->clearLists();
-    fileList.clear();
-    indexList.clear();
+    createdFiles.clear();
     downloadManager->addToClipboardList(text);
-    informNVDA();
+    play();
 }
 
 void Player::stop()
@@ -140,13 +115,11 @@ void Player::stop()
         qMediaPlayer.playlist()->clear();
     downloadManager->clearLists();
     downloadManager->cancelDownload();
-    fileList.clear();
-    indexList.clear();
-    if (!spokenIndex.isEmpty())
-        spokenIndex.clear();
-    if (!spokenText.isEmpty())
-        spokenText.clear();
-    clearFiles();
+    //createdFiles.clear();
+    if (!createdFileIndexes.isEmpty())
+        createdFileIndexes.clear();
+    clearCreatedFiles();
+    clearPlayedFiles();
 }
 
 void Player::pause()
@@ -159,11 +132,36 @@ void Player::resume()
     qMediaPlayer.play();
 }
 
-void Player::clearFiles()
+void Player::clearCreatedFiles()
 {
     while (!createdFiles.isEmpty())
     {
         QString file = createdFiles.takeFirst();
         QFile::remove(file);
+    }
+}
+
+void Player::clearPlayedFiles()
+{
+    while (!playedFiles.isEmpty())
+    {
+        QString file = playedFiles.takeFirst();
+        QFile::remove(file);
+    }
+}
+
+void Player::sendIndexToNVDA()
+{
+    if (nvdaSender.nvdaIndexServerConnection != NULL)
+    {
+        if (!createdFileIndexes.isEmpty())
+        {
+            QString indexToSend = createdFileIndexes.takeFirst();
+            if (indexToSend != "")
+            {
+                QByteArray textToSend = indexToSend.toUtf8() ;
+                nvdaSender.nvdaIndexServerConnection->write(textToSend);
+            }
+        }
     }
 }

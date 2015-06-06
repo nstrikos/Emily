@@ -1,20 +1,14 @@
 #include "downloadmanager.h"
-#include <QtNetwork/QNetworkAccessManager>
-#include <QDir>
-#include <QTextCodec>
 
-DownloadManager::DownloadManager(QStringList textList, QStringList indexList){
+DownloadManager::DownloadManager(){
     reply = NULL;
     downloading = false;
     clipBoardEnabled  = false;
     count = 0;
-    this->indexList = indexList;
-    this->textList = textList;
-    connect(this, SIGNAL(finished(QString,QString,QString)), this, SLOT(processLists()));
-    buffer = "";
-    timer = new QTimer();
-    connect(timer, SIGNAL(timeout()), this, SLOT(processLists()));
-    timer->start(50);
+    connect(this, SIGNAL(finished(QString, QString)), this, SLOT(processLists()));
+//    timer = new QTimer();
+//    connect(timer, SIGNAL(timeout()), this, SLOT(processLists()));
+//    timer->start(50);
 }
 
 DownloadManager::~DownloadManager()
@@ -120,7 +114,7 @@ void DownloadManager::httpReadyRead()
 void DownloadManager::finishRequest()
 {
     downloading = false;
-    emit finished(filename, textToSpeak, index);
+    emit finished(filename, index);
 }
 
 void DownloadManager::setVoice(QString voice)
@@ -130,49 +124,19 @@ void DownloadManager::setVoice(QString voice)
 
 void DownloadManager::addToList(QString text, QString index)
 {
-    //QStringList tempList = text.split(".");
-    //foreach (QString tmp, tempList) {
-        //        //QStringList tempList2 = tmp.split(",");
-        //        //foreach (QString tmp2, tempList2) {
-        //            //qDebug() << tmp2;
-    //    textList << tmp;
-    //    indexList << "";
-        //        //}
-    //}
-
         textList << text;
         indexList << index;
-    //if (!indexList.isEmpty())
-    //{
-
-    //    indexList.removeLast();
-    //    indexList << index;
-    //}
-    //processLists();
 }
 
 void DownloadManager::addToClipboardList(QString text)
 {
     QStringList tempList = text.split(".");
     foreach (QString tmp, tempList) {
-        //        //QStringList tempList2 = tmp.split(",");
-        //        //foreach (QString tmp2, tempList2) {
-        //            //qDebug() << tmp2;
-        //qDebug() << tmp;
+
         textList << tmp;
         indexList << "";
-        //        //}
+
     }
-
-    //    textList << text;
-    //    indexList << index;
-    //if (!indexList.isEmpty())
-    //{
-
-    //    indexList.removeLast();
-    //    indexList << index;
-    //}
-
 }
 
 void DownloadManager::clearLists()

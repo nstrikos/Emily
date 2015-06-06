@@ -51,7 +51,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Player *player;
 
     void createActions();
     void createTrayAndIcons();
@@ -87,8 +86,7 @@ private:
     NvdaReceiver *nvdaReceiver;
     IndexTextList *indexTextList;
     DownloadManager *downloadManager;
-    QStringList textList;
-    QStringList indexList;
+    Player *player;
 };
 
 #endif // MAINWINDOW_H

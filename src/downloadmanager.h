@@ -1,21 +1,15 @@
 #ifndef DOWNLOADMANAGER_H
 #define DOWNLOADMANAGER_H
 
-#include <QTextStream>
-#include <QFile>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QUrl>
-#include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
-#include <QtMultimedia/QMediaPlayer>
-#include <QTimer>
+#include <QDir>
 
 class DownloadManager : public QObject
 {
     Q_OBJECT
 
 public:
-    DownloadManager(QStringList textList, QStringList indexList);
+    DownloadManager();
     ~DownloadManager();
     void setVoice(QString voice);
     void addToList(QString text, QString index);
@@ -44,15 +38,13 @@ private:
     QString textToSpeak;
     QString voice;
     bool clipBoardEnabled;
-    QString buffer;
-    QTimer *timer;
 
 private slots:
     void httpFinished();
     void httpReadyRead();
 
 signals:
-    void finished(QString filename, QString text, QString index);
+    void finished(QString filename, QString index);
     void cancelled();
 };
 

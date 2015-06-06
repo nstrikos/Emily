@@ -14,8 +14,6 @@ NvdaSender::~NvdaSender()
     nvdaIndexServer.close();
 }
 
-
-
 void NvdaSender::nvdaIndexServerAcceptConnection()
 {
     nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();

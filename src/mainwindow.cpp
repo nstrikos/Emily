@@ -55,7 +55,7 @@ void MainWindow::createAndInitializeObjects()
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
     connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
 
-    downloadManager = new DownloadManager(textList, indexList);
+    downloadManager = new DownloadManager();
     indexTextList = new IndexTextList(downloadManager);
     player = new Player(downloadManager);
     nvdaReceiver = new NvdaReceiver(indexTextList, player);
