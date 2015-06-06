@@ -12,22 +12,10 @@ Player::Player(DownloadManager* downloadManager)
     //Create playlist object
     createPlayListModel();
     connect(&playlist, SIGNAL(currentIndexChanged(int)), this,  SLOT(informNVDA()));
-
-
-    connect(&nvdaIndexServer, SIGNAL(newConnection()),
-            this, SLOT(nvdaIndexServerAcceptConnection()));
-
-
-    nvdaIndexServer.listen(QHostAddress::LocalHost, 57118);
-
-    nvdaIndexServerConnection = NULL;
 }
 
 Player::~Player()
 {
-    //Close connections
-    nvdaIndexServer.close();
-
     //Clear all files
     while (!playedFiles.isEmpty())
     {
@@ -41,24 +29,15 @@ Player::~Player()
 void Player::createPlayListModel()
 {
     qMediaPlayer.setPlaylist(&playlist);
-    if (!qMediaPlayer.isAvailable())
-    {
-        QMessageBox msgBox;
-        msgBox.setText( QObject::tr("The QMediaPlayer object does not have a valid service.\n"\
-                                    "Please check the media service plugins are installed.") );
-        msgBox.setIcon( QMessageBox::Critical );
-        msgBox.exec();
-    }
 }
 
 void Player::playFile(QString filename, QString text, QString index)
 {
     this->index = index;
-    this->spokenText = text;
+    this->spokenText << text;
     fileList << filename;
     createdFiles << filename;
     spokenIndex << index;
-    qDebug() << index << ":" << text;
     informNVDA();
 }
 
@@ -75,12 +54,7 @@ void Player::addToPlaylist(const QString& filename)
 void Player::setVoice(QString voice)
 {
     this->voice = voice;
-    //    if (voice == emilyVoice)
-    //        rate = 0.8;
-    //    else
-    //rate = 1.0;
     downloadManager->setVoice(voice);
-    //qMediaPlayer.setPlaybackRate(rate);
 }
 
 void Player::increaseRate()
@@ -122,15 +96,19 @@ void Player::informNVDA()
             qMediaPlayer.play();
         }
 
-        if (nvdaIndexServerConnection != NULL)
+        //if (nvdaIndexServerConnection != NULL)
+        if (nvdaSender.nvdaIndexServerConnection != NULL)
         {
             if (!spokenIndex.isEmpty())
             {
                 QString index = spokenIndex.takeFirst();
+                QString text = spokenText.takeFirst();
                 if (index != "")
                 {
                     QByteArray textTemp = index.toUtf8() ;
-                    nvdaIndexServerConnection->write(textTemp);
+                    //nvdaIndexServerConnection->write(textTemp);
+                    nvdaSender.nvdaIndexServerConnection->write(textTemp);
+                    qDebug() << "Sent index:" << index << ",Text:" << text;
                 }
             }
         }
@@ -138,11 +116,6 @@ void Player::informNVDA()
         //Finally process next text
         downloadManager->processLists();
     }
-}
-
-void Player::nvdaIndexServerAcceptConnection()
-{
-    nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
 }
 
 void Player::speakClipBoardText(QString text)
@@ -169,6 +142,10 @@ void Player::stop()
     downloadManager->cancelDownload();
     fileList.clear();
     indexList.clear();
+    if (!spokenIndex.isEmpty())
+        spokenIndex.clear();
+    if (!spokenText.isEmpty())
+        spokenText.clear();
     clearFiles();
 }
 

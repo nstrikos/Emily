@@ -2,19 +2,12 @@
 #define PLAYER_H
 
 #include "downloadmanager.h"
+#include "nvdasender.h"
 #include "constants.h"
 
 #include <QMediaPlaylist>
-#include <QFileSystemWatcher>
-#include <QMessageBox>
 #include <QDir>
 #include <QTextCodec>
-#include <QTcpServer>
-#include <QTcpSocket>
-#include <QTimer>
-
-class QTcpServer;
-class QTcpSocket;
 
 class Player : public QObject
 {
@@ -32,9 +25,7 @@ public:
     void resume();
     void clearFiles();
 
-public slots:
-
-    void nvdaIndexServerAcceptConnection();
+public slots:    
     void speakClipBoardText(QString text);
 
 private slots:
@@ -56,10 +47,9 @@ private:
     QString voice;
     QString index;
     QString lastReadIndex;
-    QString spokenText;
+    QStringList spokenText;
 
-    QTcpServer nvdaIndexServer;
-    QTcpSocket *nvdaIndexServerConnection;
+    NvdaSender nvdaSender;
 };
 
 #endif // PLAYER_H

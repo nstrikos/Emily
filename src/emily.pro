@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     nvdareceiver.cpp \
     nvdatexthandler.cpp \
     indextextlist.cpp \
-    nvdacommandhandler.cpp
+    nvdacommandhandler.cpp \
+    nvdasender.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     nvdareceiver.h \
     nvdatexthandler.h \
     indextextlist.h \
-    nvdacommandhandler.h
+    nvdacommandhandler.h \
+    nvdasender.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \
