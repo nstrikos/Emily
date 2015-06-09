@@ -126,6 +126,7 @@ void DownloadManager::addToList(QString text, QString index)
 {
         textList << text;
         indexList << index;
+        processLists();
 }
 
 void DownloadManager::addToClipboardList(QString text)
