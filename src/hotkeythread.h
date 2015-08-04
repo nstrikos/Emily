@@ -20,13 +20,12 @@ private:
     QClipboard *clipBoard;
 
 signals:
-     void setEmilyVoice();
-     void setGoogleGreekVoice();
+     void setGreekVoice();
      void setEnglishVoice();
-     void setHerculesVoice();
      void restoreWindow();
      void speakHighlightedText(QString);
      void stop();
+     void pause();
  };
 
 #endif // HOTKEYTHREAD_H

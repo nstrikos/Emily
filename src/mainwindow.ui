@@ -61,7 +61,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Επιλογή φωνής</string>
+         <string>F2 - Επιλογή φωνής</string>
         </property>
        </widget>
       </item>
@@ -73,7 +73,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F2 - Επανεκκίνηση</string>
+         <string>F3 - Επανεκκίνηση</string>
         </property>
        </widget>
       </item>
@@ -85,7 +85,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F3 - Εγκατάσταση οδηγών</string>
+         <string>F4 - Εγκατάσταση οδηγών</string>
         </property>
        </widget>
       </item>
@@ -97,7 +97,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F4 - Χρήση μνήμης</string>
+         <string>F5 - Χρήση μνήμης</string>
         </property>
        </widget>
       </item>
@@ -109,7 +109,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F5 - Εγκατάσταση σε φορήτο δίσκο</string>
+         <string>F6 - Εγκατάσταση σε φορητό δίσκο</string>
         </property>
        </widget>
       </item>
@@ -121,7 +121,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F6 - Σχετικά</string>
+         <string>F7 - Σχετικά</string>
         </property>
        </widget>
       </item>
@@ -133,7 +133,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F7 - Έξοδος</string>
+         <string>F8 - Έξοδος</string>
         </property>
        </widget>
       </item>
@@ -165,6 +165,7 @@
  <tabstops>
   <tabstop>okButton</tabstop>
   <tabstop>helpButton</tabstop>
+  <tabstop>selectVoiceButton</tabstop>
   <tabstop>restartButton</tabstop>
   <tabstop>installDriversButton</tabstop>
   <tabstop>memoryButton</tabstop>

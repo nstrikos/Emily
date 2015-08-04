@@ -22,11 +22,11 @@ public:
     void decreaseRate();
     void setRate(QString rateString);
     void stop();
-    void pause();
     void resume();
 
 public slots:    
     void speakClipBoardText(QString text);
+    void pause();
 
 private slots:
     void addToFileList(QString filename, QString index);

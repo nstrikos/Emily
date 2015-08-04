@@ -95,15 +95,20 @@ void Player::play()
 
 void Player::speakClipBoardText(QString text)
 {
-    clearCreatedFiles();
-    clearPlayedFiles(); // ????? is it necessary?
-    qMediaPlayer.stop();
-    if (!qMediaPlayer.playlist()->isEmpty())
-        qMediaPlayer.playlist()->clear();
-    downloadManager->clearLists();
-    createdFiles.clear();
-    downloadManager->addToClipboardList(text);
-    play();
+    if (qMediaPlayer.state() == QMediaPlayer::PausedState )
+        qMediaPlayer.play();
+    else
+    {
+        clearCreatedFiles();
+        clearPlayedFiles(); // ????? is it necessary?
+        qMediaPlayer.stop();
+        if (!qMediaPlayer.playlist()->isEmpty())
+            qMediaPlayer.playlist()->clear();
+        downloadManager->clearLists();
+        createdFiles.clear();
+        downloadManager->addToClipboardList(text);
+        play();
+    }
 }
 
 void Player::stop()

@@ -40,18 +40,15 @@ private slots:
     void installAddon();
     void displayMemoryStatus();
     void help();
+    void selectVoice();
     void about();
     void setEnglishVoice();
-    void setGoogleGreekVoice();
-    void setEmilyVoice();
-    void setHerculesVoice();
+    void setGreekVoice();
     void installDiskDrive();
     void installationComplete();
     void increaseRate();
     void decreaseRate();
     void stopPlayer();
-
-    void on_selectVoiceButton_clicked();
 
 private:
     Ui::MainWindow *ui;

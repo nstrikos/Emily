@@ -20,7 +20,7 @@ void ProgressDialog::increase()
     int value = ui->progressBar->value();
     value++;
     ui->progressBar->setValue(value);
-    this->setWindowTitle(ui->progressBar->text() + copyString);
+    this->setWindowTitle(ui->progressBar->text());
 }
 
 void ProgressDialog::resetProgressBar(int maxFiles)
@@ -28,7 +28,7 @@ void ProgressDialog::resetProgressBar(int maxFiles)
     canClose = false;
     ui->progressBar->setValue(0);
     ui->progressBar->setMaximum(maxFiles);
-    this->setWindowTitle(ui->progressBar->text() + copyString);
+    this->setWindowTitle(ui->progressBar->text());
 }
 
 void ProgressDialog::closeEvent(QCloseEvent * event)

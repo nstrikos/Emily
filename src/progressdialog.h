@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QCloseEvent>
 
-const QString copyString = " αντιγράφτηκε";
+//const QString copyString = " αντιγράφτηκε";
 
 namespace Ui {
 class ProgressDialog;

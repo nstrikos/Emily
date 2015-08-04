@@ -53,17 +53,19 @@ void MainWindow::createAndInitializeObjects()
     timer->start(1000);
     hotkeyThread.start();
     connect(&hotkeyThread, SIGNAL(restoreWindow()), this, SLOT(restore()));
-    connect(&hotkeyThread, SIGNAL(setGoogleGreekVoice()), this, SLOT(setGoogleGreekVoice()));
+    connect(&hotkeyThread, SIGNAL(setGreekVoice()), this, SLOT(setGreekVoice()));
     connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
-    connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
-    connect(&hotkeyThread, SIGNAL(setHerculesVoice()), this, SLOT(setHerculesVoice()));
     connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
+
+    //This is the core algorithm
+    //These objects cooperate to implement the functionality
 
     downloadManager = new DownloadManager();
     indexTextList = new IndexTextList(downloadManager);
     player = new Player(downloadManager);
     nvdaReceiver = new NvdaReceiver(indexTextList, player);
     connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
+    connect(&hotkeyThread, SIGNAL(pause()), player, SLOT(pause()));
 }
 
 void MainWindow::createShortcuts()
@@ -72,17 +74,19 @@ void MainWindow::createShortcuts()
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
     connect(helpShortcut, SIGNAL(activated()), this, SLOT(help()));
-    QShortcut *restartShortcut = new QShortcut(QKeySequence("F2"), this);
+    QShortcut *selectVoiceShortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(selectVoiceShortcut, SIGNAL(activated()), this, SLOT(selectVoice()));
+    QShortcut *restartShortcut = new QShortcut(QKeySequence("F3"), this);
     connect(restartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer()));
-    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F3"), this);
+    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F4"), this);
     connect(installAddonShortcut, SIGNAL(activated()), this, SLOT(installAddon()));
-    QShortcut *memoryShortcut = new QShortcut(QKeySequence("F4"), this);
+    QShortcut *memoryShortcut = new QShortcut(QKeySequence("F5"), this);
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
-    QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F5"), this);
+    QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F6"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F6"), this);
+    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F7"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
-    QShortcut *quitShortcut = new QShortcut(QKeySequence("F7"), this);
+    QShortcut *quitShortcut = new QShortcut(QKeySequence("F8"), this);
     connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
 }
 
@@ -90,6 +94,7 @@ void MainWindow::createConnections()
 {
     connect(ui->okButton, SIGNAL(clicked()), this, SLOT(hide()));
     connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(help()));
+    connect(ui->selectVoiceButton, SIGNAL(clicked(bool)), this, SLOT(selectVoice()));
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(startMaryServer()));
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
@@ -314,7 +319,7 @@ void MainWindow::help()
 void MainWindow::about()
 {
     QMessageBox msgBox;
-    msgBox.setText("Emily 0.7\nEmail : nstrikos@yahoo.gr");
+    msgBox.setText("Emily 0.8\nEmail : nstrikos@yahoo.gr");
     msgBox.setIcon( QMessageBox::Information );
     msgBox.exec();
 }
@@ -325,22 +330,10 @@ void MainWindow::setEnglishVoice()
     player->setVoice(spikeVoice);
 }
 
-void MainWindow::setGoogleGreekVoice()
+void MainWindow::setGreekVoice()
 {
     this->voice = googleVoice;
     player->setVoice(googleVoice);
-}
-
-void MainWindow::setEmilyVoice()
-{
-    this->voice = emilyVoice;
-    player->setVoice(emilyVoice);
-}
-
-void MainWindow::setHerculesVoice()
-{
-    this->voice = herculesVoice;
-    player->setVoice(herculesVoice);
 }
 
 void MainWindow::installDiskDrive()
@@ -492,7 +485,7 @@ void MainWindow::setVoice(QString voice)
     player->setVoice(this->voice);
 }
 
-void MainWindow::on_selectVoiceButton_clicked()
+void MainWindow::selectVoice()
 {
     if (selectVoiceDialog == NULL)
         selectVoiceDialog = new SelectVoiceDialog();
