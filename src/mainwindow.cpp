@@ -24,6 +24,8 @@ MainWindow::~MainWindow()
         delete chooseDiskDialog;
     if (progressDialog != NULL)
         delete progressDialog;
+    if (selectVoiceDialog != NULL)
+        delete selectVoiceDialog;
     delete timer;
     delete downloadManager;
     delete player;
@@ -44,6 +46,7 @@ void MainWindow::createAndInitializeObjects()
 {
     chooseDiskDialog = NULL;
     progressDialog = NULL;
+    selectVoiceDialog = NULL;
 
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(restartMaryServer()));
@@ -53,6 +56,7 @@ void MainWindow::createAndInitializeObjects()
     connect(&hotkeyThread, SIGNAL(setGoogleGreekVoice()), this, SLOT(setGoogleGreekVoice()));
     connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
     connect(&hotkeyThread, SIGNAL(setEmilyVoice()), this, SLOT(setEmilyVoice()));
+    connect(&hotkeyThread, SIGNAL(setHerculesVoice()), this, SLOT(setHerculesVoice()));
     connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
 
     downloadManager = new DownloadManager();
@@ -317,8 +321,8 @@ void MainWindow::about()
 
 void MainWindow::setEnglishVoice()
 {
-    this->voice = englishVoice;
-    player->setVoice(englishVoice);
+    this->voice = spikeVoice;
+    player->setVoice(spikeVoice);
 }
 
 void MainWindow::setGoogleGreekVoice()
@@ -331,6 +335,12 @@ void MainWindow::setEmilyVoice()
 {
     this->voice = emilyVoice;
     player->setVoice(emilyVoice);
+}
+
+void MainWindow::setHerculesVoice()
+{
+    this->voice = herculesVoice;
+    player->setVoice(herculesVoice);
 }
 
 void MainWindow::installDiskDrive()
@@ -467,17 +477,31 @@ void MainWindow::readSettings()
     QSettings settings("Emily", "Emily");
     QString readVoice = settings.value("Voice").toString();
     setVoice(readVoice);
+
+//    This code helps to find the path of the settings file
+//    QString config_dir = QFileInfo(settings.fileName()).absolutePath() + "/";
+//    qDebug() << config_dir;
 }
 
 void MainWindow::setVoice(QString voice)
 {
-    if (voice == emilyVoice)
-        this->voice = emilyVoice;
-    else if (voice == googleVoice)
-        this->voice = googleVoice;
-    else if (voice == englishVoice)
-        this->voice = englishVoice;
+    if (voice != "")
+        this->voice = voice;
     else
         this->voice = googleVoice;
     player->setVoice(this->voice);
+}
+
+void MainWindow::on_selectVoiceButton_clicked()
+{
+    if (selectVoiceDialog == NULL)
+        selectVoiceDialog = new SelectVoiceDialog();
+    selectVoiceDialog->setModal(true);
+    selectVoiceDialog->initCombobox(this->voice);
+
+    if (selectVoiceDialog->exec())
+    {
+        this->voice = selectVoiceDialog->getSelectedVoice();
+        player->setVoice(this->voice);
+    }
 }

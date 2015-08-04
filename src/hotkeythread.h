@@ -23,6 +23,7 @@ signals:
      void setEmilyVoice();
      void setGoogleGreekVoice();
      void setEnglishVoice();
+     void setHerculesVoice();
      void restoreWindow();
      void speakHighlightedText(QString);
      void stop();

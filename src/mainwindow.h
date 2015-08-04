@@ -14,6 +14,7 @@
 #include "nvdareceiver.h"
 #include "indextextlist.h"
 #include "downloadmanager.h"
+#include "selectvoicedialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -43,11 +44,14 @@ private slots:
     void setEnglishVoice();
     void setGoogleGreekVoice();
     void setEmilyVoice();
+    void setHerculesVoice();
     void installDiskDrive();
     void installationComplete();
     void increaseRate();
     void decreaseRate();
     void stopPlayer();
+
+    void on_selectVoiceButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -87,6 +91,8 @@ private:
     IndexTextList *indexTextList;
     DownloadManager *downloadManager;
     Player *player;
+
+    SelectVoiceDialog *selectVoiceDialog;
 };
 
 #endif // MAINWINDOW_H

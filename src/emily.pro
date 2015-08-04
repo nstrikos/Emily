@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     nvdatexthandler.cpp \
     indextextlist.cpp \
     nvdacommandhandler.cpp \
-    nvdasender.cpp
+    nvdasender.cpp \
+    selectvoicedialog.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -38,11 +39,13 @@ HEADERS  += mainwindow.h \
     nvdatexthandler.h \
     indextextlist.h \
     nvdacommandhandler.h \
-    nvdasender.h
+    nvdasender.h \
+    selectvoicedialog.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \
-    progressdialog.ui
+    progressdialog.ui \
+    selectvoicedialog.ui
 
 win32:LIBS += -lpsapi
 

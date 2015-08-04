@@ -54,6 +54,18 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="selectVoiceButton">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Επιλογή φωνής</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="restartButton">
         <property name="font">
          <font>
