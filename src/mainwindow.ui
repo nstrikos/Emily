@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Emily</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -37,7 +37,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Esc - Κλείσιμο παραθύρου</string>
+         <string>Esc - Close window</string>
         </property>
        </widget>
       </item>
@@ -49,7 +49,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F1 - Βοήθεια</string>
+         <string>F1 - Help</string>
         </property>
        </widget>
       </item>
@@ -61,7 +61,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F2 - Επιλογή φωνής</string>
+         <string>F2 - Select voice</string>
         </property>
        </widget>
       </item>
@@ -73,7 +73,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F3 - Επανεκκίνηση</string>
+         <string>F3 - Restart</string>
         </property>
        </widget>
       </item>
@@ -85,7 +85,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F4 - Εγκατάσταση οδηγών</string>
+         <string>F4 - Install drivers</string>
         </property>
        </widget>
       </item>
@@ -97,7 +97,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F5 - Χρήση μνήμης</string>
+         <string>F5 - Memory usage</string>
         </property>
        </widget>
       </item>
@@ -109,7 +109,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F6 - Εγκατάσταση σε φορητό δίσκο</string>
+         <string>F6 - Create portable copy</string>
         </property>
        </widget>
       </item>
@@ -121,7 +121,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F7 - Σχετικά</string>
+         <string>F7 - About</string>
         </property>
        </widget>
       </item>
@@ -133,7 +133,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F8 - Έξοδος</string>
+         <string>F8 - Exit</string>
         </property>
        </widget>
       </item>

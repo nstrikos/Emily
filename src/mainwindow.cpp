@@ -121,13 +121,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::createActions()
 {
-    minimizeAction = new QAction(tr("Ε&λαχιστοποίηση"), this);
+    minimizeAction = new QAction(tr("Mi&nimize"), this);
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    restoreAction = new QAction(tr("Ε&παναφορά"), this);
+    restoreAction = new QAction(tr("&Restore"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(restore()));
 
-    quitAction = new QAction(tr("&Έξοδος"), this);
+    quitAction = new QAction(tr("E&xit"), this);
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
@@ -227,7 +227,7 @@ void MainWindow::startMaryServer()
     {
         memoryForMaryServer = 0;
         QMessageBox msgBox;
-        msgBox.setText( QObject::tr("Η Έμιλυ δεν μπορεί να ξεκινήσει.") );
+        msgBox.setText( QObject::tr("Emily cannot start.") );
         msgBox.setIcon( QMessageBox::Critical );
         msgBox.exec();
     }

@@ -47,6 +47,10 @@ FORMS    += mainwindow.ui \
     progressdialog.ui \
     selectvoicedialog.ui
 
+TRANSLATIONS = emily_en.ts \
+               emily_el.ts
+
 win32:LIBS += -lpsapi
 
-RESOURCES = emily.qrc
+RESOURCES = emily.qrc \
+    translations.qrc

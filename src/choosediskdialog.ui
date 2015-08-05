@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>217</width>
-    <height>81</height>
+    <width>236</width>
+    <height>88</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Επιλογή δίσκου</string>
+   <string>Select disk</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -29,7 +29,7 @@
      <item>
       <widget class="QPushButton" name="cancelButton">
        <property name="text">
-        <string>Ακύρωση</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
