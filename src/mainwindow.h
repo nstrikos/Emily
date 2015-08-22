@@ -10,6 +10,7 @@
 #include <psapi.h>
 #include <QtWidgets>
 #include <QTimer>
+#include <QClipboard>
 #include "hotkeythread.h"
 #include "nvdareceiver.h"
 #include "indextextlist.h"
@@ -49,6 +50,8 @@ private slots:
     void increaseRate();
     void decreaseRate();
     void stopPlayer();
+    void speakClipboard();
+    void clipboardButtonClicked();
 
 private:
     Ui::MainWindow *ui;
@@ -65,6 +68,7 @@ private:
     void writeSettings();
     void readSettings();
     void setVoice(QString voice);
+    void setUseClipboard(bool value);
     //void startNVDA();
 
     QSystemTrayIcon *trayIcon;
@@ -90,6 +94,9 @@ private:
     Player *player;
 
     SelectVoiceDialog *selectVoiceDialog;
+
+    QClipboard *clipboard;
+    bool useClipboard;
 };
 
 #endif // MAINWINDOW_H

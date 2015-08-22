@@ -88,20 +88,30 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="124"/>
+        <location filename="mainwindow.cpp" line="525"/>
+        <source>F7 - Χρήση προχείρου μη ενεργή</source>
+        <translation>F7 - Χρήση προχείρου μη ενεργή</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="148"/>
+        <source>F9 - Exit</source>
+        <translation>F9 - Έξοδος</translation>
+    </message>
+    <message>
         <source>F7 - About</source>
         <oldsource>F7 - Σχετικά</oldsource>
-        <translation>F7 - Σχετικά</translation>
+        <translation type="vanished">F7 - Σχετικά</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="136"/>
-        <source>F8 - Exit</source>
-        <oldsource>F8 - Έξοδος</oldsource>
-        <translation>F8 - Έξοδος</translation>
+        <source>F8 - About</source>
+        <oldsource>F8 - Exit</oldsource>
+        <translation>F8 - Σχετικά</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="26"/>
         <location filename="mainwindow.cpp" line="9"/>
-        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="153"/>
         <source>Emily</source>
         <translation>Emily</translation>
     </message>
@@ -118,19 +128,24 @@
         <translation type="vanished">&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="130"/>
         <source>Mi&amp;nimize</source>
         <translation>Ε&amp;λαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="133"/>
         <source>&amp;Restore</source>
         <translation>Ε&amp;παναφορά</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>E&amp;xit</source>
         <translation>&amp;Έξοδος</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="522"/>
+        <source>F7 - Χρήση προχείρου ενεργή</source>
+        <translation>F7 - Χρήση προχείρου ενεργή</translation>
     </message>
 </context>
 <context>
@@ -171,7 +186,7 @@
         <translation type="vanished">Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="230"/>
+        <location filename="mainwindow.cpp" line="236"/>
         <source>Emily cannot start.</source>
         <translation>Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>

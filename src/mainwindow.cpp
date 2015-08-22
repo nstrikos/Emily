@@ -9,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("Emily"));
     ui->okButton->setFocus();
 
+    //Waiting for readSettings is too slow
+    //So clipboard settings are read first
+    QSettings settings("Emily", "Emily");
+    bool clip = settings.value("Clipboard").toBool();
+    setUseClipboard(clip);
+
     createActions();
     createTrayAndIcons();
     createAndInitializeObjects();
@@ -66,6 +72,9 @@ void MainWindow::createAndInitializeObjects()
     nvdaReceiver = new NvdaReceiver(indexTextList, player);
     connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
     connect(&hotkeyThread, SIGNAL(pause()), player, SLOT(pause()));
+
+    clipboard = QApplication::clipboard();
+    connect(clipboard, SIGNAL(dataChanged()), this, SLOT(speakClipboard()));
 }
 
 void MainWindow::createShortcuts()
@@ -84,9 +93,11 @@ void MainWindow::createShortcuts()
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
     QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F6"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F7"), this);
+    QShortcut *clipboardhortcut = new QShortcut(QKeySequence("F7"), this);
+    connect(clipboardhortcut, SIGNAL(activated()), this, SLOT(clipboardButtonClicked()));
+    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F8"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
-    QShortcut *quitShortcut = new QShortcut(QKeySequence("F8"), this);
+    QShortcut *quitShortcut = new QShortcut(QKeySequence("F9"), this);
     connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
 }
 
@@ -99,6 +110,7 @@ void MainWindow::createConnections()
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
+    connect(ui->clipboardButton, SIGNAL(clicked(bool)), this, SLOT(clipboardButtonClicked()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
     connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
@@ -463,6 +475,7 @@ void MainWindow::writeSettings()
 {
     QSettings settings("Emily", "Emily");
     settings.setValue("Voice", this->voice);
+    settings.setValue("Clipboard", useClipboard);
 }
 
 void MainWindow::readSettings()
@@ -497,4 +510,26 @@ void MainWindow::selectVoice()
         this->voice = selectVoiceDialog->getSelectedVoice();
         player->setVoice(this->voice);
     }
+}
+
+void MainWindow::speakClipboard()
+{
+    if (useClipboard)
+        player->speakClipBoardText(clipboard->text());
+}
+
+void MainWindow::setUseClipboard(bool value)
+{
+    this->useClipboard = value;
+    if (useClipboard)
+    {
+        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου ενεργή"));
+    }
+    else
+        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου μη ενεργή"));
+}
+
+void MainWindow::clipboardButtonClicked()
+{
+    setUseClipboard(!useClipboard);
 }

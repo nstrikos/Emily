@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>422</height>
+    <width>412</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -114,6 +114,18 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="clipboardButton">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>F7 - Χρήση προχείρου μη ενεργή</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="aboutButton">
         <property name="font">
          <font>
@@ -121,7 +133,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F7 - About</string>
+         <string>F8 - About</string>
         </property>
        </widget>
       </item>
@@ -133,7 +145,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F8 - Exit</string>
+         <string>F9 - Exit</string>
         </property>
        </widget>
       </item>
@@ -146,7 +158,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>360</width>
+     <width>412</width>
      <height>27</height>
     </rect>
    </property>

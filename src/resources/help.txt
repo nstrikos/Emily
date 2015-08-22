@@ -27,8 +27,9 @@ F3 - Restart Emily
 F4 - Install Emily NVDA addons, this is only necessary if Emily in installed before NVDA
 F5 - Memory usage
 F6 - Create a portable coly
-F7 - About the the application
-F8 - Exit
+F7 - Enable/Disable clipboard text
+F8 - About the the application
+F9 - Exit
 
 
 Ελληνικά
@@ -61,7 +62,8 @@ F3 - Επανεκκίνηση της Έμιλυ
 F4 - Εγκατάσταση των οδηγών της Έμιλυ στο NVDA, αυτό χρειάζεται αν εγκαταστήσετε πρώτα την Έμιλυ και μετά το NVDA
 F5 - Εμφανίζεται η χρήση της μνήμης από την Έμιλυ
 F6 - Εγκατάσταση σε φορητό δίσκο
-F7 - Πληροφορίες σχετικά με την εφαρμογή
-F8 - Έξοδος της Έμιλυ
+F7 - Ενεργοποίηση/Απενεργοποίηση προχείρου
+F8 - Πληροφορίες σχετικά με την εφαρμογή
+F9 - Έξοδος της Έμιλυ
 
 
