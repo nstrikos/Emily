@@ -4,5 +4,7 @@
         <file>resources/emily.ico</file>
         <file>resources/flag.png</file>
         <file>resources/manifest.ini</file>
+        <file>resources/sound.ico</file>
+        <file>resources/sound.png</file>
     </qresource>
 </RCC>

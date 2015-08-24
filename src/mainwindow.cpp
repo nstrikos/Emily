@@ -153,7 +153,7 @@ void MainWindow::createTrayAndIcons()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
 
-    QIcon icon = QIcon(":/new/prefix1/resources/flag.png");
+    QIcon icon = QIcon(":/new/prefix1/resources/sound.png");
     trayIcon->setIcon(icon);
     setWindowIcon(icon);
     trayIcon->setToolTip(tr("Emily"));
@@ -331,7 +331,7 @@ void MainWindow::help()
 void MainWindow::about()
 {
     QMessageBox msgBox;
-    msgBox.setText("Emily 0.8\nEmail : nstrikos@yahoo.gr");
+    msgBox.setText("Emily 0.8\nEmail : nstrikos@yahoo.gr\nIcons: Linecons Free by Designmodo\nLicense: Creative Commons");
     msgBox.setIcon( QMessageBox::Information );
     msgBox.exec();
 }

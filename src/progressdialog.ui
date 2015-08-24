@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Progress</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="emily.qrc">
+    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QProgressBar" name="progressBar">
@@ -23,6 +27,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="emily.qrc"/>
+ </resources>
  <connections/>
 </ui>

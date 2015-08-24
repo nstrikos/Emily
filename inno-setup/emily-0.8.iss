@@ -21,13 +21,14 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=C:\Emily-build-directory\licenses\gpl-3.0.txt
 OutputDir=C:\Users\Nikos\Desktop\Emily\inno-setup
-SetupIconFile=C:\Emily-build-directory\resources\emily.ico
+SetupIconFile=C:\Emily-build-directory\resources\sound.ico
 OutputBaseFilename=emily
 Compression=lzma
 SolidCompression=yes
 ;PrivilegesRequired=admin
 
 [Languages]
+Name: "en"; MessagesFile: "compiler:Default.isl"
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 
 [Files]
@@ -54,9 +55,11 @@ Source: "C:\Emily-build-directory\resources\manifest.ini"; DestDir: "{userappdat
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+;Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}";  WorkingDir: "{app}"; IconFilename: "{app}\resources\sound.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+;Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\sound.ico" 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

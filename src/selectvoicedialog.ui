@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Select voice</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="emily.qrc">
+    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QComboBox" name="comboBox"/>
@@ -29,7 +33,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="emily.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
