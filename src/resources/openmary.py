@@ -3,6 +3,7 @@ import synthDriverHandler
 from collections import OrderedDict
 import speech
 import os
+import os.path
 from logHandler import log
 import synthDrivers
 import codecs
@@ -11,6 +12,7 @@ import string
 import socket
 import sys
 import time
+import subprocess
 
 class SynthDriver(SynthDriver):
 
@@ -23,15 +25,17 @@ class SynthDriver(SynthDriver):
             self.timeToDie = False
             self.readData = ""
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.settimeout(None)
+            self.socket.settimeout(100000000)
             self.host = 'localhost';
             self.port = 57118;
+	 
+			
             try:
                 self.socket.connect((self.host , self.port))
             except socket.error, ex:
                 totalDelay = 0.0
                 delay = 0.25
-                while totalDelay < 25.0:
+                while totalDelay < 250000000.0:
                     try:
                         self.socket.connect((self.host, self.port))
                         return
@@ -78,8 +82,128 @@ class SynthDriver(SynthDriver):
             self.sock.close()
 
     def __init__(self):
-        self.voice = 'emily-16-hmm-norm'
-        self.curvoice = 'emily-16-hmm-norm'
+	filepath = "c:/Program Files/Emily/emily.exe"
+	if os.path.isfile(filepath):
+		p = subprocess.Popen("c:/Program Files/Emily/emily.exe", cwd="c:/Program Files/Emily")
+	else:
+		p = subprocess.Popen("c:/Program Files (x86)/Emily/emily.exe", cwd="c:/Program Files (x86)/Emily")				
+	
+        self.voice = 'hercules - greek'
+        self.myVoice = 'hercules - greek'
+        self.voices = ('hercules - greek',)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-emily-v2.0.1-hmm-5.1-SNAPSHOT.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('emily - greek')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-emily-v2.0.1-hmm-5.1-SNAPSHOT.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('emily - greek')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-spike-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('spike')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-spike-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('spike')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-rms-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('rms')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-rms-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('rms')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-slt-hsmm-5.1.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('slt')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-slt-hsmm-5.1.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('slt')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-cori-2740-hsmm-5.2.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('cori - experimental')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cori-2740-hsmm-5.2.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('cori - experimental')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-obadiah-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('obadiah')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-obadiah-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('obadiah')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-prudence-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('prudence')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-prudence-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('prudence')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-poppy-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('poppy')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-poppy-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('poppy')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-bdl-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('bdl')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-bdl-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('bdl')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-pavoque-neutral-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('pavoque - german')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-pavoque-neutral-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('pavoque - german')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-ot-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('ot - turkish ')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-ot-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('ot - turkish ')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-istc-lucia-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('lucia - italian')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-istc-lucia-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('lucia - italian')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "C:/Program Files/Emily/marytts/lib/voice-upmc-pierre-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('pierre - french')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "C:/Program Files (x86)/Emily/marytts/lib/voice-upmc-pierre-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('pierre - french')
+            self.voices = self.voices + (self.tmpVoice,)
+        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-nk-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('nk - telugu')
+            self.voices = self.voices + (self.tmpVoice,)
+	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-nk-hsmm-5.1.jar"
+        if os.path.isfile(filepath):
+            self.tmpVoice = ('nk - telugu')
+            self.voices = self.voices + (self.tmpVoice,)
+
         self.index = 0
         self.indexList = [0]
         self.thread = SynthDriver.myThread(1, "Thread", self.indexList)
@@ -88,12 +212,14 @@ class SynthDriver(SynthDriver):
         self.sendText = SynthDriver.sendText()
         self.sendCommand = SynthDriver.sendCommand()
         self.myRate = 50
+	
 
 
     name = "openmary"
     description = "Emily - Open Mary"
     supportedSettings = (SynthDriver.RateSetting(), SynthDriver.VoiceSetting())
-    voices = ('emily-16-hmm-norm','emily-16-hmm-norm')
+    myVoice = 'hercules - greek'
+    voices = ('hercules - greek')
 
     @classmethod
     def check(cls):
@@ -113,13 +239,16 @@ class SynthDriver(SynthDriver):
             text = "(NVDA Index)" + str(self.index) + "#" + text
             self.sendText.write(text)
 
+
     def _get_voice(self):
-        return self.curvoice
+        return self.myVoice
 
     def _getAvailableVoices(self):
         o = OrderedDict()
         for v in self.voices:
-            o[v] = synthDriverHandler.VoiceInfo(v, v)
+        	o[v] = synthDriverHandler.VoiceInfo(v, v)
+                if o[v] == None:
+                        o[v] = 'hercules - greek'
         return o
 
     def _get_lastIndex(self):
@@ -142,9 +271,20 @@ class SynthDriver(SynthDriver):
     def _get_rate(self):
         return self.myRate
 
+    def _set_voice(self, value):
+        print(value)
+        if value not in self.voices:
+            value = 'hercules - greek'
+        if (self.myVoice == 'None'):
+            self.myVoice = 'hercules - greek'
+            value = 'hercules - greek'
+        if (self.myVoice != value):
+            self.myVoice = value
+            self.sendCommand.write("Voice " + str(self.myVoice))
 
     def terminate(self):
-        self.thread.quit()
+	self.sendCommand.write("Quit")
+	self.thread.quit()
         self.thread.join()
         self.stopServer()
 

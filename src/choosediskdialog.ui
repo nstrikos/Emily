@@ -6,16 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>236</width>
-    <height>88</height>
+    <width>217</width>
+    <height>81</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Select disk</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="emily.qrc">
-    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+   <string>Επιλογή δίσκου</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -33,7 +29,7 @@
      <item>
       <widget class="QPushButton" name="cancelButton">
        <property name="text">
-        <string>Cancel</string>
+        <string>Ακύρωση</string>
        </property>
       </widget>
      </item>
@@ -46,8 +42,6 @@
   <tabstop>okButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>
- <resources>
-  <include location="emily.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

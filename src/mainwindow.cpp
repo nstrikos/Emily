@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Waiting for readSettings is too slow
     //So clipboard settings are read first
     QSettings settings("Emily", "Emily");
-    bool clip = settings.value("Clipboard").toBool();
-    setUseClipboard(clip);
+    //bool clip = settings.value("Clipboard").toBool();
+    //setUseClipboard(clip);
 
     createActions();
     createTrayAndIcons();
@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createShortcuts();
     createConnections();
     startMaryServer();
-    readSettings();
+    //readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -33,18 +33,18 @@ MainWindow::~MainWindow()
     if (selectVoiceDialog != NULL)
         delete selectVoiceDialog;
     delete timer;
-    delete downloadManager;
-    delete player;
-    delete nvdaReceiver;
-    delete indexTextList;
+    //delete downloadManager;
+    //delete player;
+    //delete nvdaReceiver;
+    //delete indexTextList;
     delete trayIcon;
     delete trayIconMenu;
     delete minimizeAction;
-    delete quitAction;
+    //delete quitAction;
     delete restoreAction;
     maryServerProcess.close();
     hotkeyThread.terminate();
-    writeSettings();
+    //writeSettings();
     delete ui;
 }
 
@@ -59,22 +59,22 @@ void MainWindow::createAndInitializeObjects()
     timer->start(1000);
     hotkeyThread.start();
     connect(&hotkeyThread, SIGNAL(restoreWindow()), this, SLOT(restore()));
-    connect(&hotkeyThread, SIGNAL(setGreekVoice()), this, SLOT(setGreekVoice()));
-    connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
-    connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
+    //connect(&hotkeyThread, SIGNAL(setGreekVoice()), this, SLOT(setGreekVoice()));
+    //connect(&hotkeyThread, SIGNAL(setEnglishVoice()), this, SLOT(setEnglishVoice()));
+    //connect(&hotkeyThread, SIGNAL(stop()), this, SLOT(stopPlayer()));
 
     //This is the core algorithm
     //These objects cooperate to implement the functionality
 
-    downloadManager = new DownloadManager();
-    indexTextList = new IndexTextList(downloadManager);
-    player = new Player(downloadManager);
-    nvdaReceiver = new NvdaReceiver(indexTextList, player);
-    connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
-    connect(&hotkeyThread, SIGNAL(pause()), player, SLOT(pause()));
+    //downloadManager = new DownloadManager();
+    //indexTextList = new IndexTextList(downloadManager);
+    //player = new Player(downloadManager);
+    //nvdaReceiver = new NvdaReceiver(indexTextList, player);
+    //connect(&hotkeyThread, SIGNAL(speakHighlightedText(QString)), player, SLOT(speakClipBoardText(QString)));
+    //connect(&hotkeyThread, SIGNAL(pause()), player, SLOT(pause()));
 
-    clipboard = QApplication::clipboard();
-    connect(clipboard, SIGNAL(dataChanged()), this, SLOT(speakClipboard()));
+    //clipboard = QApplication::clipboard();
+    //connect(clipboard, SIGNAL(dataChanged()), this, SLOT(speakClipboard()));
 }
 
 void MainWindow::createShortcuts()
@@ -93,8 +93,8 @@ void MainWindow::createShortcuts()
     connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
     QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F6"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *clipboardhortcut = new QShortcut(QKeySequence("F7"), this);
-    connect(clipboardhortcut, SIGNAL(activated()), this, SLOT(clipboardButtonClicked()));
+    //QShortcut *clipboardhortcut = new QShortcut(QKeySequence("F7"), this);
+    //connect(clipboardhortcut, SIGNAL(activated()), this, SLOT(clipboardButtonClicked()));
     QShortcut *aboutShortcut = new QShortcut(QKeySequence("F8"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
     QShortcut *quitShortcut = new QShortcut(QKeySequence("F9"), this);
@@ -110,9 +110,9 @@ void MainWindow::createConnections()
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
-    connect(ui->clipboardButton, SIGNAL(clicked(bool)), this, SLOT(clipboardButtonClicked()));
+    //connect(ui->clipboardButton, SIGNAL(clicked(bool)), this, SLOT(clipboardButtonClicked()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
-    connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+    //connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
 
 void MainWindow::setVisible(bool visible)
@@ -131,6 +131,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::quitReceived()
+{
+    qApp->quit();
+}
+
 void MainWindow::createActions()
 {
     minimizeAction = new QAction(tr("Mi&nimize"), this);
@@ -139,8 +144,8 @@ void MainWindow::createActions()
     restoreAction = new QAction(tr("&Restore"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(restore()));
 
-    quitAction = new QAction(tr("E&xit"), this);
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    //quitAction = new QAction(tr("E&xit"), this);
+    //connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
 void MainWindow::createTrayAndIcons()
@@ -149,7 +154,7 @@ void MainWindow::createTrayAndIcons()
     trayIconMenu->addAction(minimizeAction);
     trayIconMenu->addAction(restoreAction);
     trayIconMenu->addSeparator();
-    trayIconMenu->addAction(quitAction);
+    //trayIconMenu->addAction(quitAction);
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
 
@@ -339,13 +344,13 @@ void MainWindow::about()
 void MainWindow::setEnglishVoice()
 {
     this->voice = spikeVoice;
-    player->setVoice(spikeVoice);
+    //player->setVoice(spikeVoice);
 }
 
 void MainWindow::setGreekVoice()
 {
     this->voice = googleVoice;
-    player->setVoice(googleVoice);
+    //player->setVoice(googleVoice);
 }
 
 void MainWindow::installDiskDrive()
@@ -415,20 +420,20 @@ void MainWindow::installationComplete()
     msgBox.exec();
 }
 
-void MainWindow::increaseRate()
-{
-    player->increaseRate();
-}
+//void MainWindow::increaseRate()
+//{
+//    player->increaseRate();
+//}
 
-void MainWindow::decreaseRate()
-{
-    player->decreaseRate();
-}
+//void MainWindow::decreaseRate()
+//{
+//    player->decreaseRate();
+//}
 
-void MainWindow::stopPlayer()
-{
-    player->stop();
-}
+//void MainWindow::stopPlayer()
+//{
+//    player->stop();
+//}
 
 //void MainWindow::startNVDA()
 //{
@@ -471,32 +476,32 @@ void MainWindow::stopPlayer()
 //    SendInput(1, &ip, sizeof(INPUT));
 //}
 
-void MainWindow::writeSettings()
-{
-    QSettings settings("Emily", "Emily");
-    settings.setValue("Voice", this->voice);
-    settings.setValue("Clipboard", useClipboard);
-}
+//void MainWindow::writeSettings()
+//{
+//    QSettings settings("Emily", "Emily");
+//    settings.setValue("Voice", this->voice);
+//    //settings.setValue("Clipboard", useClipboard);
+//}
 
-void MainWindow::readSettings()
-{
-    QSettings settings("Emily", "Emily");
-    QString readVoice = settings.value("Voice").toString();
-    setVoice(readVoice);
+//void MainWindow::readSettings()
+//{
+//    QSettings settings("Emily", "Emily");
+//    QString readVoice = settings.value("Voice").toString();
+//    setVoice(readVoice);
 
-//    This code helps to find the path of the settings file
-//    QString config_dir = QFileInfo(settings.fileName()).absolutePath() + "/";
-//    qDebug() << config_dir;
-}
+////    This code helps to find the path of the settings file
+////    QString config_dir = QFileInfo(settings.fileName()).absolutePath() + "/";
+////    qDebug() << config_dir;
+//}
 
-void MainWindow::setVoice(QString voice)
-{
-    if (voice != "")
-        this->voice = voice;
-    else
-        this->voice = googleVoice;
-    player->setVoice(this->voice);
-}
+//void MainWindow::setVoice(QString voice)
+//{
+//    if (voice != "")
+//        this->voice = voice;
+//    else
+//        this->voice = googleVoice;
+//    player->setVoice(this->voice);
+//}
 
 void MainWindow::selectVoice()
 {
@@ -508,28 +513,28 @@ void MainWindow::selectVoice()
     if (selectVoiceDialog->exec())
     {
         this->voice = selectVoiceDialog->getSelectedVoice();
-        player->setVoice(this->voice);
+        //player->setVoice(this->voice);
     }
 }
 
-void MainWindow::speakClipboard()
-{
-    if (useClipboard)
-        player->speakClipBoardText(clipboard->text());
-}
+//void MainWindow::speakClipboard()
+//{
+//    if (useClipboard)
+//        player->speakClipBoardText(clipboard->text());
+//}
 
-void MainWindow::setUseClipboard(bool value)
-{
-    this->useClipboard = value;
-    if (useClipboard)
-    {
-        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου ενεργή"));
-    }
-    else
-        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου μη ενεργή"));
-}
+//void MainWindow::setUseClipboard(bool value)
+//{
+//    this->useClipboard = value;
+//    if (useClipboard)
+//    {
+//        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου ενεργή"));
+//    }
+//    else
+//        ui->clipboardButton->setText(tr("F7 - Χρήση προχείρου μη ενεργή"));
+//}
 
-void MainWindow::clipboardButtonClicked()
-{
-    setUseClipboard(!useClipboard);
-}
+//void MainWindow::clipboardButtonClicked()
+//{
+//    setUseClipboard(!useClipboard);
+//}

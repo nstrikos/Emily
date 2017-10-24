@@ -7,15 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>417</width>
-    <height>49</height>
+    <height>46</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Progress</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="emily.qrc">
-    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+   <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -27,8 +23,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="emily.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

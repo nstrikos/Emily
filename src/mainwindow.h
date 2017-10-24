@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "player.h"
 #include "choosediskdialog.h"
 #include "copythread.h"
 #include "progressdialog.h"
@@ -10,11 +9,7 @@
 #include <psapi.h>
 #include <QtWidgets>
 #include <QTimer>
-#include <QClipboard>
 #include "hotkeythread.h"
-#include "nvdareceiver.h"
-#include "indextextlist.h"
-#include "downloadmanager.h"
 #include "selectvoicedialog.h"
 
 namespace Ui {
@@ -34,6 +29,12 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
+public slots:
+    void quitReceived();
+
+signals:
+    void writeSettings();
+
 private slots:
     void restore();
     void startMaryServer();
@@ -47,11 +48,7 @@ private slots:
     void setGreekVoice();
     void installDiskDrive();
     void installationComplete();
-    void increaseRate();
-    void decreaseRate();
-    void stopPlayer();
-    void speakClipboard();
-    void clipboardButtonClicked();
+    //void voiceChanged(QString voice);
 
 private:
     Ui::MainWindow *ui;
@@ -65,10 +62,6 @@ private:
     double getAvailableMemory();
     double getUsedMemory();
     void delay(int n);
-    void writeSettings();
-    void readSettings();
-    void setVoice(QString voice);
-    void setUseClipboard(bool value);
     //void startNVDA();
 
     QSystemTrayIcon *trayIcon;
@@ -76,7 +69,6 @@ private:
 
     QAction *minimizeAction;
     QAction *restoreAction;
-    QAction *quitAction;
 
     QString command;
     QProcess maryServerProcess;
@@ -88,15 +80,16 @@ private:
     HotkeyThread hotkeyThread;
     QString voice;
 
-    NvdaReceiver *nvdaReceiver;
-    IndexTextList *indexTextList;
-    DownloadManager *downloadManager;
-    Player *player;
-
     SelectVoiceDialog *selectVoiceDialog;
 
-    QClipboard *clipboard;
-    bool useClipboard;
+    QShortcut *okShortcut;
+    QShortcut *helpShortcut;
+    QShortcut *selectVoiceShortcut;
+    QShortcut *restartShortcut;
+    QShortcut *installAddonShortcut;
+    QShortcut *memoryShortcut;
+    QShortcut *installDiskDriveShortcut;
+    QShortcut *aboutShortcut;
 };
 
 #endif // MAINWINDOW_H

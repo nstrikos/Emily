@@ -12,11 +12,15 @@ public:
     explicit NvdaSender(QObject *parent = 0);
     ~NvdaSender();
 
+public slots:
+    void send(QString text);
+
+private slots:
+    void nvdaIndexServerAcceptConnection();
+
+private:
     QTcpServer nvdaIndexServer;
     QTcpSocket *nvdaIndexServerConnection;
-
-public slots:
-    void nvdaIndexServerAcceptConnection();
 
 };
 

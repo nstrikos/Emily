@@ -14,6 +14,16 @@ NvdaSender::~NvdaSender()
     nvdaIndexServer.close();
 }
 
+void NvdaSender::send(QString text)
+{
+    if (nvdaIndexServerConnection != NULL)
+    {
+        QByteArray textToSend = text.toUtf8() ;
+        nvdaIndexServerConnection->write(textToSend);
+        qDebug() << "Send index: " << textToSend;
+    }
+}
+
 void NvdaSender::nvdaIndexServerAcceptConnection()
 {
     nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();

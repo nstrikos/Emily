@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>529</height>
+    <width>360</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,11 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Emily</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="emily.qrc">
-    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -41,7 +37,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Esc - Close window</string>
+         <string>Esc - Κλείσιμο παραθύρου</string>
         </property>
        </widget>
       </item>
@@ -53,7 +49,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F1 - Help</string>
+         <string>F1 - Βοήθεια</string>
         </property>
        </widget>
       </item>
@@ -65,7 +61,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F2 - Select voice</string>
+         <string>F2 - Επιλογή φωνής</string>
         </property>
        </widget>
       </item>
@@ -77,7 +73,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F3 - Restart</string>
+         <string>F3 - Επανεκκίνηση</string>
         </property>
        </widget>
       </item>
@@ -89,7 +85,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F4 - Install drivers</string>
+         <string>F4 - Εγκατάσταση οδηγών</string>
         </property>
        </widget>
       </item>
@@ -101,7 +97,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F5 - Memory usage</string>
+         <string>F5 - Χρήση μνήμης</string>
         </property>
        </widget>
       </item>
@@ -113,19 +109,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F6 - Create portable copy</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="clipboardButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F7 - Χρήση προχείρου μη ενεργή</string>
+         <string>F6 - Εγκατάσταση σε φορητό δίσκο</string>
         </property>
        </widget>
       </item>
@@ -137,19 +121,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F8 - About</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="exitButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F9 - Exit</string>
+         <string>F7 - Σχετικά</string>
         </property>
        </widget>
       </item>
@@ -162,8 +134,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>412</width>
-     <height>27</height>
+     <width>360</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -187,10 +159,7 @@
   <tabstop>memoryButton</tabstop>
   <tabstop>installDiskButton</tabstop>
   <tabstop>aboutButton</tabstop>
-  <tabstop>exitButton</tabstop>
  </tabstops>
- <resources>
-  <include location="emily.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

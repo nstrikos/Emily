@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "player.h"
+#include "solution.h"
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -8,24 +8,19 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    QTranslator appTranslator;
-    appTranslator.load("emily_" + QLocale::system().name(), ":/translations");
-    app.installTranslator(&appTranslator);
-
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         QMessageBox::critical(0, QObject::tr("Systray"),
-        QObject::tr("Application could not find system tray"));
+        QObject::tr("Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος."));
         return 1;
     }
+
     QApplication::setQuitOnLastWindowClosed(false);
 
-    //    //---- Check for another instance code snippet ----
-
-    //    //GUID : Generated once for your application
-    //    // you could get one GUID here: http://www.guidgenerator.com/online-guid-generator.aspx
+    //---- Check for another instance code snippet ----
+    // key must be unique for the application
     QSharedMemory sharedMemory;
-    sharedMemory.setKey("b1387fec-5d5c-41ee-a35e-ae473e3a4462");
+    sharedMemory.setKey("Emily - Open Mary voices for NVDA");
     if(sharedMemory.attach())
     {
         ;
@@ -35,7 +30,7 @@ int main(int argc, char *argv[])
     if (!sharedMemory.create(1))
     {
         QMessageBox msgBox;
-        msgBox.setText( QObject::tr("Application in already running.") );
+        msgBox.setText( QObject::tr("Η εφαρμογή έχει ήδη ξεκινήσει.") );
         msgBox.setIcon( QMessageBox::Critical );
         msgBox.exec();
         qWarning() << "Can't start more than one instance of the application.";
@@ -44,10 +39,7 @@ int main(int argc, char *argv[])
     }
     //---- END OF Check for another instance code snippet ----
 
-    MainWindow w;
-
-    //we start the application minimized
-    //w.show();
+    Solution solution;
 
     return app.exec();
 }

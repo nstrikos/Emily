@@ -4,28 +4,31 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia multimediawidgets network
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui multimedia multimediawidgets network widgets
 
 TARGET = emily
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     downloadmanager.cpp \
     player.cpp \
     choosediskdialog.cpp \
     copythread.cpp \
     progressdialog.cpp \
     hotkeythread.cpp \
-    nvdareceiver.cpp \
     nvdatexthandler.cpp \
-    indextextlist.cpp \
-    nvdacommandhandler.cpp \
     nvdasender.cpp \
-    selectvoicedialog.cpp
+    selectvoicedialog.cpp \
+    solution.cpp \
+    settings.cpp \
+    nvdacommandreceiver.cpp \
+    textmediator.cpp \
+    commandmediator.cpp \
+    nvdatextreceiver.cpp \
+    downloadmanagerimpl.cpp \
+    playerimpl.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -35,22 +38,31 @@ HEADERS  += mainwindow.h \
     progressdialog.h \
     constants.h \
     hotkeythread.h \
-    nvdareceiver.h \
-    nvdatexthandler.h \
-    indextextlist.h \
-    nvdacommandhandler.h \
     nvdasender.h \
-    selectvoicedialog.h
+    selectvoicedialog.h \
+    solution.h \
+    settings.h \
+    nvdacommandreceiver.h \
+    textmediator.h \
+    commandmediator.h \
+    nvdatexthandler.h \
+    nvdatextreceiver.h \
+    nvdatextreceiveriface.h \
+    nvdatexthandleriface.h \
+    downloadmanageriface.h \
+    playeriface.h \
+    nvdacommandreceiveriface.h \
+    settingsiface.h \
+    downloadmanagerimpl.h \
+    playerimpl.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \
     progressdialog.ui \
     selectvoicedialog.ui
 
-TRANSLATIONS = emily_en.ts \
-               emily_el.ts
-
 win32:LIBS += -lpsapi
 
-RESOURCES = emily.qrc \
-    translations.qrc
+RESOURCES = emily.qrc
+
+RC_ICONS = sound.ico

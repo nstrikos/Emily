@@ -7,15 +7,7 @@
 
 HotkeyThread::HotkeyThread()
 {
-    clipBoard = QApplication::clipboard();
-}
 
-HotkeyThread::~HotkeyThread()
-{
-    if (clipBoard != NULL)
-    {
-        clipBoard = NULL;
-    }
 }
 
 void HotkeyThread::run()
@@ -23,9 +15,6 @@ void HotkeyThread::run()
     RegisterHotKey(NULL,1,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x31); //Ctrl + Alt + 1
     RegisterHotKey(NULL,2,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x32); //Ctrl + Alt + 2
     RegisterHotKey(NULL,3,MOD_ALT | MOD_CONTROL | MOD_NOREPEAT,0x45); //Ctrl + Alt + E
-    RegisterHotKey(NULL,4, MOD_CONTROL | MOD_NOREPEAT,0x70); //Ctrl + F1
-    RegisterHotKey(NULL,5, MOD_CONTROL | MOD_NOREPEAT,0x71); //Ctrl + F2
-    RegisterHotKey(NULL,6, MOD_CONTROL | MOD_NOREPEAT,0x72); //Ctrl + F3
 
     QApplication::processEvents();
 
@@ -40,15 +29,6 @@ void HotkeyThread::run()
                 emit setGreekVoice();
             else if (msg.wParam == 3)
                 emit restoreWindow();
-            else if (msg.wParam == 4)
-            {
-                QString text = clipBoard->text();
-                emit speakHighlightedText(text);
-            }
-            else if (msg.wParam == 5)
-                emit stop();
-            else if (msg.wParam == 6)
-                emit pause();
         }
     }
 }

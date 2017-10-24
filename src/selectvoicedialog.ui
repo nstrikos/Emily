@@ -11,11 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Select voice</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="emily.qrc">
-    <normaloff>:/new/prefix1/resources/sound.png</normaloff>:/new/prefix1/resources/sound.png</iconset>
+   <string>Επιλογή φωνής</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -33,9 +29,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="emily.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
