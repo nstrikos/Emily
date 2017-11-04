@@ -38,7 +38,7 @@ const QString turkishVoiceDisplay = "Ot - Turkish";
 const QString teluguVoiceDisplay = "Nk - Telugu";
 
 const int MEGABYTE =  1048576;
-const int MAX_MEMORY_FOR_MARY =  2000; // 2000 megabytes
+const int MAX_MEMORY_FOR_MARY =  300; // 2000 megabytes
 const int NORMAL_MEMORY_FOR_MARY = 1000; //1000 megabytes
 const int MIN_MEMORY_FOR_MARY = 500; //500 megabytes
 //const int MAX_MEMORY_FOR_MARY =  150; // 2000 megabytes

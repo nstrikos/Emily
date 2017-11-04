@@ -10,7 +10,6 @@
 
 DownloadManager::DownloadManager()
 {
-    qDebug() << "Download manager creator called";
     m_impl = new DownloadManagerImpl();
 }
 
@@ -36,7 +35,6 @@ void DownloadManager::cancelDownload()
 
 DownloadManager::~DownloadManager()
 {
-    qDebug() << "Download manager destructor called";
     delete m_impl;
 }
 

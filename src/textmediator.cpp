@@ -29,7 +29,7 @@ void TextMediator::handleNormalizedText(QString text, QString index)
 
 void TextMediator::handleWav(QBuffer *buffer, QString index)
 {
-    m_player.playFile(buffer, index);
+    m_player.addPlaylist(buffer, index);
 }
 
 void TextMediator::sendIndex(QString index)

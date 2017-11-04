@@ -1,8 +1,12 @@
+/*
+ * Explanation: This class does nothing important, it delegates
+ * the requests to PlayerImpl, which implements the functionality
+*/
+
 #include "player.h"
 
 Player::Player()
 {
-    qDebug() << "Player constructor called";
     m_impl = new PlayerImpl();
 }
 
@@ -11,9 +15,9 @@ void Player::setIndexHandler(PlayerIface *indexHandler)
     m_impl->setIndexHandler(indexHandler);
 }
 
-void Player::playFile(QBuffer* buffer, QString index)
+void Player::addPlaylist(QBuffer* buffer, QString index)
 {
-    m_impl->playFile(buffer, index);
+    m_impl->addPlaylist(buffer, index);
 }
 
 void Player::stop()
@@ -38,6 +42,5 @@ void Player::setRate(QString rateString)
 
 Player::~Player()
 {
-    qDebug() << "Player destructor called";
     delete m_impl;
 }

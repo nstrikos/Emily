@@ -9,7 +9,6 @@
 
 NvdaTextReceiver::NvdaTextReceiver()
 {
-    qDebug() << "NvdaTextReceiver constructor called";
     m_receiver = NULL;
     connect(&nvdaTextServer, SIGNAL(newConnection()),
             this, SLOT(nvdaTextServerAcceptConnection()));
@@ -35,16 +34,15 @@ void NvdaTextReceiver::getText()
     QString text(nvdaTextServerConnection->readAll());
     if (m_receiver != NULL)
         m_receiver->handleRawText(text);
-    else
-        qDebug() << "NvdaTextGetter: I have read raw text but I have nowhere to send it";
 }
 
 void NvdaTextReceiver::error(QAbstractSocket::SocketError arg1)
 {
-    qDebug() << "Error: " << arg1;
+    Q_UNUSED(arg1);
+    ;//qDebug() << "Error: " << arg1;
 }
 
 NvdaTextReceiver::~NvdaTextReceiver()
 {
-    qDebug() << "NvdaTextGetter destructor called";
+    ;//qDebug() << "NvdaTextGetter destructor called";
 }

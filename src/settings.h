@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QSettings>
-#include <QDebug>
 
 #include "constants.h"
 #include "settingsiface.h"

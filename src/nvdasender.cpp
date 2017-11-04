@@ -20,7 +20,6 @@ void NvdaSender::send(QString text)
     {
         QByteArray textToSend = text.toUtf8() ;
         nvdaIndexServerConnection->write(textToSend);
-        qDebug() << "Send index: " << textToSend;
     }
 }
 

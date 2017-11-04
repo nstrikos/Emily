@@ -1,5 +1,4 @@
 #include "commandmediator.h"
-#include <QDebug>
 
 CommandMediator::CommandMediator(NvdaCommandReceiver &commandReceiver,
                                  Player &player,
@@ -18,7 +17,6 @@ CommandMediator::CommandMediator(NvdaCommandReceiver &commandReceiver,
 
 void CommandMediator::receiveCommand(QString command)
 {
-    qDebug() << "Command received: " << command;
     if (command != "")
     {
         if (command.contains("Quit"))
@@ -44,7 +42,6 @@ void CommandMediator::receiveCommand(QString command)
 
 void CommandMediator::handleVoiceCommand(QString command)
 {
-    qDebug() << "Set voice: " << command;
     QString voice;
 
     if (command.contains("hercules"))
@@ -89,7 +86,6 @@ void CommandMediator::handleRateCommand(QString command)
     QString temp = command;
     int l = temp.lastIndexOf(" ");
     QString rate = temp.right(temp.length() - l);
-    qDebug() << "Command: Received rate: " << rate;
     m_player.setRate(rate);
     m_settings.writeRate(rate);
 }

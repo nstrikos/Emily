@@ -1,3 +1,10 @@
+/*
+ * Class : PlayerImpl
+ * Role : My responsibility is to implement Player class
+ * Collaborator : When a wav file is played I send its index to m_indexHandler
+ * which probably is a textMediator object
+*/
+
 #ifndef PLAYERIMPL_H
 #define PLAYERIMPL_H
 
@@ -14,7 +21,7 @@ public:
     ~PlayerImpl();
 public:
     void setIndexHandler(PlayerIface *indexHandler);
-    void playFile(QBuffer* buffer, QString index);
+    void addPlaylist(QBuffer* buffer, QString index);
     void setRate(QString rateString);
     void stop();
     void resume();
@@ -27,12 +34,11 @@ private:
     void sendIndexToNVDA();
     void clearPlayedBuffers();
     void clearCreatedBuffers();
-    QMediaPlayer *qMediaPlayer;
-    QVector<QBuffer*> createdBuffers;
-    QVector<QBuffer*> playedBuffers;
-    QBuffer *buffer;
-    QStringList createdFileIndexes;
-    int m_count;
+    QMediaPlayer *m_mediaPlayer;
+    QVector<QBuffer*> m_createdBuffers;
+    QVector<QBuffer*> m_playedBuffers;
+    QBuffer *m_buffer;
+    QStringList m_createdIndexes;
 
     PlayerIface *m_indexHandler;
 };

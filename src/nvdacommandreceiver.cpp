@@ -1,9 +1,7 @@
 #include "nvdacommandreceiver.h"
-#include <QDebug>
 
 NvdaCommandReceiver::NvdaCommandReceiver()
 {
-    qDebug() << "NvdaCommandReceiver constructor called";
     m_commandReceiver = NULL;
     connect(&nvdaCommandServer, SIGNAL(newConnection()),
             this, SLOT(nvdaCommandServerAcceptConnection()));
@@ -31,16 +29,15 @@ void NvdaCommandReceiver::getCommand()
     QString command(nvdaCommandServerConnection->readAll());
     if (m_commandReceiver != NULL)
         m_commandReceiver->receiveCommand(command);
-    else
-        qDebug() << "NvdaCommandReceiver: I have a command to send, but I have nowhere to send it";
 }
 
 void NvdaCommandReceiver::error(QAbstractSocket::SocketError arg1)
 {
-    qDebug() << "Error: " << arg1;
+    Q_UNUSED(arg1);
+    ;//qDebug() << "Error: " << arg1;
 }
 
 NvdaCommandReceiver::~NvdaCommandReceiver()
 {
-    qDebug() << "NvdaCommandReceiver destructor called";
+    ;//qDebug() << "NvdaCommandReceiver destructor called";
 }

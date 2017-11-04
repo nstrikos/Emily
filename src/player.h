@@ -25,7 +25,7 @@ public:
     Player();
     ~Player();
     void setIndexHandler(PlayerIface *indexHandler);
-    void playFile(QBuffer* buffer, QString index);
+    void addPlaylist(QBuffer* buffer, QString index);
     void setRate(QString rateString);
     void stop();
     void resume();

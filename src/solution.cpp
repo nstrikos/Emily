@@ -1,9 +1,7 @@
 #include "solution.h"
-#include <QDebug>
 
 Solution::Solution()
 {
-    qDebug() << "Solution creator called.";
     nvdaTextReceiver = new NvdaTextReceiver();
     nvdaTextHandler = new NvdaTextHandler();
     downloadManager = new DownloadManager();
@@ -28,7 +26,6 @@ Solution::Solution()
 
 Solution::~Solution()
 {
-    qDebug() << "Solution destructor called.";
     delete settings;
     delete commandMediator;
     delete nvdaCommandReceiver;

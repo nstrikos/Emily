@@ -9,14 +9,11 @@
 
 DownloadManagerImpl::DownloadManagerImpl()
 {
-    qDebug() << "Downloadmanager implementation creator called";
     m_wavReceiver = NULL;
     m_reply = NULL;
     m_file = NULL;
     m_downloading = false;
     m_voice = herculesVoice;
-    m_count = 0;
-    m_count2 = 0;
 }
 
 void DownloadManagerImpl::setWavReceiver(DownloadManagerIface *wavReceiver)
@@ -70,14 +67,12 @@ void DownloadManagerImpl::performTextToWav(QString text, QString index)
 
         //we create a new buffer to write wav
         m_file = new QBuffer();
-        m_count++;
 
         //we make sure buffer is writable
         if (!m_file->open(QIODevice::WriteOnly))
         {
             delete m_file;
             m_file = NULL;
-            qDebug() << "DownloadManager: cannot open buffer for writing";
             return;
         }
 
@@ -92,7 +87,6 @@ void DownloadManagerImpl::performTextToWav(QString text, QString index)
         m_httpRequestAborted = false;
 
         //schedule the request
-        qDebug() << "DownloadManagerImpl: request to http server: " << command;
         startRequest(command);
     }
 }
@@ -144,8 +138,6 @@ void DownloadManagerImpl::finishRequest()
     //And we send the m_file buffer and m_index to the receiver
     if (m_wavReceiver != NULL)
         m_wavReceiver->handleWav(m_file, m_index);
-    else
-        qDebug() << "Downloadmanager: I have created wav files, but I have nowhere to send them";
 
     //Finally we call processLists to start over
     processLists();
@@ -168,7 +160,6 @@ void DownloadManagerImpl::cancelDownload()
             delete m_file;
             m_file = NULL;
         }
-        m_count2++;
     }
 }
 
@@ -180,8 +171,6 @@ void DownloadManagerImpl::clearLists()
 
 void DownloadManagerImpl::setVoice(QString voice)
 {
-    qDebug() << "Set voice for download manager: " << voice;
-
     if (voice == herculesVoiceDisplay)
         m_voice = herculesVoice;
     else if (voice == emilyVoiceDisplay)
@@ -215,19 +204,14 @@ void DownloadManagerImpl::setVoice(QString voice)
     else
     {
         m_voice = herculesVoice;
-        qDebug() << "Voice not found. Setting voice to: " << m_voice;
     }
-    qDebug() << "Download manager: voice: " << m_voice;
 }
 
 DownloadManagerImpl::~DownloadManagerImpl()
 {
-    qDebug() << "Downloadmanager implementation destructor called";
     if (m_file != NULL)
     {
         delete m_file;
         m_file = NULL;
     }
-    qDebug() << "DownloadManagerImpl: Create buffer number: " << m_count;
-    qDebug() << "DownloadManagerImpl: Delete buffer number: " << m_count2;
 }

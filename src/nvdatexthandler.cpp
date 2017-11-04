@@ -6,11 +6,9 @@
 
 #include "nvdatexthandler.h"
 #include "constants.h"
-#include <QDebug>
 
 NvdaTextHandler::NvdaTextHandler()
 {
-    qDebug() << "NvdaTextHandler constructor called";
     m_receiver = NULL;
 }
 
@@ -63,12 +61,9 @@ void NvdaTextHandler::sendText(QString text, QString index)
 {
     if (m_receiver != NULL)
         m_receiver->handleNormalizedText(text, index);
-    else
-        qDebug() << "NvdaTextHandlerImplementation:" <<
-                    " I have text to send, but I have nowhere to send it.";
 }
 
 NvdaTextHandler::~NvdaTextHandler()
 {
-    qDebug() << "NvdaTextHandler destructor called";
+    ;//qDebug() << "NvdaTextHandler destructor called";
 }
