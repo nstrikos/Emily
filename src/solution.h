@@ -22,9 +22,9 @@ public:
 private:
     NvdaTextReceiver *nvdaTextReceiver;
     NvdaTextHandler *nvdaTextHandler;
-    NvdaSender *nvdaSender;
     DownloadManager *downloadManager;
     Player *player;
+    NvdaSender *nvdaSender;
     MainWindow *mainWindow;
     Settings *settings;
     NvdaCommandReceiver *nvdaCommandReceiver;

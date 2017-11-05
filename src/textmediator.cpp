@@ -1,3 +1,11 @@
+/*
+ * Explanation: This class implements the methods of textmediator.h
+ * It follows the mediator design pattern. Reading "Designing Object Oriented
+ * C++ Applications Using The Booch Method" p. 71 by Robert Martin and
+ * "C++ All-in-One For Dummies" p. 356 by John Paul Mueller and‎ Jeff Cogswell
+ * lead to this design.
+*/
+
 #include "textmediator.h"
 
 TextMediator::TextMediator(NvdaTextReceiver &textReceiver,

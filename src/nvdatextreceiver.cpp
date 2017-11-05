@@ -14,6 +14,7 @@ NvdaTextReceiver::NvdaTextReceiver()
             this, SLOT(nvdaTextServerAcceptConnection()));
 
     nvdaTextServer.listen(QHostAddress::LocalHost, 57116);
+    nvdaTextServerConnection = NULL;
 }
 
 void NvdaTextReceiver::setReceiver(NvdaTextReceiverIface *receiver)
@@ -45,4 +46,5 @@ void NvdaTextReceiver::error(QAbstractSocket::SocketError arg1)
 NvdaTextReceiver::~NvdaTextReceiver()
 {
     ;//qDebug() << "NvdaTextGetter destructor called";
+    nvdaTextServer.close();
 }

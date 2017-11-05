@@ -1,4 +1,11 @@
+/*
+ * Explanation: Emily addon receives indexes through 57118 port,
+ * so I start QTcpServer listening at the 57118 port
+ * and send an index when send() method is called.
+*/
+
 #include "nvdasender.h"
+#include <QDebug>
 
 NvdaSender::NvdaSender(QObject *parent) : QObject(parent)
 {
@@ -9,9 +16,9 @@ NvdaSender::NvdaSender(QObject *parent) : QObject(parent)
     nvdaIndexServerConnection = NULL;
 }
 
-NvdaSender::~NvdaSender()
+void NvdaSender::nvdaIndexServerAcceptConnection()
 {
-    nvdaIndexServer.close();
+    nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
 }
 
 void NvdaSender::send(QString text)
@@ -20,11 +27,12 @@ void NvdaSender::send(QString text)
     {
         QByteArray textToSend = text.toUtf8() ;
         nvdaIndexServerConnection->write(textToSend);
+        qDebug() << textToSend;
     }
 }
 
-void NvdaSender::nvdaIndexServerAcceptConnection()
+NvdaSender::~NvdaSender()
 {
-    nvdaIndexServerConnection = nvdaIndexServer.nextPendingConnection();
+    nvdaIndexServer.close();
 }
 

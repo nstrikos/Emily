@@ -1,3 +1,10 @@
+/*
+ * Class : NvdaSender
+ * Role : My responsibility is to send incoming index to Nvda
+ * Collaborator : None, everyone who wants to send an index to Nvda
+ * just calls send() method.
+*/
+
 #ifndef NVDASENDER_H
 #define NVDASENDER_H
 
@@ -11,8 +18,6 @@ class NvdaSender : public QObject
 public:
     explicit NvdaSender(QObject *parent = 0);
     ~NvdaSender();
-
-public slots:
     void send(QString text);
 
 private slots:
