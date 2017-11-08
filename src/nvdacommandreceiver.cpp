@@ -1,3 +1,11 @@
+/*
+ * Explanation: Emily addon sends commands through 57117 port,
+ * so I start QTcpServer listening at the 57117 port
+ * When there is a readyRead() signal I call getCommand()
+ * and send text to m_commandReceiver.
+ * When there is an error I call error() and display the error
+*/
+
 #include "nvdacommandreceiver.h"
 
 NvdaCommandReceiver::NvdaCommandReceiver()

@@ -13,6 +13,7 @@ CommandMediator::CommandMediator(NvdaCommandReceiver &commandReceiver,
 {
     m_commandReceiver.setReceiver(this);
     m_settings.setUpdater(this);
+    m_settings.readSettings();
 }
 
 void CommandMediator::receiveCommand(QString command)

@@ -1,37 +1,24 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QObject>
-#include <QSettings>
-
-#include "constants.h"
 #include "settingsiface.h"
+#include "settingsimpl.h"
 
-class Settings : public QObject
+class Settings
 {
-    Q_OBJECT
+
 public:
     Settings();
+    ~Settings();
 
-public:
     void setUpdater(SettingsIface *updater);
-    void read();
-
-public slots:
+    void readSettings();
     void writeVoice(QString voice);
     void writeRate(QString rate);
     void writeSettings();
 
-signals:
-    void updateVoice(QString voice);
-    void updateRate(QString rate);
-
 private:
-    void initializeVoice();
-    void initializeRate();
-    QString m_voice;
-    QString m_rate;
-    SettingsIface *m_settingsUpdater;
+    SettingsImpl *m_settingsImpl;
 };
 
 #endif // SETTINGS_H

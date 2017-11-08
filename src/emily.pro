@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     commandmediator.cpp \
     nvdatextreceiver.cpp \
     downloadmanagerimpl.cpp \
-    playerimpl.cpp
+    playerimpl.cpp \
+    settingsimpl.cpp
 
 HEADERS  += mainwindow.h \
     downloadmanager.h \
@@ -54,7 +55,8 @@ HEADERS  += mainwindow.h \
     nvdacommandreceiveriface.h \
     settingsiface.h \
     downloadmanagerimpl.h \
-    playerimpl.h
+    playerimpl.h \
+    settingsimpl.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \
