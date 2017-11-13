@@ -48,6 +48,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::setStorage(SettingsStorageIface *storage)
+{
+    m_storage = storage;
+}
+
 void MainWindow::createAndInitializeObjects()
 {
     chooseDiskDialog = NULL;
@@ -83,8 +88,8 @@ void MainWindow::createShortcuts()
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
     connect(helpShortcut, SIGNAL(activated()), this, SLOT(help()));
-    QShortcut *selectVoiceShortcut = new QShortcut(QKeySequence("F2"), this);
-    connect(selectVoiceShortcut, SIGNAL(activated()), this, SLOT(selectVoice()));
+    //QShortcut *selectVoiceShortcut = new QShortcut(QKeySequence("F2"), this);
+    //connect(selectVoiceShortcut, SIGNAL(activated()), this, SLOT(selectVoice()));
     QShortcut *restartShortcut = new QShortcut(QKeySequence("F3"), this);
     connect(restartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer()));
     QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F4"), this);
@@ -105,7 +110,7 @@ void MainWindow::createConnections()
 {
     connect(ui->okButton, SIGNAL(clicked()), this, SLOT(hide()));
     connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(help()));
-    connect(ui->selectVoiceButton, SIGNAL(clicked(bool)), this, SLOT(selectVoice()));
+    //connect(ui->selectVoiceButton, SIGNAL(clicked(bool)), this, SLOT(selectVoice()));
     connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(startMaryServer()));
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
     connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
@@ -341,18 +346,6 @@ void MainWindow::about()
     msgBox.exec();
 }
 
-void MainWindow::setEnglishVoice()
-{
-    this->voice = spikeVoice;
-    //player->setVoice(spikeVoice);
-}
-
-void MainWindow::setGreekVoice()
-{
-    this->voice = googleVoice;
-    //player->setVoice(googleVoice);
-}
-
 void MainWindow::installDiskDrive()
 {
     if (!chooseDiskDialog)
@@ -375,7 +368,7 @@ void MainWindow::installDiskDrive()
 
                 //Set up thread
                 QThread* copyThread = new QThread;
-                Copy* copy = new Copy(drivePath);
+                Copy* copy = new Copy(drivePath, m_storage->getVoice(), m_storage->getRate());
                 int maxFiles = copy->countMaxFiles();
                 copy->moveToThread(copyThread);
                 connect(copyThread, SIGNAL(started()), copy, SLOT(process()));
@@ -503,19 +496,19 @@ void MainWindow::installationComplete()
 //    player->setVoice(this->voice);
 //}
 
-void MainWindow::selectVoice()
-{
-    if (selectVoiceDialog == NULL)
-        selectVoiceDialog = new SelectVoiceDialog();
-    selectVoiceDialog->setModal(true);
-    selectVoiceDialog->initCombobox(this->voice);
+//void MainWindow::selectVoice()
+//{
+//    if (selectVoiceDialog == NULL)
+//        selectVoiceDialog = new SelectVoiceDialog();
+//    selectVoiceDialog->setModal(true);
+//    selectVoiceDialog->initCombobox(this->voice);
 
-    if (selectVoiceDialog->exec())
-    {
-        this->voice = selectVoiceDialog->getSelectedVoice();
-        //player->setVoice(this->voice);
-    }
-}
+//    if (selectVoiceDialog->exec())
+//    {
+//        this->voice = selectVoiceDialog->getSelectedVoice();
+//        //player->setVoice(this->voice);
+//    }
+//}
 
 //void MainWindow::speakClipboard()
 //{

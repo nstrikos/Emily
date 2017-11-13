@@ -44,6 +44,8 @@ private:
     QStringList m_indexList;
     QString m_index;
     QString m_voice;
+    int m_actualBuffers;
+    int m_delBuffers;
 
     DownloadManagerIface *m_wavReceiver;
 };

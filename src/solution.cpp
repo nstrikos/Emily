@@ -27,12 +27,12 @@ Solution::Solution()
 Solution::~Solution()
 {
     delete settings;
-    delete commandMediator;
     delete nvdaCommandReceiver;
-    delete nvdaTextReceiver;
+    delete commandMediator;
     delete nvdaTextHandler;
-    delete downloadManager;
     delete player;
+    delete downloadManager;
+    delete nvdaTextReceiver;
     delete textMediator;
     delete nvdaSender;
     delete mainWindow;

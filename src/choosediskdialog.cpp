@@ -1,6 +1,9 @@
 #include "choosediskdialog.h"
 #include "ui_choosediskdialog.h"
 
+#include <QStorageInfo>
+#include <QDebug>
+
 ChooseDiskDialog::ChooseDiskDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChooseDiskDialog)
@@ -27,14 +30,27 @@ bool ChooseDiskDialog::searchDrivesAndAddtoCombobox()
     //if there are any available drives returns true
 
     ui->comboBox->clear();
-    QDir dir;
 
-    //We start at i=1 to avoid choosing drive C
-    for (int i = 1; i < dir.drives().size(); i++)
-    {
-        QFileInfo item = dir.drives().at(i);
-        ui->comboBox->addItem(diskString + item.canonicalFilePath());
+    foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
+        if (storage.isValid() && storage.isReady()) {
+            if (!storage.isReadOnly()) {
+                qDebug() << storage.displayName();
+                if (!storage.displayName().startsWith("c", Qt::CaseInsensitive))
+                    ui->comboBox->addItem(storage.rootPath());
+            }
+        }
     }
+
+//    ui->comboBox->clear();
+//    QDir dir;
+
+//    //We start at i=1 to avoid choosing drive C
+//    for (int i = 1; i < dir.drives().size(); i++)
+//    {
+//        QFileInfo item = dir.drives().at(i);
+//        if (item.isWritable())
+//            ui->comboBox->addItem(diskString + item.canonicalFilePath());
+//    }
     if (ui->comboBox->count() == 0)
     {
         return false;

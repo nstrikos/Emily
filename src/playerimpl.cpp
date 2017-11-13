@@ -10,6 +10,7 @@ PlayerImpl::PlayerImpl()
 {
     m_indexHandler = NULL;
     m_buffer = NULL;
+    m_delCount = 0;
     m_mediaPlayer = new QMediaPlayer();
     m_mediaPlayer->setPlaybackRate(1.0);
     connect(m_mediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(play()));
@@ -59,7 +60,10 @@ void PlayerImpl::clearPlayedBuffers()
         if ( tempBuffer != m_buffer)
         {
             if ( tempBuffer != NULL)
+            {
                 delete tempBuffer;
+                m_delCount++;
+            }
             m_playedBuffers.removeFirst();
         }
     }
@@ -92,6 +96,7 @@ void PlayerImpl::clearCreatedBuffers()
     {
         QBuffer *tempBuffer = m_createdBuffers.takeFirst();
         delete tempBuffer;
+        m_delCount++;
     }
 }
 
@@ -119,13 +124,21 @@ void PlayerImpl::setIndexHandler(PlayerIface *indexHandler)
 
 PlayerImpl::~PlayerImpl()
 {
+    qDebug() << "PlayerImpl destructor called";
     delete m_mediaPlayer;
     clearCreatedBuffers();
     clearPlayedBuffers();
+
+    //We delete the last buffer, this buffer is in mediaPlayer.setMedia
+    //If we delete this buffer, the application will crash
+    //So we first delete mediaPlayer and then we delete m_buffer
     if (m_buffer != NULL)
     {
         delete m_buffer;
         m_buffer = NULL;
+        m_delCount++;
     }
+    qDebug() << "PlayerImpl: Number of deleted buffers: " << m_delCount;
+    qDebug() << "PlayerImpl destructor completed";
 }
 

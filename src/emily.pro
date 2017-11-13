@@ -56,7 +56,8 @@ HEADERS  += mainwindow.h \
     settingsiface.h \
     downloadmanagerimpl.h \
     playerimpl.h \
-    settingsimpl.h
+    settingsimpl.h \
+    settingsstorageiface.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \

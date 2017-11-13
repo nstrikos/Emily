@@ -1,8 +1,11 @@
 #include "copythread.h"
+#include <QTextStream>
 
-Copy::Copy(QString drivePath)
+Copy::Copy(QString drivePath, QString voice, QString rate)
 {
     this->drivePath = drivePath;
+    this->voice = voice;
+    this->rate = rate;
 
     srcPath = QDir::currentPath();
     QDir installationDir = drivePath + "/Emily";
@@ -84,6 +87,20 @@ void Copy::installOpenMaryConf(QString drivePath)
     }
 }
 
+void Copy::installUserSettings(QString voice, QString rate)
+{
+    QString filename = dstPath + "/userSettings";
+    QFile file( filename );
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Text) )
+    {
+        file.resize(0);
+        QTextStream stream( &file );
+        stream << "Voice: " << voice << endl;
+        stream << "Rate: " << rate;
+    }
+    file.close();
+}
+
 int Copy::countMaxFiles()
 {
 //    int count = 0;
@@ -148,6 +165,7 @@ void Copy::process()
 
     cpDir(srcPath, dstPath);
     installOpenMaryConf(drivePath);
+    installUserSettings(voice, rate);
     emit finished();
 }
 

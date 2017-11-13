@@ -2,6 +2,8 @@
 
 #include <QLocale>
 #include <QSettings>
+#include <QDir>
+#include <QDebug>
 
 #include "constants.h"
 
@@ -17,9 +19,12 @@ void SettingsImpl::setUpdater(SettingsIface *updater)
 
 void SettingsImpl::readSettings()
 {
-    QSettings settings("Emily", "Emily");
-    m_voice = settings.value("Voice").toString();
-    m_rate = settings.value("Rate").toString();
+    QString dir =  QDir::currentPath();
+
+    if (dir.startsWith("c", Qt::CaseInsensitive))
+        readFromRegistry();
+    else
+        readFromCurFolder();
 
     if (m_voice == "")
         initializeVoice();
@@ -31,31 +36,94 @@ void SettingsImpl::readSettings()
         m_settingsUpdater->updateVoice(m_voice);
         m_settingsUpdater->updateRate(m_rate);
     }
+}
+
+void SettingsImpl::readFromRegistry()
+{
+    QSettings settings("Emily", "Emily");
+    m_voice = settings.value("Voice").toString();
+    m_rate = settings.value("Rate").toString();
 
     //    This code helps to find the path of the settings file
     //    QString config_dir = QFileInfo(settings.fileName()).absolutePath() + "/";
     //    qDebug() << config_dir;
+    qDebug() << m_voice << " " << m_rate;
 }
 
-void SettingsImpl::writeVoice(QString voice)
+void SettingsImpl::readFromCurFolder()
 {
-    m_voice = voice;
-    QSettings settings("Emily", "Emily");
-    settings.setValue("Voice", m_voice);
-}
+    QString text;
+    QString filename = QDir::currentPath() + "/userSettings";
+    QFile file( filename );
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&file);
 
-void SettingsImpl::writeRate(QString rate)
-{
-    rate = rate.trimmed();
-    m_rate = rate;
-    QSettings settings("Emily", "Emily");
-    settings.setValue("Rate", m_rate);
+        text = in.readAll();
+
+        int i = text.indexOf(":");
+        int l = text.indexOf("\r");
+        m_voice = text.mid(i + 2, l - i - 2);
+        text = text.right(l);
+        i = text.indexOf(":");
+        l = text.indexOf("\r");
+        m_rate = text.mid(i + 2, l - i - 2);
+        qDebug() << m_voice;
+        qDebug() << m_rate;
+    }
+
+    file.close();
 }
 
 void SettingsImpl::writeSettings()
 {
-    writeVoice(m_voice);
-    writeRate(m_rate);
+    QString dir =  QDir::currentPath();
+
+    if (dir.startsWith("c", Qt::CaseInsensitive))
+        writeToRegistry();
+    else
+        writeToCurFolder();
+}
+
+void SettingsImpl::writeToRegistry()
+{
+    QSettings settings("Emily", "Emily");
+    settings.setValue("Voice", m_voice);
+    settings.setValue("Rate", m_rate);
+}
+
+void SettingsImpl::writeToCurFolder()
+{
+    QString filename = QDir::currentPath() + "/userSettings";
+    QFile file( filename );
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Text) )
+    {
+        file.resize(0);
+        QTextStream stream( &file );
+        stream << "Voice: " << m_voice << endl;
+        stream << "Rate: " << m_rate;
+    }
+    file.close();
+}
+
+void SettingsImpl::setVoice(QString voice)
+{
+    m_voice = voice;
+}
+
+void SettingsImpl::setRate(QString rate)
+{
+    m_rate = rate.trimmed();
+}
+
+QString SettingsImpl::voice()
+{
+    return m_voice;
+}
+
+QString SettingsImpl::rate()
+{
+    return m_rate;
 }
 
 void SettingsImpl::initializeVoice()

@@ -35,6 +35,8 @@ void DownloadManager::cancelDownload()
 
 DownloadManager::~DownloadManager()
 {
+    qDebug() << "DownloadManager destructor called";
     delete m_impl;
+    qDebug() << "DownloadManager destructor completed";
 }
 

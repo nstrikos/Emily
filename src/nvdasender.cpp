@@ -5,7 +5,6 @@
 */
 
 #include "nvdasender.h"
-#include <QDebug>
 
 NvdaSender::NvdaSender(QObject *parent) : QObject(parent)
 {

@@ -4,6 +4,7 @@
 #include <QObject>
 #include "nvdacommandreceiveriface.h"
 #include "settingsiface.h"
+#include "settingsstorageiface.h"
 #include "nvdacommandreceiver.h"
 #include "settings.h"
 #include "player.h"
@@ -13,7 +14,8 @@
 
 class CommandMediator :
         public NvdaCommandReceiverIface,
-        public SettingsIface
+        public SettingsIface,
+        public SettingsStorageIface
 {
 
 public:
@@ -26,6 +28,8 @@ public:
     void receiveCommand(QString command);
     virtual void updateVoice(QString voice);
     virtual void updateRate(QString rate);
+    virtual QString getVoice();
+    virtual QString getRate();
 
 private:
     void handleVoiceCommand(QString command);

@@ -1,12 +1,12 @@
-#include "settings.h"
+/*
+ * Explanation: This class does nothing important, it delegates
+ * the requests to SettingsImpl, which implements the functionality
+*/
 
-#include <QLocale>
+#include "settings.h"
 
 Settings::Settings()
 {
-    //Sometimes nvda sends the first command for voice and rate too fast
-    //and the application cannot receive them.
-    //So we need a class to write and read voice and rate for the starting up
     m_settingsImpl = new SettingsImpl();
 }
 
@@ -20,19 +20,29 @@ void Settings::readSettings()
     m_settingsImpl->readSettings();
 }
 
-void Settings::writeVoice(QString voice)
-{
-    m_settingsImpl->writeVoice(voice);
-}
-
-void Settings::writeRate(QString rate)
-{
-    m_settingsImpl->writeRate(rate);
-}
-
 void Settings::writeSettings()
 {
     m_settingsImpl->writeSettings();
+}
+
+void Settings::setVoice(QString voice)
+{
+    m_settingsImpl->setVoice(voice);
+}
+
+void Settings::setRate(QString rate)
+{
+    m_settingsImpl->setRate(rate);
+}
+
+QString Settings::voice()
+{
+    return m_settingsImpl->voice();
+}
+
+QString Settings::rate()
+{
+    return m_settingsImpl->rate();
 }
 
 Settings::~Settings()

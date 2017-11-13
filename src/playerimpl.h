@@ -39,6 +39,7 @@ private:
     QVector<QBuffer*> m_playedBuffers;
     QBuffer *m_buffer;
     QStringList m_createdIndexes;
+    int m_delCount;
 
     PlayerIface *m_indexHandler;
 };

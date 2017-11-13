@@ -11,6 +11,7 @@
 #include <QTimer>
 #include "hotkeythread.h"
 #include "selectvoicedialog.h"
+#include "settingsstorageiface.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setStorage(SettingsStorageIface *storage);
 
     void setVisible(bool visible);
 
@@ -42,10 +44,8 @@ private slots:
     void installAddon();
     void displayMemoryStatus();
     void help();
-    void selectVoice();
+    //void selectVoice();
     void about();
-    void setEnglishVoice();
-    void setGreekVoice();
     void installDiskDrive();
     void installationComplete();
     //void voiceChanged(QString voice);
@@ -78,7 +78,6 @@ private:
     ChooseDiskDialog *chooseDiskDialog;
     ProgressDialog *progressDialog;
     HotkeyThread hotkeyThread;
-    QString voice;
 
     SelectVoiceDialog *selectVoiceDialog;
 
@@ -90,6 +89,8 @@ private:
     QShortcut *memoryShortcut;
     QShortcut *installDiskDriveShortcut;
     QShortcut *aboutShortcut;
+
+    SettingsStorageIface *m_storage;
 };
 
 #endif // MAINWINDOW_H

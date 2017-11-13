@@ -12,6 +12,8 @@ DownloadManagerImpl::DownloadManagerImpl()
     m_wavReceiver = NULL;
     m_reply = NULL;
     m_file = NULL;
+    m_actualBuffers = 0;
+    m_delBuffers = 0;
     m_downloading = false;
     m_voice = herculesVoice;
 }
@@ -67,6 +69,7 @@ void DownloadManagerImpl::performTextToWav(QString text, QString index)
 
         //we create a new buffer to write wav
         m_file = new QBuffer();
+        m_actualBuffers++;
 
         //we make sure buffer is writable
         if (!m_file->open(QIODevice::WriteOnly))
@@ -159,6 +162,7 @@ void DownloadManagerImpl::cancelDownload()
         {
             delete m_file;
             m_file = NULL;
+            m_delBuffers++;
         }
     }
 }
@@ -209,9 +213,16 @@ void DownloadManagerImpl::setVoice(QString voice)
 
 DownloadManagerImpl::~DownloadManagerImpl()
 {
-    if (m_file != NULL)
-    {
-        delete m_file;
-        m_file = NULL;
-    }
+    qDebug() << "DownloadManagerImpl destructor called";
+//    cancelDownload();
+//    if (m_file != NULL)
+//    {
+//        delete m_file;
+//        m_file = NULL;
+//        qDebug() << "DownloadmanagerImpl: deleting buffer";
+//    }
+    qDebug() << "DownloaManagerImpl: Number of total buffers created: " << m_actualBuffers;
+    qDebug() << "DownloaManagerImpl: Number of buffers deleted : " << m_delBuffers;
+    qDebug() << "DownloaManagerImpl: Number of actual buffers created: " << m_actualBuffers - m_delBuffers;
+    qDebug() << "DownloadManagerImpl destructor completed";
 }

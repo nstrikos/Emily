@@ -1,3 +1,10 @@
+/*
+ * Class : SettingsImpl
+ * Role : My responsibility is to implement Settings class
+ * Collaborator : When I read settings I send them to m_settingsUpdater
+ * which probably is a textMediator object
+*/
+
 #ifndef SETTINGSIMPL_H
 #define SETTINGSIMPL_H
 
@@ -12,11 +19,19 @@ public:
 
     void setUpdater(SettingsIface *updater);
     void readSettings();
-    void writeVoice(QString voice);
-    void writeRate(QString rate);
     void writeSettings();
+    void setVoice(QString voice);
+    void setRate(QString rate);
+    QString voice();
+    QString rate();
 
 private:
+    void readFromRegistry();
+    void readFromCurFolder();
+    void writeToRegistry();
+    void writeToCurFolder();
+    void writeVoice(QString voice);
+    void writeRate(QString rate);
     void initializeVoice();
     void initializeRate();
     QString m_voice;

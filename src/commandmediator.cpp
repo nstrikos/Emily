@@ -14,6 +14,7 @@ CommandMediator::CommandMediator(NvdaCommandReceiver &commandReceiver,
     m_commandReceiver.setReceiver(this);
     m_settings.setUpdater(this);
     m_settings.readSettings();
+    m_mainWindow.setStorage(this);
 }
 
 void CommandMediator::receiveCommand(QString command)
@@ -22,8 +23,8 @@ void CommandMediator::receiveCommand(QString command)
     {
         if (command.contains("Quit"))
         {
-            m_mainWindow.quitReceived();
             m_settings.writeSettings();
+            m_mainWindow.quitReceived();
         }
         if (command.contains("Cancel"))
         {
@@ -77,7 +78,7 @@ void CommandMediator::handleVoiceCommand(QString command)
         voice = teluguVoiceDisplay;
 
     m_downloadManager.setVoice(voice);
-    m_settings.writeVoice(voice);
+    m_settings.setVoice(voice);
 }
 
 void CommandMediator::handleRateCommand(QString command)
@@ -88,7 +89,7 @@ void CommandMediator::handleRateCommand(QString command)
     int l = temp.lastIndexOf(" ");
     QString rate = temp.right(temp.length() - l);
     m_player.setRate(rate);
-    m_settings.writeRate(rate);
+    m_settings.setRate(rate);
 }
 
 void CommandMediator::updateVoice(QString voice)
@@ -99,6 +100,16 @@ void CommandMediator::updateVoice(QString voice)
 void CommandMediator::updateRate(QString rate)
 {
     m_player.setRate(rate);
+}
+
+QString CommandMediator::getVoice()
+{
+    return m_settings.voice();
+}
+
+QString CommandMediator::getRate()
+{
+    return m_settings.rate();
 }
 
 CommandMediator::~CommandMediator()
