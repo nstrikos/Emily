@@ -88,22 +88,24 @@ void MainWindow::createShortcuts()
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
     QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
     connect(helpShortcut, SIGNAL(activated()), this, SLOT(help()));
+    QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F2"), this);
+    connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
+    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F3"), this);
+    connect(installAddonShortcut, SIGNAL(activated()), this, SLOT(installAddon()));
+    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F4"), this);
+    connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
     //QShortcut *selectVoiceShortcut = new QShortcut(QKeySequence("F2"), this);
     //connect(selectVoiceShortcut, SIGNAL(activated()), this, SLOT(selectVoice()));
-    QShortcut *restartShortcut = new QShortcut(QKeySequence("F3"), this);
-    connect(restartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer()));
-    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F4"), this);
-    connect(installAddonShortcut, SIGNAL(activated()), this, SLOT(installAddon()));
-    QShortcut *memoryShortcut = new QShortcut(QKeySequence("F5"), this);
-    connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
-    QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F6"), this);
-    connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
+    //QShortcut *restartShortcut = new QShortcut(QKeySequence("F3"), this);
+    //connect(restartShortcut, SIGNAL(activated()), this, SLOT(startMaryServer()));
+
+    //QShortcut *memoryShortcut = new QShortcut(QKeySequence("F5"), this);
+    //connect(memoryShortcut, SIGNAL(activated()), this, SLOT(displayMemoryStatus()));
+
     //QShortcut *clipboardhortcut = new QShortcut(QKeySequence("F7"), this);
     //connect(clipboardhortcut, SIGNAL(activated()), this, SLOT(clipboardButtonClicked()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F8"), this);
-    connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
-    QShortcut *quitShortcut = new QShortcut(QKeySequence("F9"), this);
-    connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
+    //QShortcut *quitShortcut = new QShortcut(QKeySequence("F9"), this);
+    //connect(quitShortcut, SIGNAL(activated()), qApp, SLOT(quit()));
 }
 
 void MainWindow::createConnections()
@@ -111,9 +113,9 @@ void MainWindow::createConnections()
     connect(ui->okButton, SIGNAL(clicked()), this, SLOT(hide()));
     connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(help()));
     //connect(ui->selectVoiceButton, SIGNAL(clicked(bool)), this, SLOT(selectVoice()));
-    connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(startMaryServer()));
+    //connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(startMaryServer()));
     connect(ui->installDriversButton, SIGNAL(clicked()), this, SLOT(installAddon()));
-    connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
+    //connect(ui->memoryButton, SIGNAL(clicked()), this, SLOT(displayMemoryStatus()));
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
     //connect(ui->clipboardButton, SIGNAL(clicked(bool)), this, SLOT(clipboardButtonClicked()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
@@ -143,10 +145,10 @@ void MainWindow::quitReceived()
 
 void MainWindow::createActions()
 {
-    minimizeAction = new QAction(tr("Mi&nimize"), this);
+    minimizeAction = new QAction(tr("Ε&λαχιστοποίση"), this);
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    restoreAction = new QAction(tr("&Restore"), this);
+    restoreAction = new QAction(tr("&Επαναφορά"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(restore()));
 
     //quitAction = new QAction(tr("E&xit"), this);

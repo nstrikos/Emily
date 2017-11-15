@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>422</height>
+    <width>349</width>
+    <height>282</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -54,26 +54,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="selectVoiceButton">
+       <widget class="QPushButton" name="installDiskButton">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>F2 - Επιλογή φωνής</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="restartButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F3 - Επανεκκίνηση</string>
+         <string>F2 - Εγκατάσταση σε φορητό δίσκο</string>
         </property>
        </widget>
       </item>
@@ -85,31 +73,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F4 - Εγκατάσταση οδηγών</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="memoryButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F5 - Χρήση μνήμης</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="installDiskButton">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>F6 - Εγκατάσταση σε φορητό δίσκο</string>
+         <string>F3 - Εγκατάσταση προσθέτου NVDA</string>
         </property>
        </widget>
       </item>
@@ -121,7 +85,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F7 - Σχετικά</string>
+         <string>F4 - Σχετικά με την εφαρμογή</string>
         </property>
        </widget>
       </item>
@@ -134,7 +98,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>360</width>
+     <width>349</width>
      <height>26</height>
     </rect>
    </property>
@@ -153,11 +117,8 @@
  <tabstops>
   <tabstop>okButton</tabstop>
   <tabstop>helpButton</tabstop>
-  <tabstop>selectVoiceButton</tabstop>
-  <tabstop>restartButton</tabstop>
-  <tabstop>installDriversButton</tabstop>
-  <tabstop>memoryButton</tabstop>
   <tabstop>installDiskButton</tabstop>
+  <tabstop>installDriversButton</tabstop>
   <tabstop>aboutButton</tabstop>
  </tabstops>
  <resources/>
