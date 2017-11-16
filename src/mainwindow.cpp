@@ -319,6 +319,11 @@ void MainWindow::installAddon()
 
         QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
         QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+
+        QMessageBox msgBox;
+        msgBox.setText(tr("Η εγκατάσταση ολοκληρώθηκε"));
+        msgBox.setIcon( QMessageBox::Information );
+        msgBox.exec();
     }
 }
 
@@ -410,7 +415,7 @@ void MainWindow::installationComplete()
     }
 
     QMessageBox msgBox;
-    msgBox.setText("Η εγκατάσταση ολοκληρώθηκε");
+    msgBox.setText(tr("Η εγκατάσταση ολοκληρώθηκε"));
     msgBox.setIcon( QMessageBox::Information );
     msgBox.exec();
 }

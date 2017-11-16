@@ -82,11 +82,18 @@ class SynthDriver(SynthDriver):
             self.sock.close()
 
     def __init__(self):
-	filepath = "c:/Program Files/Emily/emily.exe"
-	if os.path.isfile(filepath):
-		p = subprocess.Popen("c:/Program Files/Emily/emily.exe", cwd="c:/Program Files/Emily")
+	cwd = os.getcwd()
+	drive = cwd[:1]
+	if drive == 'c' or drive == 'C':
+		filepath = "c:/Program Files/Emily/emily.exe"
+		if os.path.isfile(filepath):
+			p = subprocess.Popen("c:/Program Files/Emily/emily.exe", cwd="c:/Program Files/Emily")
+		else:
+			p = subprocess.Popen("c:/Program Files (x86)/Emily/emily.exe", cwd="c:/Program Files (x86)/Emily")
 	else:
-		p = subprocess.Popen("c:/Program Files (x86)/Emily/emily.exe", cwd="c:/Program Files (x86)/Emily")				
+		filepath = str(drive) + ":/Emily/emily.exe"
+		dir = str(drive) + ":/Emily"
+		p = subprocess.Popen(filepath, cwd=dir)					
 	
         self.voice = 'hercules - greek'
         self.myVoice = 'hercules - greek'

@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/new/prefix1">
         <file>resources/sound.png</file>
+        <file>resources/manifest.ini</file>
+        <file>resources/openmary.py</file>
     </qresource>
 </RCC>

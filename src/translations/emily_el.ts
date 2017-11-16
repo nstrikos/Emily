@@ -4,13 +4,13 @@
 <context>
     <name>ChooseDiskDialog</name>
     <message>
+        <location filename="choosediskdialog.ui" line="14"/>
         <source>Επιλογή δίσκου</source>
-        <translation type="vanished">Επιλογή δίσκου</translation>
+        <translation>Επιλογή δίσκου</translation>
     </message>
     <message>
-        <location filename="choosediskdialog.ui" line="14"/>
         <source>Select disk</source>
-        <translation>Επιλογή δίσκου</translation>
+        <translation type="vanished">Επιλογή δίσκου</translation>
     </message>
     <message>
         <location filename="choosediskdialog.ui" line="25"/>
@@ -18,26 +18,47 @@
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="choosediskdialog.ui" line="32"/>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
+        <location filename="choosediskdialog.ui" line="32"/>
         <source>Ακύρωση</source>
-        <translation type="vanished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="mainwindow.ui" line="26"/>
+        <source>MainWindow</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="40"/>
         <source>Esc - Κλείσιμο παραθύρου</source>
-        <translation type="vanished">Esc - Κλείσιμο παραθύρου</translation>
+        <translation>Esc - Κλείσιμο παραθύρου</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="52"/>
-        <source>F1 - Help</source>
-        <oldsource>F1 - Βοήθεια</oldsource>
+        <source>F1 - Βοήθεια</source>
+        <oldsource>F1 - Help</oldsource>
         <translation>F1 - Βοήθεια</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="64"/>
+        <source>F2 - Εγκατάσταση σε φορητό δίσκο</source>
+        <translation>F6 - Εγκατάσταση σε φορητό δίσκο {2 ?}</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="76"/>
+        <source>F3 - Εγκατάσταση προσθέτου NVDA</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="88"/>
+        <source>F4 - Σχετικά με την εφαρμογή</source>
+        <translation></translation>
     </message>
     <message>
         <source>F2 - Επιλογή φωνής</source>
@@ -52,50 +73,41 @@
         <translation type="vanished">F4 - Εγκατάσταση οδηγών</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="100"/>
         <source>F5 - Memory usage</source>
         <oldsource>F5 - Χρήση μνήμης</oldsource>
-        <translation>F5 - Χρήση μνήμης</translation>
+        <translation type="vanished">F5 - Χρήση μνήμης</translation>
     </message>
     <message>
         <source>F6 - Εγκατάσταση σε φορητό δίσκο</source>
         <translation type="vanished">F6 - Εγκατάσταση σε φορητό δίσκο</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="40"/>
         <source>Esc - Close window</source>
-        <translation>Esc - Κλείσιμο παραθύρου</translation>
+        <translation type="vanished">Esc - Κλείσιμο παραθύρου</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="64"/>
         <source>F2 - Select voice</source>
-        <translation>F2 - Επιλογή φωνής</translation>
+        <translation type="vanished">F2 - Επιλογή φωνής</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="76"/>
         <source>F3 - Restart</source>
-        <translation>F3 - Επανεκκίνηση</translation>
+        <translation type="vanished">F3 - Επανεκκίνηση</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="88"/>
         <source>F4 - Install drivers</source>
-        <translation>F4 - Εγκατάσταση οδηγών</translation>
+        <translation type="vanished">F4 - Εγκατάσταση οδηγών</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="112"/>
         <source>F6 - Create portable copy</source>
-        <translation>F6 - Δημιουργία φορητού αντίγραφου</translation>
+        <translation type="vanished">F6 - Δημιουργία φορητού αντίγραφου</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="124"/>
-        <location filename="mainwindow.cpp" line="525"/>
         <source>F7 - Χρήση προχείρου μη ενεργή</source>
-        <translation>F7 - Χρήση προχείρου μη ενεργή</translation>
+        <translation type="vanished">F7 - Χρήση προχείρου μη ενεργή</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="148"/>
         <source>F9 - Exit</source>
-        <translation>F9 - Έξοδος</translation>
+        <translation type="vanished">F9 - Έξοδος</translation>
     </message>
     <message>
         <source>F7 - About</source>
@@ -103,17 +115,31 @@
         <translation type="vanished">F7 - Σχετικά</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="136"/>
         <source>F8 - About</source>
         <oldsource>F8 - Exit</oldsource>
-        <translation>F8 - Σχετικά</translation>
+        <translation type="vanished">F8 - Σχετικά</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="26"/>
         <location filename="mainwindow.cpp" line="9"/>
-        <location filename="mainwindow.cpp" line="153"/>
+        <location filename="mainwindow.cpp" line="171"/>
         <source>Emily</source>
         <translation>Emily</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="148"/>
+        <source>Ε&amp;λαχιστοποίση</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="151"/>
+        <source>&amp;Επαναφορά</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="324"/>
+        <location filename="mainwindow.cpp" line="418"/>
+        <source>Η εγκατάσταση ολοκληρώθηκε</source>
+        <translation></translation>
     </message>
     <message>
         <source>Ε&amp;λαχιστοποίηση</source>
@@ -128,65 +154,65 @@
         <translation type="vanished">&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
         <source>Mi&amp;nimize</source>
-        <translation>Ε&amp;λαχιστοποίηση</translation>
+        <translation type="vanished">Ε&amp;λαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
         <source>&amp;Restore</source>
-        <translation>Ε&amp;παναφορά</translation>
+        <translation type="vanished">Ε&amp;παναφορά</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="136"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Έξοδος</translation>
+        <translation type="vanished">&amp;Έξοδος</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="522"/>
         <source>F7 - Χρήση προχείρου ενεργή</source>
-        <translation>F7 - Χρήση προχείρου ενεργή</translation>
+        <translation type="vanished">F7 - Χρήση προχείρου ενεργή</translation>
     </message>
 </context>
 <context>
     <name>ProgressDialog</name>
     <message>
-        <location filename="progressdialog.ui" line="14"/>
         <source>Progress</source>
-        <translation>Πρόοδος</translation>
+        <translation type="vanished">Πρόοδος</translation>
+    </message>
+    <message>
+        <location filename="progressdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="17"/>
+        <location filename="main.cpp" line="13"/>
         <source>Systray</source>
         <translation>Systray</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="18"/>
         <source>Application could not find system tray</source>
-        <translation>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος</translation>
+        <translation type="vanished">Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="38"/>
         <source>Application in already running.</source>
-        <translation>Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
-    </message>
-    <message>
-        <source>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</source>
-        <translation type="vanished">Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</translation>
-    </message>
-    <message>
-        <source>Η εφαρμογή έχει ήδη ξεκινήσει.</source>
         <translation type="vanished">Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="14"/>
+        <source>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</source>
+        <translation>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="33"/>
+        <source>Η εφαρμογή έχει ήδη ξεκινήσει.</source>
+        <translation>Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
     </message>
     <message>
         <source>Η Έμιλυ δεν μπορεί να ξεκινήσει.</source>
         <translation type="vanished">Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="236"/>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>Emily cannot start.</source>
         <translation>Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
@@ -194,13 +220,13 @@
 <context>
     <name>SelectVoiceDialog</name>
     <message>
+        <location filename="selectvoicedialog.ui" line="14"/>
         <source>Επιλογή φωνής</source>
-        <translation type="vanished">Επιλογή φωνής</translation>
+        <translation>Επιλογή φωνής</translation>
     </message>
     <message>
-        <location filename="selectvoicedialog.ui" line="14"/>
         <source>Select voice</source>
-        <translation>Επιλογή φωνής</translation>
+        <translation type="vanished">Επιλογή φωνής</translation>
     </message>
 </context>
 </TS>
