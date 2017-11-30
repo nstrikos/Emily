@@ -31,6 +31,8 @@ void SettingsImpl::readSettings()
     if (m_rate == "")
         initializeRate();
 
+    convertPreviousVersion();
+
     if (m_settingsUpdater != NULL)
     {
         m_settingsUpdater->updateVoice(m_voice);
@@ -73,6 +75,42 @@ void SettingsImpl::readFromCurFolder()
     }
 
     file.close();
+}
+
+void SettingsImpl::convertPreviousVersion()
+{
+    if ( m_voice == emilyVoice )
+        m_voice = emilyVoiceDisplay;
+    else if ( m_voice == herculesVoice )
+        m_voice = herculesVoiceDisplay;
+    else if ( m_voice == googleVoice )
+        m_voice = herculesVoiceDisplay;
+    else if ( m_voice == spikeVoice )
+        m_voice = spikeVoiceDisplay;
+    else if ( m_voice == prudenceVoice )
+        m_voice = prudenceVoiceDisplay;
+    else if ( m_voice == poppyVoice )
+        m_voice = poppyVoiceDisplay;
+    else if ( m_voice == obadiahVoice )
+        m_voice = obadiahVoiceDisplay;
+    else if ( m_voice == coriVoice )
+        m_voice = coriVoiceDisplay;
+    else if ( m_voice == rmsVoice )
+        m_voice = rmsVoiceDisplay;
+    else if ( m_voice == bdlVoice )
+        m_voice = bdlVoiceDisplay;
+    else if ( m_voice == pavoqueVoice )
+        m_voice = pavoqueVoiceDisplay;
+    else if ( m_voice == pierreVoice )
+        m_voice = pierreVoiceDisplay;
+    else if ( m_voice == luciaVoice )
+        m_voice = luciaVoiceDisplay;
+    else if ( m_voice == turkishVoice )
+        m_voice = turkishVoiceDisplay;
+    else if ( m_voice == teluguVoice )
+        m_voice = teluguVoiceDisplay;
+
+    qDebug() << m_voice;
 }
 
 void SettingsImpl::writeSettings()

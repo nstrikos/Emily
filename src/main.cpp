@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "solution.h"
+#include <QTranslator>
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
@@ -8,10 +9,14 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    QTranslator appTranslator;
+    appTranslator.load("emily_" + QLocale::system().name(), "./translations");
+    app.installTranslator(&appTranslator);
+
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         QMessageBox::critical(0, QObject::tr("Systray"),
-        QObject::tr("Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος."));
+                              QObject::tr("Application could not find system tray"));
         return 1;
     }
 
@@ -30,7 +35,7 @@ int main(int argc, char *argv[])
     if (!sharedMemory.create(1))
     {
         QMessageBox msgBox;
-        msgBox.setText( QObject::tr("Η εφαρμογή έχει ήδη ξεκινήσει.") );
+        msgBox.setText( QObject::tr("Application is already running") );
         msgBox.setIcon( QMessageBox::Critical );
         msgBox.exec();
         qWarning() << "Can't start more than one instance of the application.";

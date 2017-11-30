@@ -98,118 +98,32 @@ class SynthDriver(SynthDriver):
         self.voice = 'hercules - greek'
         self.myVoice = 'hercules - greek'
         self.voices = ('hercules - greek',)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-emily-v2.0.1-hmm-5.1-SNAPSHOT.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('emily - greek')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-emily-v2.0.1-hmm-5.1-SNAPSHOT.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('emily - greek')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-spike-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('spike')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-spike-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('spike')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-rms-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('rms')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-rms-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('rms')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-slt-hsmm-5.1.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('slt')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-slt-hsmm-5.1.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('slt')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-cori-2740-hsmm-5.2.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('cori - experimental')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cori-2740-hsmm-5.2.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('cori - experimental')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-obadiah-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('obadiah')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-obadiah-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('obadiah')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-prudence-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('prudence')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-prudence-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('prudence')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-poppy-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('poppy')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-poppy-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('poppy')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-bdl-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('bdl')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-bdl-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('bdl')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-pavoque-neutral-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('pavoque - german')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-pavoque-neutral-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('pavoque - german')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-dfki-ot-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('ot - turkish ')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-dfki-ot-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('ot - turkish ')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-istc-lucia-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('lucia - italian')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-istc-lucia-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('lucia - italian')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "C:/Program Files/Emily/marytts/lib/voice-upmc-pierre-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('pierre - french')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "C:/Program Files (x86)/Emily/marytts/lib/voice-upmc-pierre-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('pierre - french')
-            self.voices = self.voices + (self.tmpVoice,)
-        filepath = "c:/Program Files/Emily/marytts/lib/voice-cmu-nk-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('nk - telugu')
-            self.voices = self.voices + (self.tmpVoice,)
-	filepath = "c:/Program Files (x86)/Emily/marytts/lib/voice-cmu-nk-hsmm-5.1.jar"
-        if os.path.isfile(filepath):
-            self.tmpVoice = ('nk - telugu')
-            self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('emily - greek')
+	self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('spike')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('rms')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('cori - experimental')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('obadiah')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('prudence')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('poppy')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('bdl')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('pavoque - german')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('ot - turkish ')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('lucia - italian')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('pierre - french')
+        self.voices = self.voices + (self.tmpVoice,)
+        self.tmpVoice = ('nk - telugu')
+        self.voices = self.voices + (self.tmpVoice,)
 
         self.index = 0
         self.indexList = [0]

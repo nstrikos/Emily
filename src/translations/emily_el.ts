@@ -4,13 +4,13 @@
 <context>
     <name>ChooseDiskDialog</name>
     <message>
-        <location filename="choosediskdialog.ui" line="14"/>
         <source>Επιλογή δίσκου</source>
-        <translation>Επιλογή δίσκου</translation>
+        <translation type="vanished">Επιλογή δίσκου</translation>
     </message>
     <message>
+        <location filename="choosediskdialog.ui" line="14"/>
         <source>Select disk</source>
-        <translation type="vanished">Επιλογή δίσκου</translation>
+        <translation>Επιλογή δίσκου</translation>
     </message>
     <message>
         <location filename="choosediskdialog.ui" line="25"/>
@@ -18,47 +18,46 @@
         <translation>OK</translation>
     </message>
     <message>
+        <location filename="choosediskdialog.ui" line="32"/>
         <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="choosediskdialog.ui" line="32"/>
         <source>Ακύρωση</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.ui" line="26"/>
-        <source>MainWindow</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="40"/>
         <source>Esc - Κλείσιμο παραθύρου</source>
-        <translation>Esc - Κλείσιμο παραθύρου</translation>
+        <translation type="vanished">Esc - Κλείσιμο παραθύρου</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="52"/>
-        <source>F1 - Βοήθεια</source>
-        <oldsource>F1 - Help</oldsource>
+        <source>F1 - Help</source>
+        <oldsource>F1 - Βοήθεια</oldsource>
         <translation>F1 - Βοήθεια</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="64"/>
-        <source>F2 - Εγκατάσταση σε φορητό δίσκο</source>
-        <translation>F6 - Εγκατάσταση σε φορητό δίσκο {2 ?}</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="76"/>
-        <source>F3 - Εγκατάσταση προσθέτου NVDA</source>
-        <translation></translation>
+        <source>F2 - Install on portable disk</source>
+        <translation>F6 - Εγκατάσταση σε φορητό δίσκο</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="88"/>
-        <source>F4 - Σχετικά με την εφαρμογή</source>
-        <translation></translation>
+        <source>F4 - About</source>
+        <translation>F4 - Σχετικά με την εφαρμογή</translation>
+    </message>
+    <message>
+        <source>F2 - Εγκατάσταση σε φορητό δίσκο</source>
+        <translation type="vanished">F6 - Εγκατάσταση σε φορητό δίσκο {2 ?}</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="76"/>
+        <source>F3 - Install NVDA addon</source>
+        <oldsource>F3 - Εγκατάσταση προσθέτου NVDA</oldsource>
+        <translation>F3 - Εγκατάσταση προσθέτου NVDA</translation>
     </message>
     <message>
         <source>F2 - Επιλογή φωνής</source>
@@ -82,8 +81,9 @@
         <translation type="vanished">F6 - Εγκατάσταση σε φορητό δίσκο</translation>
     </message>
     <message>
+        <location filename="mainwindow.ui" line="40"/>
         <source>Esc - Close window</source>
-        <translation type="vanished">Esc - Κλείσιμο παραθύρου</translation>
+        <translation>Esc - Κλείσιμο παραθύρου</translation>
     </message>
     <message>
         <source>F2 - Select voice</source>
@@ -120,26 +120,15 @@
         <translation type="vanished">F8 - Σχετικά</translation>
     </message>
     <message>
+        <location filename="mainwindow.ui" line="26"/>
         <location filename="mainwindow.cpp" line="9"/>
-        <location filename="mainwindow.cpp" line="171"/>
+        <location filename="mainwindow.cpp" line="172"/>
         <source>Emily</source>
         <translation>Emily</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="148"/>
-        <source>Ε&amp;λαχιστοποίση</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="151"/>
-        <source>&amp;Επαναφορά</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="324"/>
-        <location filename="mainwindow.cpp" line="418"/>
-        <source>Η εγκατάσταση ολοκληρώθηκε</source>
-        <translation></translation>
+        <source>Η εγκατάσταση του πρόσθετου ολοκληρώθηκε</source>
+        <translation type="vanished">Η εγκατάσταση του πρόσθετου ολοκληρώθηκε</translation>
     </message>
     <message>
         <source>Ε&amp;λαχιστοποίηση</source>
@@ -158,8 +147,29 @@
         <translation type="vanished">Ε&amp;λαχιστοποίηση</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="149"/>
+        <source>&amp;Minimize</source>
+        <translation>Ε&amp;λαχιστοποίηση</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="152"/>
         <source>&amp;Restore</source>
-        <translation type="vanished">Ε&amp;παναφορά</translation>
+        <translation>Ε&amp;παναφορά</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="327"/>
+        <source>Addon installation is complete</source>
+        <translation>Η εγκατάσταση του προσθέτου ολοκληρώθηκε</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="405"/>
+        <source>There are no disk drives to install</source>
+        <translation>Δεν υπάρχουν δίσκοι για εγκατάσταση</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="422"/>
+        <source>Installation completed</source>
+        <translation>Η εγκατάσταση ολοκληρώθηκε</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -173,13 +183,9 @@
 <context>
     <name>ProgressDialog</name>
     <message>
-        <source>Progress</source>
-        <translation type="vanished">Πρόοδος</translation>
-    </message>
-    <message>
         <location filename="progressdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
+        <source>Progress</source>
+        <translation>Πρόοδος</translation>
     </message>
 </context>
 <context>
@@ -190,29 +196,33 @@
         <translation>Systray</translation>
     </message>
     <message>
+        <location filename="main.cpp" line="14"/>
         <source>Application could not find system tray</source>
-        <translation type="vanished">Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος</translation>
+        <translation>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="33"/>
+        <source>Application is already running</source>
+        <translation>Η εφαρμογή έχει ήδη ξεκινήσει</translation>
     </message>
     <message>
         <source>Application in already running.</source>
         <translation type="vanished">Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="14"/>
         <source>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</source>
-        <translation>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</translation>
+        <translation type="vanished">Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
         <source>Η εφαρμογή έχει ήδη ξεκινήσει.</source>
-        <translation>Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
+        <translation type="vanished">Η εφαρμογή έχει ήδη ξεκινήσει.</translation>
     </message>
     <message>
         <source>Η Έμιλυ δεν μπορεί να ξεκινήσει.</source>
         <translation type="vanished">Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="254"/>
+        <location filename="mainwindow.cpp" line="255"/>
         <source>Emily cannot start.</source>
         <translation>Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
@@ -220,13 +230,13 @@
 <context>
     <name>SelectVoiceDialog</name>
     <message>
-        <location filename="selectvoicedialog.ui" line="14"/>
         <source>Επιλογή φωνής</source>
-        <translation>Επιλογή φωνής</translation>
+        <translation type="vanished">Επιλογή φωνής</translation>
     </message>
     <message>
+        <location filename="selectvoicedialog.ui" line="14"/>
         <source>Select voice</source>
-        <translation type="vanished">Επιλογή φωνής</translation>
+        <translation>Επιλογή φωνής</translation>
     </message>
 </context>
 </TS>

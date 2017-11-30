@@ -1,0 +1,69 @@
+English
+-----------------------------------------------------------------
+
+INSTALLATION
+After the installation, Emily will start automatically after Windows login. Restart NVDA to use Emily.
+
+CONFIGURE NVDA
+In NVDA settings, go to Synthesizer and choose Emily - Open Mary
+
+UNINSTALLATION
+Make sure that NVDA does not use Emily - Open Mary,  by changing the Synthesizer in NVDA settings. If you do not that, NVDA will have to sound after uninstallation. The go to Windows main menu and choose Emily - Unistall Emily
+
+SHORTCUTS
+
+Control-Alt-E Show Emily window
+Control-Alt-1 Use english voice 
+Control-Alt-2 Use greek voice
+Control-Alt-F1 Speak clipboard content
+Control-Alt-F2 Stop speaking clipboard content
+Control-Alt-F3 Pause speaking clipboard content
+
+In Emily window the shortcuts are:
+Esc - Close window
+F1 - Help
+F2 - Select voice
+F3 - Restart Emily
+F4 - Install Emily NVDA addons, this is only necessary if Emily in installed before NVDA
+F5 - Memory usage
+F6 - Create a portable coly
+F7 - Enable/Disable clipboard text
+F8 - About the the application
+F9 - Exit
+
+
+Ελληνικά
+-----------------------------------------------------------------
+
+ΕΓΚΑΤΑΣΤΑΣΗ
+Μετά την εγκατάσταση η Έμιλυ θα ξεκινάει αυτόματα με την είσοδο στα Windows. Επανεκκινήστε το NVDA για να χρησιμοποιήσετε την Έμιλυ.
+
+ΡΥΘΜΙΣΗ NVDA
+Στις ρυθμίσεις του NVDA, πηγαίνετε στις "Προτιμήσεις" και μετά στο "Συνθέτης ομιλίας". Πλοηγηθείτε με TAB και στο "Συνθέτης ομιλίας" επιλέξτε "Emily - Open Mary".
+
+ΑΠΕΓΚΑΤΑΣΤΑΣΗ
+Βεβαιωθείτε ότι το NVDA δεν χρησιμοποιεί το "Emily - Open Mary", πηγαίνοντας στις Ρυθμίσεις του NVDA, Προτιμήσεις, Συνθέτης ομιλίας και επιλέγοντας έναν άλλο συνθέτη ομιλίας. Αν δεν το κάνετε αυτό, το NVDA δεν θα έχει ήχο μετά την επεγκατάσταση. Στη συνέχεια από το αρχικό μενού των Windows επιλέξτε Emily και απεγκατάσταση του Emily.
+
+ΣΥΝΤΟΜΕΥΣΕΙΣ
+
+Control-Alt-E Εμφάνιση του διαλόγου της Έμιλυ
+Control-Alt-1 Χρήση αγγλικής φωνής 
+Control-Alt-2 Χρήση της ελληνικής φωνής
+Control-Alt-F1 Εκφώνηση των περιεχομένων του προχείρου
+Control-Alt-F2 Σταμάτημα εκφώνησης προχείρου
+Control-Alt-F3 Παύση εκφώνησης προχείρου
+
+
+Στο παράθυρο διαλόγου της Έμιλυ οι συντομεύσεις είναι οι εξής:
+Esc - Κλείσιμο παραθύρου
+F1 - Βοήθεια
+F2 - Επιλογή φωνής
+F3 - Επανεκκίνηση της Έμιλυ
+F4 - Εγκατάσταση των οδηγών της Έμιλυ στο NVDA, αυτό χρειάζεται αν εγκαταστήσετε πρώτα την Έμιλυ και μετά το NVDA
+F5 - Εμφανίζεται η χρήση της μνήμης από την Έμιλυ
+F6 - Εγκατάσταση σε φορητό δίσκο
+F7 - Ενεργοποίηση/Απενεργοποίηση προχείρου
+F8 - Πληροφορίες σχετικά με την εφαρμογή
+F9 - Έξοδος της Έμιλυ
+
+

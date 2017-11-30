@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
+    <width>425</width>
     <height>282</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Emily</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -37,7 +37,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Esc - Κλείσιμο παραθύρου</string>
+         <string>Esc - Close window</string>
         </property>
        </widget>
       </item>
@@ -49,7 +49,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F1 - Βοήθεια</string>
+         <string>F1 - Help</string>
         </property>
        </widget>
       </item>
@@ -61,7 +61,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F2 - Εγκατάσταση σε φορητό δίσκο</string>
+         <string>F2 - Install on portable disk</string>
         </property>
        </widget>
       </item>
@@ -73,7 +73,19 @@
          </font>
         </property>
         <property name="text">
-         <string>F3 - Εγκατάσταση προσθέτου NVDA</string>
+         <string>F3 - Install NVDA addon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="nextButton">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>F4 - Next voice</string>
         </property>
        </widget>
       </item>
@@ -85,7 +97,7 @@
          </font>
         </property>
         <property name="text">
-         <string>F4 - Σχετικά με την εφαρμογή</string>
+         <string>F12 - About</string>
         </property>
        </widget>
       </item>
@@ -98,7 +110,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>349</width>
+     <width>425</width>
      <height>26</height>
     </rect>
    </property>
@@ -119,6 +131,7 @@
   <tabstop>helpButton</tabstop>
   <tabstop>installDiskButton</tabstop>
   <tabstop>installDriversButton</tabstop>
+  <tabstop>nextButton</tabstop>
   <tabstop>aboutButton</tabstop>
  </tabstops>
  <resources/>

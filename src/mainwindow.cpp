@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("Emily"));
     ui->okButton->setFocus();
 
+    m_storage = NULL;
+    m_changeVoice = NULL;
+
     //Waiting for readSettings is too slow
     //So clipboard settings are read first
     QSettings settings("Emily", "Emily");
@@ -22,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createConnections();
     startMaryServer();
     //readSettings();
+    installAddon();
 }
 
 MainWindow::~MainWindow()
@@ -45,12 +49,23 @@ MainWindow::~MainWindow()
     maryServerProcess.close();
     hotkeyThread.terminate();
     //writeSettings();
+    delete okShortcut;
+    delete helpShortcut;
+    delete installAddonShortcut;
+    delete installDiskDriveShortcut;
+    delete nextVoiceShortcut;
+    delete aboutShortcut;
     delete ui;
 }
 
 void MainWindow::setStorage(SettingsStorageIface *storage)
 {
     m_storage = storage;
+}
+
+void MainWindow::setChangeVoice(ChangeVoiceIface *changeVoice)
+{
+    m_changeVoice = changeVoice;
 }
 
 void MainWindow::createAndInitializeObjects()
@@ -84,15 +99,17 @@ void MainWindow::createAndInitializeObjects()
 
 void MainWindow::createShortcuts()
 {
-    QShortcut *okShortcut = new QShortcut(QKeySequence("Esc"), this);
+    okShortcut = new QShortcut(QKeySequence("Esc"), this);
     connect(okShortcut, SIGNAL(activated()), this, SLOT(hide()));
-    QShortcut *helpShortcut = new QShortcut(QKeySequence("F1"), this);
+    helpShortcut = new QShortcut(QKeySequence("F1"), this);
     connect(helpShortcut, SIGNAL(activated()), this, SLOT(help()));
-    QShortcut *installDiskDriveShortcut = new QShortcut(QKeySequence("F2"), this);
+    installDiskDriveShortcut = new QShortcut(QKeySequence("F2"), this);
     connect(installDiskDriveShortcut, SIGNAL(activated()), this, SLOT(installDiskDrive()));
-    QShortcut *installAddonShortcut = new QShortcut(QKeySequence("F3"), this);
+    installAddonShortcut = new QShortcut(QKeySequence("F3"), this);
     connect(installAddonShortcut, SIGNAL(activated()), this, SLOT(installAddon()));
-    QShortcut *aboutShortcut = new QShortcut(QKeySequence("F4"), this);
+    nextVoiceShortcut = new QShortcut(QKeySequence("F4"), this);
+    connect(nextVoiceShortcut, SIGNAL(activated()), this, SLOT(nextVoice()));
+    aboutShortcut = new QShortcut(QKeySequence("F12"), this);
     connect(aboutShortcut, SIGNAL(activated()), this, SLOT(about()));
     //QShortcut *selectVoiceShortcut = new QShortcut(QKeySequence("F2"), this);
     //connect(selectVoiceShortcut, SIGNAL(activated()), this, SLOT(selectVoice()));
@@ -119,6 +136,7 @@ void MainWindow::createConnections()
     connect(ui->installDiskButton, SIGNAL(clicked()), this, SLOT(installDiskDrive()));
     //connect(ui->clipboardButton, SIGNAL(clicked(bool)), this, SLOT(clipboardButtonClicked()));
     connect(ui->aboutButton, SIGNAL(clicked()), this, SLOT(about()));
+    connect(ui->nextButton, SIGNAL(clicked(bool)), this, SLOT(nextVoice()));
     //connect(ui->exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
 
@@ -145,10 +163,10 @@ void MainWindow::quitReceived()
 
 void MainWindow::createActions()
 {
-    minimizeAction = new QAction(tr("Ε&λαχιστοποίση"), this);
+    minimizeAction = new QAction(tr("&Minimize"), this);
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    restoreAction = new QAction(tr("&Επαναφορά"), this);
+    restoreAction = new QAction(tr("&Restore"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(restore()));
 
     //quitAction = new QAction(tr("E&xit"), this);
@@ -315,15 +333,45 @@ void MainWindow::installAddon()
         openmaryFile = emilyAddonSynthDriverPath + "\\openmary.py";
         openmaryObjectFile = emilyAddonSynthDriverPath + "\\openmary.pyo";
 
-        QFile::remove(openmaryObjectFile);
 
-        QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
-        QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+        QString text;
+        bool needsDelete = false;
+        //QString filename = QDir::currentPath() + "/userSettings";
+        QFile file( manifestFile );
+        if(file.open(QIODevice::ReadOnly))
+        {
+            QTextStream in(&file);
 
-        QMessageBox msgBox;
-        msgBox.setText(tr("Η εγκατάσταση ολοκληρώθηκε"));
-        msgBox.setIcon( QMessageBox::Information );
-        msgBox.exec();
+            text = in.readAll();
+            if (!text.contains("version = 0.9"))
+                needsDelete = true;
+        }
+
+        file.close();
+
+//        qDebug() << file.size();
+//        qDebug() << text;
+//        qDebug() << needsDelete;
+
+        if (needsDelete == true)
+        {
+            QFile::remove(manifestFile);
+            QFile::remove(openmaryFile);
+            QFile::remove(openmaryObjectFile);
+        }
+
+        if (!QFile::exists(openmaryFile) || (needsDelete == true) )
+        {
+            //QFile::remove(openmaryObjectFile);
+
+            QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
+            QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+
+            QMessageBox msgBox;
+            msgBox.setText(tr("Addon installation is complete"));
+            msgBox.setIcon( QMessageBox::Information );
+            msgBox.exec();
+        }
     }
 }
 
@@ -348,7 +396,7 @@ void MainWindow::help()
 void MainWindow::about()
 {
     QMessageBox msgBox;
-    msgBox.setText("Emily 0.8\nEmail : nstrikos@yahoo.gr\nIcons: Linecons Free by Designmodo\nLicense: Creative Commons");
+    msgBox.setText("Emily 0.9\nEmail : nstrikos@yahoo.gr\nIcons: Linecons Free by Designmodo\nLicense: Creative Commons");
     msgBox.setIcon( QMessageBox::Information );
     msgBox.exec();
 }
@@ -398,7 +446,7 @@ void MainWindow::installDiskDrive()
     else
     {
         QMessageBox msgBox;
-        msgBox.setText("Δεν υπάρχουν δίσκοι για να γίνει εγκατάσταση");
+        msgBox.setText(tr("There are no disk drives to install"));
         msgBox.setIcon( QMessageBox::Information );
         msgBox.exec();
     }
@@ -415,9 +463,15 @@ void MainWindow::installationComplete()
     }
 
     QMessageBox msgBox;
-    msgBox.setText(tr("Η εγκατάσταση ολοκληρώθηκε"));
+    msgBox.setText(tr("Installation completed"));
     msgBox.setIcon( QMessageBox::Information );
     msgBox.exec();
+}
+
+void MainWindow::nextVoice()
+{
+    if (m_changeVoice != NULL)
+        m_changeVoice->nextVoice();
 }
 
 //void MainWindow::increaseRate()

@@ -16,7 +16,6 @@ SelectVoiceDialog::SelectVoiceDialog(QWidget *parent) :
     ui->comboBox->addItem(rmsVoiceDisplay);
     ui->comboBox->addItem(bdlVoiceDisplay);
     ui->comboBox->addItem(herculesVoiceDisplay);
-    ui->comboBox->addItem(googleVoiceDisplay);
     ui->comboBox->addItem(emilyVoiceDisplay);
     ui->comboBox->addItem(pavoqueVoiceDisplay);
     ui->comboBox->addItem(pierreVoiceDisplay);
@@ -55,8 +54,6 @@ void SelectVoiceDialog::on_buttonBox_accepted()
         selectedVoice = bdlVoice;
     else if (currentSelection == emilyVoiceDisplay)
         selectedVoice = emilyVoice;
-    else if (currentSelection == googleVoiceDisplay)
-        selectedVoice = googleVoice;
     else if (currentSelection == herculesVoiceDisplay)
         selectedVoice = herculesVoice;
     else if (currentSelection == pavoqueVoiceDisplay)
@@ -108,8 +105,6 @@ void SelectVoiceDialog::initCombobox(QString voice)
         currentSelection = bdlVoiceDisplay;
     else if (selectedVoice == emilyVoice)
         currentSelection = emilyVoiceDisplay;
-    else if (selectedVoice == googleVoice)
-        currentSelection = googleVoiceDisplay;
     else if (selectedVoice == herculesVoice)
         currentSelection = herculesVoiceDisplay;
     else if (selectedVoice == pavoqueVoice)

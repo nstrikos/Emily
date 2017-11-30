@@ -12,6 +12,7 @@
 #include "hotkeythread.h"
 #include "selectvoicedialog.h"
 #include "settingsstorageiface.h"
+#include "changevoiceiface.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void setStorage(SettingsStorageIface *storage);
+    void setChangeVoice(ChangeVoiceIface *changeVoice);
 
     void setVisible(bool visible);
 
@@ -48,6 +50,7 @@ private slots:
     void about();
     void installDiskDrive();
     void installationComplete();
+    void nextVoice();
     //void voiceChanged(QString voice);
 
 private:
@@ -83,14 +86,13 @@ private:
 
     QShortcut *okShortcut;
     QShortcut *helpShortcut;
-    QShortcut *selectVoiceShortcut;
-    QShortcut *restartShortcut;
     QShortcut *installAddonShortcut;
-    QShortcut *memoryShortcut;
     QShortcut *installDiskDriveShortcut;
+    QShortcut *nextVoiceShortcut;
     QShortcut *aboutShortcut;
 
     SettingsStorageIface *m_storage;
+    ChangeVoiceIface *m_changeVoice;
 };
 
 #endif // MAINWINDOW_H

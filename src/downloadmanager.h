@@ -19,6 +19,7 @@ public:
     ~DownloadManager();
     void setWavReceiver(DownloadManagerIface *wavReceiver);
     void setVoice(QString voice);
+    void nextVoice();
     void textToSpeech(QString text, QString index);
     void cancelDownload();
 

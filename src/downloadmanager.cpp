@@ -23,6 +23,11 @@ void DownloadManager::setVoice(QString voice)
     m_impl->setVoice(voice);
 }
 
+void DownloadManager::nextVoice()
+{
+    m_impl->nextVoice();
+}
+
 void DownloadManager::textToSpeech(QString text, QString index)
 {
     m_impl->textToSpeech(text, index);

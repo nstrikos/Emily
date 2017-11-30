@@ -28,6 +28,7 @@ public:
 private:
     void readFromRegistry();
     void readFromCurFolder();
+    void convertPreviousVersion();
     void writeToRegistry();
     void writeToCurFolder();
     void writeVoice(QString voice);

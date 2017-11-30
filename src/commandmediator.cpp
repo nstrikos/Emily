@@ -15,6 +15,7 @@ CommandMediator::CommandMediator(NvdaCommandReceiver &commandReceiver,
     m_settings.setUpdater(this);
     m_settings.readSettings();
     m_mainWindow.setStorage(this);
+    m_mainWindow.setChangeVoice(this);
 }
 
 void CommandMediator::receiveCommand(QString command)
@@ -60,8 +61,6 @@ void CommandMediator::handleVoiceCommand(QString command)
         voice = prudenceVoiceDisplay;
     else if (command.contains("poppy"))
         voice = poppyVoiceDisplay;
-    else if (command.contains("slt"))
-        voice = sltVoiceDisplay;
     else if (command.contains("bdl"))
         voice = bdlVoiceDisplay;
     else if (command.contains("obadiah"))
@@ -110,6 +109,11 @@ QString CommandMediator::getVoice()
 QString CommandMediator::getRate()
 {
     return m_settings.rate();
+}
+
+void CommandMediator::nextVoice()
+{
+    m_downloadManager.nextVoice();
 }
 
 CommandMediator::~CommandMediator()

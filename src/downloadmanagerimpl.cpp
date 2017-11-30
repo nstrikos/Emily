@@ -6,6 +6,7 @@
 #include "downloadmanagerimpl.h"
 #include "constants.h"
 #include <QBuffer>
+#include <QApplication>
 
 DownloadManagerImpl::DownloadManagerImpl()
 {
@@ -191,8 +192,6 @@ void DownloadManagerImpl::setVoice(QString voice)
         m_voice = poppyVoice;
     else if (voice == obadiahVoiceDisplay)
         m_voice = obadiahVoice;
-    else if (voice == sltVoiceDisplay)
-        m_voice = sltVoice;
     else if (voice == bdlVoiceDisplay)
         m_voice = bdlVoice;
     else if (voice == pavoqueVoiceDisplay)
@@ -209,6 +208,39 @@ void DownloadManagerImpl::setVoice(QString voice)
     {
         m_voice = herculesVoice;
     }
+}
+
+void DownloadManagerImpl::nextVoice()
+{
+    QApplication::beep();
+    if (m_voice == herculesVoice)
+        m_voice = emilyVoice;
+    else if (m_voice == emilyVoice)
+        m_voice = coriVoice;
+    else if (m_voice == coriVoice)
+        m_voice = spikeVoice;
+    else if (m_voice == spikeVoice)
+        m_voice = rmsVoice;
+    else if (m_voice == rmsVoice)
+        m_voice = prudenceVoice;
+    else if (m_voice == prudenceVoice)
+        m_voice = poppyVoice;
+    else if (m_voice == poppyVoice)
+        m_voice = obadiahVoice;
+    else if (m_voice == obadiahVoice)
+        m_voice = bdlVoice;
+    else if (m_voice == bdlVoice)
+        m_voice = pavoqueVoice;
+     else if (m_voice == pavoqueVoice)
+        m_voice = pierreVoice;
+    else if (m_voice == pierreVoice)
+        m_voice = luciaVoice;
+    else if (m_voice == luciaVoice)
+        m_voice = turkishVoice;
+    else if (m_voice == turkishVoice)
+        m_voice = teluguVoice;
+    else if (m_voice == teluguVoice)
+        m_voice = herculesVoice;
 }
 
 DownloadManagerImpl::~DownloadManagerImpl()

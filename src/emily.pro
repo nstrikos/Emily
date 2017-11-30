@@ -57,12 +57,16 @@ HEADERS  += mainwindow.h \
     downloadmanagerimpl.h \
     playerimpl.h \
     settingsimpl.h \
-    settingsstorageiface.h
+    settingsstorageiface.h \
+    changevoiceiface.h
 
 FORMS    += mainwindow.ui \
     choosediskdialog.ui \
     progressdialog.ui \
     selectvoicedialog.ui
+
+TRANSLATIONS = emily_en.ts \
+               emily_el.ts
 
 win32:LIBS += -lpsapi
 
