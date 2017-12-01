@@ -311,66 +311,72 @@ void MainWindow::delay(int n)
 
 void MainWindow::installAddon()
 {
-    QString manifestFile, openmaryFile, openmaryObjectFile;
+    QString dir =  QDir::currentPath();
 
-    QString nvdaRoamingPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
-            "\\AppData\\Roaming\\nvda";
-
-    QDir nvdaDir(nvdaRoamingPath);
-    if (nvdaDir.exists())
+    if (dir.startsWith("c", Qt::CaseInsensitive))
     {
 
-        QString emilyAddonPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
-                "\\AppData\\Roaming\\nvda\\addons\\Emily";
+        QString manifestFile, openmaryFile, openmaryObjectFile;
 
-        QString emilyAddonSynthDriverPath = emilyAddonPath + "\\synthDrivers";
+        QString nvdaRoamingPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
+                "\\AppData\\Roaming\\nvda";
 
-        QDir dir(emilyAddonSynthDriverPath);
-        if(!dir.exists())
-            dir.mkpath(emilyAddonSynthDriverPath);
-
-        manifestFile = emilyAddonPath + "\\manifest.ini";
-        openmaryFile = emilyAddonSynthDriverPath + "\\openmary.py";
-        openmaryObjectFile = emilyAddonSynthDriverPath + "\\openmary.pyo";
-
-
-        QString text;
-        bool needsDelete = false;
-        //QString filename = QDir::currentPath() + "/userSettings";
-        QFile file( manifestFile );
-        if(file.open(QIODevice::ReadOnly))
+        QDir nvdaDir(nvdaRoamingPath);
+        if (nvdaDir.exists())
         {
-            QTextStream in(&file);
 
-            text = in.readAll();
-            if (!text.contains("version = 0.9"))
-                needsDelete = true;
-        }
+            QString emilyAddonPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
+                    "\\AppData\\Roaming\\nvda\\addons\\Emily";
 
-        file.close();
+            QString emilyAddonSynthDriverPath = emilyAddonPath + "\\synthDrivers";
 
-//        qDebug() << file.size();
-//        qDebug() << text;
-//        qDebug() << needsDelete;
+            QDir dir(emilyAddonSynthDriverPath);
+            if(!dir.exists())
+                dir.mkpath(emilyAddonSynthDriverPath);
 
-        if (needsDelete == true)
-        {
-            QFile::remove(manifestFile);
-            QFile::remove(openmaryFile);
-            QFile::remove(openmaryObjectFile);
-        }
+            manifestFile = emilyAddonPath + "\\manifest.ini";
+            openmaryFile = emilyAddonSynthDriverPath + "\\openmary.py";
+            openmaryObjectFile = emilyAddonSynthDriverPath + "\\openmary.pyo";
 
-        if (!QFile::exists(openmaryFile) || (needsDelete == true) )
-        {
-            //QFile::remove(openmaryObjectFile);
 
-            QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
-            QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+            QString text;
+            bool needsDelete = false;
+            //QString filename = QDir::currentPath() + "/userSettings";
+            QFile file( manifestFile );
+            if(file.open(QIODevice::ReadOnly))
+            {
+                QTextStream in(&file);
 
-            QMessageBox msgBox;
-            msgBox.setText(tr("Addon installation is complete"));
-            msgBox.setIcon( QMessageBox::Information );
-            msgBox.exec();
+                text = in.readAll();
+                if (!text.contains("version = 0.9"))
+                    needsDelete = true;
+            }
+
+            file.close();
+
+            //        qDebug() << file.size();
+            //        qDebug() << text;
+            //        qDebug() << needsDelete;
+
+            if (needsDelete == true)
+            {
+                QFile::remove(manifestFile);
+                QFile::remove(openmaryFile);
+                QFile::remove(openmaryObjectFile);
+            }
+
+            if (!QFile::exists(openmaryFile) || (needsDelete == true) )
+            {
+                //QFile::remove(openmaryObjectFile);
+
+                QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
+                QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
+
+                QMessageBox msgBox;
+                msgBox.setText(tr("Addon installation is complete"));
+                msgBox.setIcon( QMessageBox::Information );
+                msgBox.exec();
+            }
         }
     }
 }
