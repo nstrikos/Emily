@@ -372,6 +372,7 @@ void MainWindow::installAddon()
                 QFile::copy(":/new/prefix1/resources/manifest.ini", manifestFile);
                 QFile::copy(":/new/prefix1/resources/openmary.py", openmaryFile);
 
+                QApplication::beep();
                 QMessageBox msgBox;
                 msgBox.setText(tr("Addon installation is complete"));
                 msgBox.setIcon( QMessageBox::Information );
