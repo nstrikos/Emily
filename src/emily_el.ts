@@ -46,8 +46,14 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="88"/>
-        <source>F4 - About</source>
+        <source>F4 - Next voice</source>
+        <oldsource>F4 - About</oldsource>
         <translation type="unfinished">F8 - Σχετικά {4 ?}</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="100"/>
+        <source>F12 - About</source>
+        <translation type="unfinished">F8 - Σχετικά {12 ?}</translation>
     </message>
     <message>
         <source>F2 - Εγκατάσταση σε φορητό δίσκο</source>
@@ -122,7 +128,7 @@
     <message>
         <location filename="mainwindow.ui" line="26"/>
         <location filename="mainwindow.cpp" line="9"/>
-        <location filename="mainwindow.cpp" line="172"/>
+        <location filename="mainwindow.cpp" line="189"/>
         <source>Emily</source>
         <translation>Emily</translation>
     </message>
@@ -147,27 +153,27 @@
         <translation type="vanished">Ε&amp;λαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="149"/>
+        <location filename="mainwindow.cpp" line="166"/>
         <source>&amp;Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="152"/>
+        <location filename="mainwindow.cpp" line="169"/>
         <source>&amp;Restore</source>
         <translation>Ε&amp;παναφορά</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="327"/>
+        <location filename="mainwindow.cpp" line="376"/>
         <source>Addon installation is complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="405"/>
+        <location filename="mainwindow.cpp" line="455"/>
         <source>There are no disk drives to install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="422"/>
+        <location filename="mainwindow.cpp" line="472"/>
         <source>Installation completed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -191,17 +197,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="13"/>
+        <location filename="main.cpp" line="18"/>
         <source>Systray</source>
         <translation>Systray</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="14"/>
+        <location filename="main.cpp" line="19"/>
         <source>Application could not find system tray</source>
         <translation>Η εφαρμογή δεν μπόρεσε να βρει εργαλειοθήκη συστήματος</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="33"/>
+        <location filename="main.cpp" line="38"/>
         <source>Application is already running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -222,7 +228,7 @@
         <translation type="vanished">Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="255"/>
+        <location filename="mainwindow.cpp" line="272"/>
         <source>Emily cannot start.</source>
         <translation>Η Έμιλυ δεν μπορεί να ξεκινήσει.</translation>
     </message>
